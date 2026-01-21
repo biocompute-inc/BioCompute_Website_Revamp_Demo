@@ -2,8 +2,12 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import DNAHelix from '@/client/components/ui/dnahelix';
+import dynamic from 'next/dynamic';
 import { Inter } from 'next/font/google'
+
+const DNAHelix = dynamic(() => import('@/client/components/ui/dnahelix'), {
+  ssr: false,
+})
 
 export const metadata: Metadata = {
   title: 'BioCompute Inc. - DNA-Based Data Storage',
