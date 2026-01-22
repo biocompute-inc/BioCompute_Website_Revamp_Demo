@@ -25,15 +25,15 @@ export default function BlogsPage() {
   );
 
   return (
-    <div className="bg-gradient-to-b from-purple/5 to-transparent min-h-screen pt-16">
+    <div className=" min-h-screen pt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Header */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-8">
           <div>
-            <p className="text-sm font-bold uppercase tracking-widest text-gray-600 mb-2">
+            <p className="text-2xl font-medium uppercase tracking-widest text-gray-600 mb-2">
               BLOGS
             </p>
-            <h1 className="text-4xl md:text-5xl font-bold text-dark">
+            <h1 className="text-base md:text-4xl font-bold text-dark">
               Insights & Updates
             </h1>
           </div>
@@ -106,11 +106,10 @@ export default function BlogsPage() {
               <button
                 key={page}
                 onClick={() => setCurrentPage(page)}
-                className={`w-10 h-10 rounded text-sm font-bold transition-colors ${
-                  currentPage === page
-                    ? 'bg-dark text-white'
-                    : 'border border-gray-300 bg-white text-dark hover:bg-gray-100'
-                }`}
+                className={`w-10 h-10 rounded text-sm font-bold transition-colors ${currentPage === page
+                  ? 'bg-dark text-white'
+                  : 'border border-gray-300 bg-white text-dark hover:bg-gray-100'
+                  }`}
               >
                 {page}
               </button>

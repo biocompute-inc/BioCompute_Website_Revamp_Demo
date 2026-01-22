@@ -1,4 +1,5 @@
 'use client'
+import DNABackground from '@/components/DNABackground';
 import DNAHelix from '../../client/components/ui/dnahelix';
 // import ShinyText from '@/client/components/ui/shinytext';
 
@@ -6,20 +7,9 @@ export default function HeroSection() {
     return (
         <div className="relative w-full h-screen bg-black overflow-hidden flex items-center justify-center">
 
-            {/* Background Layer */}
+            Background Layer
             <div className="absolute inset-0 z-0">
-                <DNAHelix
-                    linesGradient={["#9333ea", "#a855f7", "#c084fc", "#7c3aed", "#6366f1", "#4f46e5", "#3b82f6", "#2563eb", "#1d4ed8"]} // Purple to Blue gradient
-                    enabledWaves={['top', 'middle', 'bottom']} // Enable all three paths
-                    lineCount={[1, 1, 1]} // Different counts for each path (19 total DNA strands)
-                    lineDistance={[0.2, 0.15, 0.18]} // Tighter spacing for more strands
-                    topWavePosition={{ x: 8.5, y: 0, rotate: -0.9 }} // Upper right to lower left diagonal
-                    middleWavePosition={{ x: 7.0, y: 0.1, rotate: 0.1 }} // Left middle to right-above middle (horizontal-ish)
-                    bottomWavePosition={{ x: 8.0, y: -1, rotate: 0.8 }} // Lower right to upper left diagonal
-                    animationSpeed={0.2}
-                    bendStrength={0.8}
-                    opacity={0.6}
-                />
+                <DNABackground />
             </div>
 
             {/* Foreground Content */}

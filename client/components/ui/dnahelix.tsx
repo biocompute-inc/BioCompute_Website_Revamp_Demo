@@ -21,7 +21,7 @@ void main() {
 `;
 
 const fragmentShader = `
-precision highp float;
+precision mediump float;
 
 uniform float iTime;
 uniform vec3  iResolution;
@@ -78,21 +78,11 @@ vec3 getLineColor(float t, vec3 baseColor) {
   return gradientColor;
 }
 
-// Get strand-specific color with variation
+// Simplified color with depth
 vec3 getStrandColor(float t, float depth, float strandOffset) {
   vec3 baseColor = getLineColor(t, vec3(1.0));
-  
-  // Add depth-based color shift (purple when close, blue when far)
-  vec3 depthShift = mix(vec3(0.3, 0.1, 0.6), vec3(0.2, 0.5, 0.9), depth);
-  
-  // Add per-strand color variation
-  vec3 strandVariation = mix(
-    vec3(0.5, 0.2, 0.8), // Purple tint
-    vec3(0.3, 0.6, 1.0), // Blue tint
-    fract(strandOffset * 0.7)
-  );
-  
-  return baseColor * mix(depthShift, strandVariation, 0.3);
+  vec3 depthShift = mix(vec3(0.4, 0.2, 0.7), vec3(0.6, 0.4, 0.85), depth);
+  return baseColor * depthShift;
 }
 
 // Enhanced 3D DNA Helix with granular detail
@@ -112,25 +102,13 @@ float dnaStrand(vec2 uv, float offset, vec2 screenUv, vec2 mouseUv, bool shouldB
   // --- ENHANCED 3D DNA MATH ---
   
   // Primary helix structure
-  float amplitude = 0.25;
+  float amplitude = 0.18;
   float y1 = sin(x_progression) * amplitude;
   float y2 = sin(x_progression + PI) * amplitude;
   
-  // Add micro-wobbles for organic feel
-  y1 += sin(x_progression * 3.7) * 0.005;
-  y2 += sin(x_progression * 3.7 + PI) * 0.005;
-  
-  // Secondary harmonics for natural variation
-  y1 += cos(x_progression * 1.3 + time * 0.3) * 0.01;
-  y2 += cos(x_progression * 1.3 + time * 0.3 + PI) * 0.01;
-  
-  // Tertiary micro-details for ultra-fine structure
-  y1 += sin(x_progression * 6.5 + time * 0.5) * 0.003;
-  y2 += sin(x_progression * 6.5 + time * 0.5 + PI) * 0.003;
-  
-  // Quaternary detail for base pair bumps
-  y1 += cos(x_progression * 10.0) * 0.002;
-  y2 += cos(x_progression * 10.0 + PI) * 0.002;
+  // Minimal wobble for organic feel
+  y1 += sin(x_progression * 3.7) * 0.006;
+  y2 += sin(x_progression * 3.7 + PI) * 0.006;
   
   y1 += bendY;
   y2 += bendY;
@@ -144,107 +122,46 @@ float dnaStrand(vec2 uv, float offset, vec2 screenUv, vec2 mouseUv, bool shouldB
   float depth2 = (z2 + 1.0) * 0.5;
   
   // Stronger perspective scaling
-  float size1 = mix(0.4, 1.6, depth1);
-  float size2 = mix(0.4, 1.6, depth2);
+  float size1 = mix(0.5, 1.4, depth1);
+  float size2 = mix(0.5, 1.4, depth2);
   
-  // Enhanced brightness variation for depth
-  float brightness1 = mix(0.2, 0.8, depth1);
-  float brightness2 = mix(0.2, 0.8, depth2);
-  
-  // Add edge darkening when strands go behind
-  float depthShadow1 = mix(0.5, 1.0, smoothstep(-0.2, 0.8, z));
-  float depthShadow2 = mix(0.5, 1.0, smoothstep(-0.2, 0.8, z2));
-  brightness1 *= depthShadow1;
-  brightness2 *= depthShadow2;
+  // Simplified brightness for depth
+  float brightness1 = mix(0.3, 0.9, depth1);
+  float brightness2 = mix(0.3, 0.9, depth2);
 
-  // --- ULTRA-DETAILED GRANULAR STRAND RENDERING ---
+  // --- HIGHLY OPTIMIZED STRAND RENDERING ---
   
-  float baseWidth = 0.0015; // Ultra-thin core for maximum detail
-  float glowWidth = 0.028;
+  float baseWidth = 0.002;
+  float glowWidth = 0.022;
   
-  // Multi-layer core with ultra-fine gradations (4 core layers)
-  float core1_innermost = (baseWidth * 0.3) * size1 / max(abs(uv.y - y1), 0.0002);
-  float core1_inner = (baseWidth * 0.6) * size1 / max(abs(uv.y - y1), 0.0004);
-  float core1_mid = (baseWidth * 1.0) * size1 / max(abs(uv.y - y1), 0.0008);
-  float core1_outer = (baseWidth * 1.4) * size1 / max(abs(uv.y - y1), 0.0013);
+  // Single core layer
+  float core1 = (baseWidth) * size1 / max(abs(uv.y - y1), 0.001);
+  float core2 = (baseWidth) * size2 / max(abs(uv.y - y2), 0.001);
   
-  float core2_innermost = (baseWidth * 0.3) * size2 / max(abs(uv.y - y2), 0.0002);
-  float core2_inner = (baseWidth * 0.6) * size2 / max(abs(uv.y - y2), 0.0004);
-  float core2_mid = (baseWidth * 1.0) * size2 / max(abs(uv.y - y2), 0.0008);
-  float core2_outer = (baseWidth * 1.4) * size2 / max(abs(uv.y - y2), 0.0013);
+  // Minimal glow (2 layers)
+  float glow1_1 = (glowWidth * 0.6) * size1 / max(abs(uv.y - y1), 0.005);
+  float glow1_2 = (glowWidth * 1.5) * size1 / max(abs(uv.y - y1), 0.015);
   
-  // Enhanced multi-layer glow system (8 layers for maximum depth)
-  float glow1_1 = (glowWidth * 0.2) * size1 / max(abs(uv.y - y1), 0.0008);
-  float glow1_2 = (glowWidth * 0.4) * size1 / max(abs(uv.y - y1), 0.0018);
-  float glow1_3 = (glowWidth * 0.6) * size1 / max(abs(uv.y - y1), 0.0035);
-  float glow1_4 = (glowWidth * 0.9) * size1 / max(abs(uv.y - y1), 0.0060);
-  float glow1_5 = (glowWidth * 1.2) * size1 / max(abs(uv.y - y1), 0.0095);
-  float glow1_6 = (glowWidth * 1.6) * size1 / max(abs(uv.y - y1), 0.0140);
-  float glow1_7 = (glowWidth * 2.0) * size1 / max(abs(uv.y - y1), 0.0190);
-  float glow1_8 = (glowWidth * 2.5) * size1 / max(abs(uv.y - y1), 0.0250);
+  float glow2_1 = (glowWidth * 0.6) * size2 / max(abs(uv.y - y2), 0.005);
+  float glow2_2 = (glowWidth * 1.5) * size2 / max(abs(uv.y - y2), 0.015);
   
-  float glow2_1 = (glowWidth * 0.2) * size2 / max(abs(uv.y - y2), 0.0008);
-  float glow2_2 = (glowWidth * 0.4) * size2 / max(abs(uv.y - y2), 0.0018);
-  float glow2_3 = (glowWidth * 0.6) * size2 / max(abs(uv.y - y2), 0.0035);
-  float glow2_4 = (glowWidth * 0.9) * size2 / max(abs(uv.y - y2), 0.0060);
-  float glow2_5 = (glowWidth * 1.2) * size2 / max(abs(uv.y - y2), 0.0095);
-  float glow2_6 = (glowWidth * 1.6) * size2 / max(abs(uv.y - y2), 0.0140);
-  float glow2_7 = (glowWidth * 2.0) * size2 / max(abs(uv.y - y2), 0.0190);
-  float glow2_8 = (glowWidth * 2.5) * size2 / max(abs(uv.y - y2), 0.0250);
-  
-  // Combine all layers with precise falloff for maximum detail
-  float strand1 = (
-    core1_innermost * 2.0 + 
-    core1_inner * 1.5 + 
-    core1_mid * 1.0 + 
-    core1_outer * 0.7 +
-    glow1_1 * 0.6 + 
-    glow1_2 * 0.45 + 
-    glow1_3 * 0.32 + 
-    glow1_4 * 0.22 +
-    glow1_5 * 0.15 +
-    glow1_6 * 0.10 +
-    glow1_7 * 0.06 +
-    glow1_8 * 0.03
-  ) * brightness1;
-  
-  float strand2 = (
-    core2_innermost * 2.0 + 
-    core2_inner * 1.5 + 
-    core2_mid * 1.0 + 
-    core2_outer * 0.7 +
-    glow2_1 * 0.6 + 
-    glow2_2 * 0.45 + 
-    glow2_3 * 0.32 + 
-    glow2_4 * 0.22 +
-    glow2_5 * 0.15 +
-    glow2_6 * 0.10 +
-    glow2_7 * 0.06 +
-    glow2_8 * 0.03
-  ) * brightness2;
+  // Combine layers
+  float strand1 = (core1 * 1.5 + glow1_1 * 0.4 + glow1_2 * 0.15) * brightness1;
+  float strand2 = (core2 * 1.5 + glow2_1 * 0.4 + glow2_2 * 0.15) * brightness2;
 
-  // --- ULTRA-DETAILED GRANULAR RUNGS WITH BASE PAIRS ---
+  // --- OPTIMIZED RUNGS ---
   
-  float rungFrequency = 9.0; // Higher frequency for more detail
-  float rungWidth = 0.008; // Very thin rungs
+  float rungFrequency = 6.0;
+  float rungWidth = 0.01;
   
   float rungPhase = x_progression;
   
   // Primary rung pattern
   float stripes = smoothstep(1.0 - rungWidth, 1.0, sin(rungPhase * rungFrequency));
   
-  // Add base pair detail (A-T, G-C bumps)
-  float basePairDetail1 = sin(rungPhase * rungFrequency * 4.0) * 0.05 + 0.95;
-  float basePairDetail2 = cos(rungPhase * rungFrequency * 6.0 + PI * 0.5) * 0.04 + 0.96;
-  stripes *= basePairDetail1 * basePairDetail2;
-  
-  // Add micro-segments to rungs (showing bonds)
-  float segmentation = smoothstep(0.3, 0.7, sin(rungPhase * rungFrequency * 2.0 + PI * 0.25));
-  stripes *= mix(0.85, 1.0, segmentation);
-  
-  // Add texture variation
-  float rungTexture = sin(rungPhase * 20.0 + time * 0.8) * 0.03 + 0.97;
-  stripes *= rungTexture;
+  // Simplified rung detail
+  float basePairDetail = sin(rungPhase * rungFrequency * 4.0) * 0.04 + 0.96;
+  stripes *= basePairDetail;
   
   // Precise masking between strands
   float yMin = min(y1, y2);
@@ -259,52 +176,22 @@ float dnaStrand(vec2 uv, float offset, vec2 screenUv, vec2 mouseUv, bool shouldB
   // Size variation based on depth
   float rungSize = mix(0.5, 1.4, (depth1 + depth2) * 0.5);
   
-  // Multi-layer rung rendering with enhanced detail
+  // Optimized rung rendering (2 layers instead of 5)
   float rungCore = insideHelix * stripes * rungVisibility * rungSize;
-  float rungGlow1 = insideHelix * stripes * rungVisibility * rungSize * 1.3;
-  float rungGlow2 = insideHelix * stripes * rungVisibility * rungSize * 1.7;
-  float rungGlow3 = insideHelix * stripes * rungVisibility * rungSize * 2.1;
-  float rungGlow4 = insideHelix * stripes * rungVisibility * rungSize * 2.5;
-  float rungGlow5 = insideHelix * stripes * rungVisibility * rungSize * 3.0;
+  float rungGlow = insideHelix * stripes * rungVisibility * rungSize * 1.8;
   
-  // Combine rung layers with multiple glow stages
-  float rungs = (
-    rungCore * 0.8 + 
-    rungGlow1 * 0.35 + 
-    rungGlow2 * 0.20 +
-    rungGlow3 * 0.12 +
-    rungGlow4 * 0.07 +
-    rungGlow5 * 0.04
-  ) * 0.65;
+  // Combine rung layers
+  float rungs = (rungCore * 0.7 + rungGlow * 0.25) * 0.6;
   
-  // Add depth-based color variation to rungs
-  float depthTint = mix(0.8, 1.2, (depth1 + depth2) * 0.5);
-  rungs *= depthTint;
+  // --- OPTIMIZED SURFACE DETAIL ---
   
-  // --- ULTRA-DETAILED SURFACE DETAIL & GRANULARITY ---
+  // Single texture layer for performance
+  float texture1 = sin(x_progression * 18.0 + time * 1.5) * 0.012 + 0.988;
+  float texture2 = sin(x_progression * 18.0 + time * 1.5 + PI) * 0.012 + 0.988;
   
-  // Layer 1: Primary texture (sugar-phosphate backbone bumps)
-  float texture1_primary = sin(x_progression * 18.0 + time * 1.5) * 0.015 + 0.985;
-  float texture2_primary = sin(x_progression * 18.0 + time * 1.5 + PI) * 0.015 + 0.985;
-  
-  // Layer 2: Secondary texture (molecular detail)
-  float texture1_secondary = cos(x_progression * 25.0) * 0.01 + 0.99;
-  float texture2_secondary = cos(x_progression * 25.0 + PI) * 0.01 + 0.99;
-  
-  // Layer 3: Tertiary texture (atomic-scale roughness)
-  float texture1_tertiary = sin(x_progression * 40.0 + time * 2.0) * 0.008 + 0.992;
-  float texture2_tertiary = sin(x_progression * 40.0 + time * 2.0 + PI) * 0.008 + 0.992;
-  
-  // Combine all texture layers
-  strand1 *= texture1_primary * texture1_secondary * texture1_tertiary;
-  strand2 *= texture2_primary * texture2_secondary * texture2_tertiary;
-  
-  // Enhanced specular highlights with color shift
-  float specular1 = pow(depth1, 3.5) * 0.15;
-  float specular2 = pow(depth2, 3.5) * 0.15;
-  
-  strand1 += specular1;
-  strand2 += specular2;
+  // Apply texture
+  strand1 *= texture1;
+  strand2 *= texture2;
   
   glowColor = vec3(strand1 + strand2 + rungs);
   return strand1 + strand2 + rungs;
@@ -332,7 +219,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
       float fi = float(i);
       float t = fi / max(float(bottomLineCount - 1), 1.0);
       
-      float angle = bottomWavePosition.z * log(length(baseUv) + 1.0);
+      float angle = bottomWavePosition.z * 0.5;
       vec2 ruv = baseUv * rotate(angle);
       
       vec2 pos = ruv + vec2(bottomLineDistance * fi + bottomWavePosition.x, bottomWavePosition.y);
@@ -361,7 +248,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
       float fi = float(i);
       float t = fi / max(float(middleLineCount - 1), 1.0);
       
-      float angle = middleWavePosition.z * log(length(baseUv) + 1.0);
+      float angle = middleWavePosition.z * 0.5;
       vec2 ruv = baseUv * rotate(angle);
       
       vec2 pos = ruv + vec2(middleLineDistance * fi + middleWavePosition.x, middleWavePosition.y);
@@ -390,7 +277,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
       float fi = float(i);
       float t = fi / max(float(topLineCount - 1), 1.0);
       
-      float angle = topWavePosition.z * log(length(baseUv) + 1.0);
+      float angle = topWavePosition.z * 0.5;
       vec2 ruv = baseUv * rotate(angle);
       ruv.x *= -1.0;
       
@@ -413,11 +300,6 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
       col += lineCol * intensity * 0.8;
     }
   }
-
-  // Enhanced atmospheric depth with subtle vignette
-  vec2 vignetteUv = fragCoord / iResolution.xy;
-  float vignette = 1.0 - length(vignetteUv - 0.5) * 0.4;
-  col *= vignette;
 
   fragColor = vec4(col, 1.0);
 }
@@ -476,7 +358,7 @@ function hexToVec3(hex: string): Vector3 {
 }
 
 export default function DNAHelix({
-  linesGradient = ["#4c1d95", "#7c3aed", "#a78bfa", "#60a5fa", "#3b82f6"], // Deep Purple -> Violet -> Light Purple -> Light Blue -> Blue
+  linesGradient = ["#7a4d8f", "#9b6fb5", "#b893d1", "#c5a8dc", "#d4bfe8"], // Deep Purple -> Violet -> Light Purple -> Light Blue -> Blue
   enabledWaves = ['middle'],
   lineCount = [8],
   lineDistance = [0.3],
@@ -532,8 +414,12 @@ export default function DNAHelix({
     const camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
     camera.position.z = 1;
 
-    const renderer = new WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    const renderer = new WebGLRenderer({
+      antialias: false,
+      alpha: true,
+      powerPreference: 'high-performance'
+    });
+    renderer.setPixelRatio(1.0);
     renderer.domElement.style.width = '100%';
     renderer.domElement.style.height = '100%';
     containerRef.current.appendChild(renderer.domElement);
@@ -611,7 +497,12 @@ export default function DNAHelix({
     const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(setSize) : null;
     if (ro && containerRef.current) ro.observe(containerRef.current);
 
+    let lastMouseUpdate = 0;
     const handlePointerMove = (event: PointerEvent) => {
+      const now = performance.now();
+      if (now - lastMouseUpdate < 16) return; // Throttle to ~60fps
+      lastMouseUpdate = now;
+
       const rect = renderer.domElement.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
@@ -640,13 +531,13 @@ export default function DNAHelix({
     const renderLoop = () => {
       uniforms.iTime.value = clock.getElapsedTime();
       if (interactive) {
-        currentMouseRef.current.lerp(targetMouseRef.current, mouseDamping);
+        currentMouseRef.current.lerp(targetMouseRef.current, 0.1);
         uniforms.iMouse.value.copy(currentMouseRef.current);
-        currentInfluenceRef.current += (targetInfluenceRef.current - currentInfluenceRef.current) * mouseDamping;
+        currentInfluenceRef.current += (targetInfluenceRef.current - currentInfluenceRef.current) * 0.1;
         uniforms.bendInfluence.value = currentInfluenceRef.current;
       }
       if (parallax) {
-        currentParallaxRef.current.lerp(targetParallaxRef.current, mouseDamping);
+        currentParallaxRef.current.lerp(targetParallaxRef.current, 0.1);
         uniforms.parallaxOffset.value.copy(currentParallaxRef.current);
       }
       renderer.render(scene, camera);
@@ -678,7 +569,9 @@ export default function DNAHelix({
       className="w-full h-full relative overflow-hidden"
       style={{
         mixBlendMode: mixBlendMode,
-        opacity: opacity
+        opacity: opacity,
+        willChange: 'transform',
+        transform: 'translateZ(0)'
       }}
     />
   );

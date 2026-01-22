@@ -1,16 +1,12 @@
 'use client'
 
-import dynamic from 'next/dynamic';
-
-const DNAHelix = dynamic(() => import('@/client/components/ui/dnahelix'), {
-    ssr: false,
-})
+import DNAHelix from "@/client/components/ui/dnahelix"
 
 export default function DNABackground() {
     return (
         <div className="fixed inset-0 -z-10 pointer-events-none">
             <DNAHelix
-                linesGradient={["#9333ea", "#a855f7", "#c084fc", "#7c3aed", "#6366f1", "#4f46e5", "#3b82f6", "#2563eb", "#1d4ed8"]}
+                linesGradient={["#7d4f95", "#8a5fa5", "#9b6fb5", "#ac7fc5", "#bd8fd5", "#9b6fb5", "#8a5fa5", "#7d4f95", "#6f3f85"]}
                 enabledWaves={['top', 'middle', 'bottom']}
                 lineCount={[1, 1, 1]}
                 lineDistance={[0.2, 0.15, 0.18]}
@@ -20,7 +16,9 @@ export default function DNABackground() {
                 animationSpeed={0.2}
                 bendStrength={0.8}
                 opacity={0.6}
+                interactive={true}
+                parallax={true}
             />
         </div>
     )
-}
+}    

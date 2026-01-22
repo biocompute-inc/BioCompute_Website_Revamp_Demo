@@ -49,7 +49,7 @@ const faqItems: FAQItem[] = [
   },
 ];
 
-export default function FAQPage() {
+export default function FAQ() {
   const [expandedId, setExpandedId] = useState<number | null>(null);
 
   const toggleItem = (id: number) => {
@@ -91,9 +91,8 @@ export default function FAQPage() {
                 </h3>
                 <ChevronDown
                   size={24}
-                  className={`flex-shrink-0 text-gray-600 transition-transform ${
-                    expandedId === item.id ? 'transform rotate-180' : ''
-                  }`}
+                  className={`flex-shrink-0 text-gray-600 transition-transform ${expandedId === item.id ? 'transform rotate-180' : ''
+                    }`}
                 />
               </button>
 

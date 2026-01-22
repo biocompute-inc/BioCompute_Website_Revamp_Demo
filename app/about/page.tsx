@@ -1,7 +1,19 @@
 "use client";
 import Image from "next/image";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import ShinyText from "@/client/components/ui/shinytext";
 
 export default function About() {
+    const heroRef = useRef<HTMLElement>(null);
+
+    const { scrollYProgress } = useScroll({
+        target: heroRef,
+        offset: ["start start", "end start"]
+    });
+
+    const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 3, 10]);
+    const opacity = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [1, 1, 0.3, 0]);
     const team = [
         {
             avatar: "/Anaghaupdated.jpeg",
@@ -27,19 +39,37 @@ export default function About() {
 
     return (
         <div className="relative min-h-screen">
-            {/* Hero Section */}
-            <section className="relative py-20 px-4 pb-0 sm:px-6 lg:px-8 min-h-[60vh] flex items-center justify-center overflow-hidden">
-                {/* Foreground Content */}
-                <div className="relative z-10 max-w-7xl mx-auto text-center backdrop-blur-xl bg-black/30 rounded-3xl p-12">
-                    <h1 className="text-6xl sm:text-5xl lg:text-7xl font-bold text-white">
-                        WELCOME TO THE STRAND AGE
-                    </h1>
+
+            {/* Hero Section with GTA VI Style Scroll Animation */}
+            <section
+                ref={heroRef}
+                className="relative h-[300vh]"
+            >
+                <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+                    <motion.div
+                        style={{
+                            scale,
+                            opacity
+                        }}
+                        className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase whitespace-nowrap tracking-tighter"
+                    >
+                        <ShinyText
+                            text="WELCOME TO THE STRAND AGE"
+                            speed={3}
+                            color="#ffffff"
+                            shineColor="#9b6fb5"
+                            spread={80}
+                            direction="right"
+                            yoyo={true}
+                            className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase whitespace-nowrap tracking-tighter"
+                        />
+                    </motion.div>
                 </div>
             </section>
 
             {/* Vision and Offer Section */}
             <section className="relative py-16 px-4 sm:px-6 lg:px-8 text-white">
-                <div className="max-w-6xl mx-auto backdrop-blur-xl bg-white/80 rounded-3xl p-8 sm:p-12">
+                <div className="max-w-6xl mx-auto backdrop-blur-xl bg-white/60 rounded-3xl p-8 sm:p-12">
                     <div className="grid md:grid-cols-2 gap-12">
                         {/* Our Vision */}
                         <div className="space-y-4">
@@ -93,7 +123,7 @@ export default function About() {
 
             {/* Our Team Section */}
             <section className="relative py-16 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-screen-xl mx-auto backdrop-blur-xl bg-gray-50/90 rounded-3xl p-8 sm:p-12">
+                <div className="max-w-screen-xl mx-auto backdrop-blur-xl bg-gray-50/70 rounded-3xl p-8 sm:p-12">
                     <div className="max-w-xl mx-auto text-center mb-12">
                         <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
                             OUR TEAM

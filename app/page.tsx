@@ -11,7 +11,7 @@ export default function Home() {
 
   return (
     <>
-      <main className="h-screen w-full snap-y snap-mandatory overflow-y-scroll scroll-smooth ">
+      <main className="h-screen w-full snap-y snap-mandatory overflow-y-scroll scroll-smooth">
         {/* Fixed Device Image - Animates based on currentSection */}
         <motion.div
           className="fixed z-20 pointer-events-none"
@@ -26,11 +26,11 @@ export default function Home() {
           animate={
             currentSection === 0
               ? {
-                top: '70%',
+                top: '68%',
                 left: '50%',
                 x: '-50%',
                 y: '-50%',
-                scale: 1,
+                scale: 0.7,
                 opacity: 1,
               }
               : currentSection === 1
@@ -43,7 +43,7 @@ export default function Home() {
                   opacity: 1,
                 }
                 : {
-                  top: '30%',
+                  top: '50%',
                   left: '50%',
                   x: '-50%',
                   y: '-50%',
@@ -51,7 +51,15 @@ export default function Home() {
                   opacity: 0,
                 }
           }
-          transition={{ type: 'spring', stiffness: 50, damping: 20, duration: 0.8 }}
+          transition={{
+            type: 'spring',
+            stiffness: 60,
+            damping: 25,
+            mass: 0.4 // Reduce mass for smoother animation
+          }}
+          style={{
+            willChange: 'transform, opacity', // Hint for GPU acceleration
+          }}
         >
           <Image
             src="/device.png"
@@ -60,6 +68,7 @@ export default function Home() {
             height={350}
             className="object-contain"
             priority
+            style={{ transform: 'translateZ(0)' }} // Force GPU layer
           />
         </motion.div>
 
@@ -70,8 +79,9 @@ export default function Home() {
         >
           <motion.div
             onViewportEnter={() => setCurrentSection(0)}
-            viewport={{ amount: 0.5 }}
+            viewport={{ amount: 0.5, once: false }}
             className="text-center px-4 relative z-10"
+            style={{ willChange: 'opacity, transform' }}
           >
             <AnimatePresence>
               {currentSection === 0 && (
@@ -80,19 +90,27 @@ export default function Home() {
                     initial={{ opacity: 0, y: -30 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -30 }}
-                    transition={{ duration: 0.6 }}
+                    transition={{ duration: 0.5, ease: 'easeOut' }}
                     className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-white"
+                    style={{ willChange: 'opacity, transform' }}
                   >
-                    The Future Of <br /> Data Storage
+                    The Future Of <br /> Data Storage Is
                   </motion.h1>
                   <motion.h2
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="text-7xl md:text-8xl lg:text-8xl font-bold text-purple relative z-10"
+                    transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' }}
+                    className="text-7xl md:text-8xl lg:text-8xl font-bold relative z-10"
+                    style={{
+                      willChange: 'opacity',
+                      background: 'linear-gradient(to bottom right, #a580c0, #9b6fb5, #8a5fa5)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text'
+                    }}
                   >
-                    IS DNA
+                    DNA
                   </motion.h2>
                 </>
               )}
@@ -107,8 +125,9 @@ export default function Home() {
         >
           <motion.div
             onViewportEnter={() => setCurrentSection(1)}
-            viewport={{ amount: 0.5 }}
+            viewport={{ amount: 0.5, once: false }}
             className="relative w-full h-full flex items-center justify-center"
+            style={{ willChange: 'auto' }}
           >
             <AnimatePresence>
               {currentSection === 1 && (
@@ -158,8 +177,9 @@ export default function Home() {
         >
           <motion.div
             onViewportEnter={() => setCurrentSection(2)}
-            viewport={{ amount: 0.5 }}
+            viewport={{ amount: 0.5, once: false }}
             className="w-full px-8"
+            style={{ willChange: 'auto' }}
           >
             <AnimatePresence>
               {currentSection === 2 && (
@@ -167,8 +187,9 @@ export default function Home() {
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 50 }}
-                  transition={{ duration: 0.8 }}
+                  transition={{ duration: 0.6, ease: 'easeOut' }}
                   className="max-w-6xl mx-auto"
+                  style={{ willChange: 'opacity, transform' }}
                 >
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
                     {/* Col 1: 512 PB */}

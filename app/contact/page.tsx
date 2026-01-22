@@ -8,6 +8,7 @@ export default function Contact() {
     name: '',
     email: '',
     linkedin: '',
+    message: '',
     category: 'Individual',
   });
 
@@ -21,7 +22,7 @@ export default function Contact() {
     <div className="pt-16">
       <section className="min-h-screen bg-dark flex items-center py-20">
         <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-start">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Left Side - Text */}
             <div>
               <h1 className="text-5xl md:text-6xl font-bold mb-8">
@@ -71,9 +72,9 @@ export default function Contact() {
                 />
               </div>
 
-              <div>
+              <div className="relative">
                 <select
-                  className="w-full bg-dark-secondary border border-gray-400 rounded px-4 py-3 text-white focus:outline-none focus:border-purple transition-colors appearance-none cursor-pointer"
+                  className="w-full bg-dark-secondary border border-gray-400 rounded px-4 py-3 pr-10 text-white focus:outline-none focus:border-purple transition-colors appearance-none cursor-pointer"
                   value={formData.category}
                   onChange={(e) =>
                     setFormData({ ...formData, category: e.target.value })
@@ -82,7 +83,29 @@ export default function Contact() {
                   <option className="bg-dark text-white">Individual</option>
                   <option className="bg-dark text-white">Enterprise</option>
                 </select>
+                <svg
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
               </div>
+
+              <div>
+                <textarea
+                  placeholder="Your Message"
+                  rows={4}
+                  className="w-full bg-transparent border-b border-gray-400 pb-3 text-white placeholder-gray-400 focus:outline-none focus:border-purple transition-colors resize-none"
+                  value={formData.message}
+                  onChange={(e) =>
+                    setFormData({ ...formData, message: e.target.value })
+                  }
+                />
+              </div>
+
+
 
               <button
                 type="submit"
