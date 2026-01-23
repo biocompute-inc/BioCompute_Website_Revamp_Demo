@@ -58,8 +58,20 @@ export default function Home() {
 
       // If we're at section 2 and scrolling down, allow transition to free scroll
       if (currentSection === 2 && direction > 0) {
+        e.preventDefault();
         setCurrentSection(3);
-        return; // Allow normal scrolling to continue to Features section
+        setIsScrolling(true);
+
+        // Give a small push to start scrolling into the next section
+        const sectionHeight = container.clientHeight;
+        setTimeout(() => {
+          container.scrollTo({
+            top: sectionHeight * 3,
+            behavior: 'smooth',
+          });
+          setTimeout(() => setIsScrolling(false), 400);
+        }, 50);
+        return;
       }
 
       // If trying to scroll back up from section 0, prevent it
@@ -102,11 +114,12 @@ export default function Home() {
     <>
       <main
         ref={scrollContainerRef}
-        className="h-screen w-full snap-y snap-mandatory overflow-y-scroll scrollbar-hide"
+        className={`h-screen w-full overflow-y-scroll scrollbar-hide ${currentSection < 3 ? 'snap-y snap-mandatory' : ''
+          }`}
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
-          scrollBehavior: currentSection < 3 ? 'auto' : 'smooth',
+          scrollBehavior: 'smooth',
         }}
       >
         {/* Fixed Device Image - Animates based on currentSection */}
