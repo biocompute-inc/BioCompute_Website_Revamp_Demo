@@ -245,6 +245,7 @@ export default function Home() {
           <video
             src="/devicepulsing.mp4"
             autoPlay
+            loop
             muted
             playsInline
             preload="auto"
