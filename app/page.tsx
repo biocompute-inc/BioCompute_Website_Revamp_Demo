@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Features from '@/components/sections/Features';
@@ -8,10 +8,98 @@ import BackedBy from '@/components/sections/BackedBy';
 
 export default function Home() {
   const [currentSection, setCurrentSection] = useState(0);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    let scrollTimeout: NodeJS.Timeout;
+
+    // Monitor scroll position continuously when in free-scroll mode
+    const handleScroll = () => {
+      if (currentSection >= 3 && !isScrolling) {
+        const scrollTop = container.scrollTop;
+        const sectionHeight = container.clientHeight;
+
+        // If scrolled back to near section 2, transition back to controlled mode
+        if (scrollTop <= sectionHeight * 2 + 100) {
+          setCurrentSection(2);
+          container.scrollTo({
+            top: sectionHeight * 2,
+            behavior: 'smooth',
+          });
+        }
+      }
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      const direction = e.deltaY > 0 ? 1 : -1;
+
+      // Allow free scrolling in section 3+
+      if (currentSection >= 3) {
+        return; // Let the scroll handler above manage the transition back
+      }
+
+      // Prevent scroll during animation
+      if (isScrolling) {
+        e.preventDefault();
+        return;
+      }
+
+      // If we're at section 2 and scrolling down, allow transition to free scroll
+      if (currentSection === 2 && direction > 0) {
+        setCurrentSection(3);
+        return; // Allow normal scrolling to continue to Features section
+      }
+
+      // If trying to scroll back up from section 0, prevent it
+      if (currentSection === 0 && direction < 0) {
+        e.preventDefault();
+        return;
+      }
+
+      e.preventDefault();
+      setIsScrolling(true);
+
+      const nextSection = Math.max(0, Math.min(2, currentSection + direction));
+
+      setCurrentSection(nextSection);
+
+      // Scroll to the section
+      const sectionHeight = container.clientHeight;
+      container.scrollTo({
+        top: nextSection * sectionHeight,
+        behavior: 'smooth',
+      });
+
+      // Reset scrolling flag after animation
+      scrollTimeout = setTimeout(() => {
+        setIsScrolling(false);
+      }, 800);
+    };
+
+    container.addEventListener('scroll', handleScroll);
+    container.addEventListener('wheel', handleWheel, { passive: false });
+
+    return () => {
+      container.removeEventListener('scroll', handleScroll);
+      container.removeEventListener('wheel', handleWheel);
+      clearTimeout(scrollTimeout);
+    };
+  }, [currentSection, isScrolling]);
 
   return (
     <>
-      <main className="h-screen w-full snap-y snap-mandatory overflow-y-scroll scroll-smooth">
+      <main
+        ref={scrollContainerRef}
+        className="h-screen w-full snap-y snap-mandatory overflow-y-scroll scroll-smooth scrollbar-hide"
+        style={{
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+        }}
+      >
         {/* Fixed Device Image - Animates based on currentSection */}
         <motion.div
           className="fixed z-20 pointer-events-none"

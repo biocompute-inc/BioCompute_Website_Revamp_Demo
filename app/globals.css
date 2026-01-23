@@ -4,6 +4,16 @@
 
 @layer utilities {
 
+  /* Hide scrollbar utility */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
   /* Line clamp utilities for text truncation */
   .line-clamp-1 {
     display: -webkit-box;
