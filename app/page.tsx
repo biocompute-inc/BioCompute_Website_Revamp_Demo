@@ -8,100 +8,76 @@ import BackedBy from '@/components/sections/BackedBy';
 
 export default function Home() {
   const [currentSection, setCurrentSection] = useState(0);
-  const [isScrolling, setIsScrolling] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-
-  // Ensure component is fully mounted before attaching listeners
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const canScrollRef = useRef(true);
 
   useEffect(() => {
-    if (!isMounted) return;
-
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    let isTransitioning = false;
-
     const handleWheel = (e: WheelEvent) => {
-      // Free scroll mode - allow normal scrolling
-      if (currentSection >= 3) {
-        // Check if scrolling back up to section 2
-        if (e.deltaY < 0 && container.scrollTop <= container.clientHeight * 2.5) {
+      const scrollingDown = e.deltaY > 0;
+
+      // Section 3+ - free scrolling, check for return to section 2
+      if (currentSection === 3) {
+        if (!scrollingDown && container.scrollTop < container.clientHeight * 2.5) {
           e.preventDefault();
           setCurrentSection(2);
+          canScrollRef.current = false;
           container.style.scrollSnapType = 'y mandatory';
-          container.scrollTo({
-            top: container.clientHeight * 2,
-            behavior: 'smooth'
-          });
+          container.scrollTo({ top: container.clientHeight * 2, behavior: 'smooth' });
+          setTimeout(() => { canScrollRef.current = true; }, 1000);
         }
         return;
       }
 
-      // Controlled sections (0, 1, 2)
-      if (isTransitioning) {
+      // Sections 0-2 - controlled scrolling
+      if (!canScrollRef.current) {
         e.preventDefault();
         return;
       }
 
       e.preventDefault();
-      isTransitioning = true;
+      canScrollRef.current = false;
 
-      const direction = e.deltaY > 0 ? 1 : -1;
       const sectionHeight = container.clientHeight;
 
-      // Transition from section 2 to free scroll
-      if (currentSection === 2 && direction > 0) {
+      // At section 0, can't go up
+      if (currentSection === 0 && !scrollingDown) {
+        canScrollRef.current = true;
+        return;
+      }
+
+      // At section 2, scrolling down goes to free scroll
+      if (currentSection === 2 && scrollingDown) {
         setCurrentSection(3);
         container.style.scrollSnapType = 'none';
 
-        // Jump past snap point then smooth scroll
         setTimeout(() => {
-          container.scrollTo({
-            top: sectionHeight * 2.8,
-            behavior: 'auto'
-          });
-
+          container.scrollTo({ top: sectionHeight * 2.5, behavior: 'auto' });
           setTimeout(() => {
-            container.scrollTo({
-              top: sectionHeight * 3.5,
-              behavior: 'smooth'
-            });
-            setTimeout(() => { isTransitioning = false; }, 500);
-          }, 50);
-        }, 50);
+            container.scrollTo({ top: sectionHeight * 3.5, behavior: 'smooth' });
+            setTimeout(() => { canScrollRef.current = true; }, 600);
+          }, 100);
+        }, 100);
         return;
       }
 
-      // Block scrolling up from section 0
-      if (currentSection === 0 && direction < 0) {
-        isTransitioning = false;
-        return;
+      // Normal navigation between sections 0, 1, 2
+      const newSection = scrollingDown ? currentSection + 1 : currentSection - 1;
+
+      if (newSection >= 0 && newSection <= 2) {
+        setCurrentSection(newSection);
+        container.scrollTo({ top: newSection * sectionHeight, behavior: 'smooth' });
+        setTimeout(() => { canScrollRef.current = true; }, 1000);
+      } else {
+        canScrollRef.current = true;
       }
-
-      // Regular section transitions (0 ↔ 1 ↔ 2)
-      const nextSection = Math.max(0, Math.min(2, currentSection + direction));
-
-      if (nextSection !== currentSection) {
-        setCurrentSection(nextSection);
-        container.scrollTo({
-          top: nextSection * sectionHeight,
-          behavior: 'smooth'
-        });
-      }
-
-      setTimeout(() => { isTransitioning = false; }, 800);
     };
 
     container.addEventListener('wheel', handleWheel, { passive: false });
-
-    return () => {
-      container.removeEventListener('wheel', handleWheel);
-    };
-  }, [currentSection, isMounted]);
+    return () => container.removeEventListener('wheel', handleWheel);
+  }, [currentSection]);
 
   return (
     <>
