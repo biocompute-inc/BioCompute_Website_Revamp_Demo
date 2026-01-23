@@ -45,9 +45,32 @@ export default function Home() {
       }
 
       // Handle touchpad inertial scrolling in controlled sections
-      if (currentSection < 3 && !isScrolling) {
+      if (currentSection < 3) {
         const scrollTop = container.scrollTop;
         const sectionHeight = container.clientHeight;
+
+        // CRITICAL: Check if we're at section 2 scrolling down - bypass isScrolling check
+        if (currentSection === 2 && scrollTop > sectionHeight * 2.1 && !isScrolling) {
+          // User is trying to scroll past section 2
+          setIsScrolling(true);
+          setCurrentSection(3);
+          scrollDelta = 0; // Reset
+
+          // Aggressively force transition
+          container.style.scrollSnapType = 'none';
+          container.scrollTo({
+            top: sectionHeight * 3.5,
+            behavior: 'smooth'
+          });
+
+          setTimeout(() => {
+            setIsScrolling(false);
+          }, 500);
+          return;
+        }
+
+        // Skip further processing if currently animating
+        if (isScrolling) return;
 
         // Detect if user scrolled significantly with touchpad
         const delta = scrollTop - lastScrollTop;
@@ -66,29 +89,6 @@ export default function Home() {
           // Don't go below 0
           if (nextSection === 0 && currentSection === 0 && direction < 0) {
             container.scrollTo({ top: 0, behavior: 'smooth' });
-            return;
-          }
-
-          // Transition to free scroll from section 2
-          if (currentSection === 2 && direction > 0) {
-            setIsScrolling(true);
-            setCurrentSection(3);
-
-            // Force scroll past section 2 immediately
-            container.scrollTo({
-              top: sectionHeight * 2.5,
-              behavior: 'auto'
-            });
-
-            // Then smooth scroll to section 3 area
-            requestAnimationFrame(() => {
-              container.scrollTo({
-                top: sectionHeight * 3,
-                behavior: 'smooth'
-              });
-            });
-
-            setTimeout(() => setIsScrolling(false), 600);
             return;
           }
 
