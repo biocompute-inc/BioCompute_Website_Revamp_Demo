@@ -48,7 +48,6 @@ export default function Home() {
       if (currentSection < 3 && !isScrolling) {
         const scrollTop = container.scrollTop;
         const sectionHeight = container.clientHeight;
-        const currentScrollSection = Math.round(scrollTop / sectionHeight);
 
         // Detect if user scrolled significantly with touchpad
         const delta = scrollTop - lastScrollTop;
@@ -61,14 +60,17 @@ export default function Home() {
           // Reset delta
           scrollDelta = 0;
 
-          // Don't go below 0 or above 2
-          if (currentSection === 0 && direction < 0) {
+          // Calculate next section
+          const nextSection = Math.max(0, Math.min(2, currentSection + direction));
+
+          // Don't go below 0
+          if (nextSection === 0 && currentSection === 0 && direction < 0) {
             container.scrollTo({ top: 0, behavior: 'smooth' });
             return;
           }
 
+          // Transition to free scroll from section 2
           if (currentSection === 2 && direction > 0) {
-            // Transition to free scroll
             setCurrentSection(3);
             setIsScrolling(true);
             setTimeout(() => {
@@ -78,17 +80,14 @@ export default function Home() {
             return;
           }
 
-          // Snap to next section
-          const nextSection = Math.max(0, Math.min(2, currentSection + direction));
-          if (nextSection !== currentSection) {
-            setIsScrolling(true);
-            setCurrentSection(nextSection);
-            container.scrollTo({
-              top: nextSection * sectionHeight,
-              behavior: 'smooth',
-            });
-            setTimeout(() => setIsScrolling(false), 800);
-          }
+          // Snap to next/previous section
+          setIsScrolling(true);
+          setCurrentSection(nextSection);
+          container.scrollTo({
+            top: nextSection * sectionHeight,
+            behavior: 'smooth',
+          });
+          setTimeout(() => setIsScrolling(false), 800);
         }
 
         lastScrollTop = scrollTop;
