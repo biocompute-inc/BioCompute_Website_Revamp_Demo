@@ -9,9 +9,17 @@ import BackedBy from '@/components/sections/BackedBy';
 export default function Home() {
   const [currentSection, setCurrentSection] = useState(0);
   const [isScrolling, setIsScrolling] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
+  // Ensure component is fully mounted before attaching listeners
   useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+
     const container = scrollContainerRef.current;
     if (!container) return;
 
@@ -88,16 +96,17 @@ export default function Home() {
       container.removeEventListener('wheel', handleWheel);
       clearTimeout(scrollTimeout);
     };
-  }, [currentSection, isScrolling]);
+  }, [currentSection, isScrolling, isMounted]);
 
   return (
     <>
       <main
         ref={scrollContainerRef}
-        className="h-screen w-full snap-y snap-mandatory overflow-y-scroll scroll-smooth scrollbar-hide"
+        className="h-screen w-full snap-y snap-mandatory overflow-y-scroll scrollbar-hide"
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
+          scrollBehavior: currentSection < 3 ? 'auto' : 'smooth',
         }}
       >
         {/* Fixed Device Image - Animates based on currentSection */}
