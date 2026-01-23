@@ -17,13 +17,13 @@ export default function Features() {
   return (
     <section className="bg-white text-dark">
       {/* Exclusive Pilots Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
+        <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
           <div>
-            <p className="text-l font-bold uppercase tracking-widest text-gray-600 mb-4">
+            <p className="text-xs sm:text-sm md:text-base font-bold uppercase tracking-widest text-gray-600 mb-3 sm:mb-4">
               EXCLUSIVE PILOTS
             </p>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
               Get Early Access to
               <br />
               DNA-based Data
@@ -31,10 +31,10 @@ export default function Features() {
               Storage
             </h2>
           </div>
-          <div className="flex justify-center">
+          <div className="flex justify-center md:justify-end">
             <Link
               href="/contact"
-              className="border-2 border-dark px-8 py-4 rounded text-dark hover:bg-dark hover:text-white transition-colors font-bold"
+              className="border-2 border-dark px-6 sm:px-8 py-3 sm:py-4 rounded text-dark hover:bg-dark hover:text-white transition-colors font-bold text-sm sm:text-base"
             >
               CONTACT US →
             </Link>
@@ -43,9 +43,9 @@ export default function Features() {
       </div>
 
       {/* How It Works Section */}
-      <div className="bg-purple/10 py-20">
+      <div className="bg-purple/10 py-12 sm:py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-12 md:mb-16">
             HOW IT WORKS
           </h2>
 

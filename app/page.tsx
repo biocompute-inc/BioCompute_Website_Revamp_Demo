@@ -211,7 +211,7 @@ export default function Home() {
                 left: '50%',
                 x: '-50%',
                 y: '-50%',
-                scale: 0.7,
+                scale: 0.9,
                 opacity: 1,
               }
               : currentSection === 1
@@ -242,20 +242,20 @@ export default function Home() {
             willChange: 'transform, opacity', // Hint for GPU acceleration
           }}
         >
-          <Image
-            src="/device.png"
-            alt="DNA Storage Device"
-            width={350}
-            height={350}
-            className="object-contain"
-            priority
+          <video
+            src="/devicepulsing.mp4"
+            autoPlay
+            muted
+            playsInline
+            preload="auto"
+            className="object-contain w-[300px] h-[300px] sm:w-[300px] sm:h-[300px] md:w-[400px] md:h-[400px] lg:w-[350px] lg:h-[350px]"
             style={{ transform: 'translateZ(0)' }} // Force GPU layer
           />
         </motion.div>
 
         {/* Section 0 (State 0): Initial View - Text with Overlapping Image */}
         <section
-          className="h-screen w-full snap-start flex items-start justify-center pt-20 md:pt-24 bg-black relative"
+          className="h-screen w-full snap-start flex items-start justify-center pt-20 md:pt-24 sm:pt-40 bg-black relative"
           onMouseEnter={() => setCurrentSection(0)}
         >
           <motion.div
@@ -272,7 +272,7 @@ export default function Home() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -30 }}
                     transition={{ duration: 0.5, ease: 'easeOut' }}
-                    className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-white"
+                    className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold tracking-tight mb-3 sm:mb-4 text-white px-4"
                     style={{ willChange: 'opacity, transform' }}
                   >
                     The Future Of <br /> Data Storage Is
@@ -282,7 +282,7 @@ export default function Home() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' }}
-                    className="text-7xl md:text-8xl lg:text-8xl font-bold relative z-10"
+                    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold relative z-10 px-4"
                     style={{
                       willChange: 'opacity',
                       background: 'linear-gradient(to bottom right, #a580c0, #9b6fb5, #8a5fa5)',
@@ -319,7 +319,7 @@ export default function Home() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -30 }}
                     transition={{ duration: 0.6, delay: 0.3 }}
-                    className="absolute top-1/4 left-1/4 text-white text-xl md:text-2xl font-bold uppercase tracking-wider z-20"
+                    className="absolute top-1/4 left-4 sm:left-8 md:left-1/4 text-white text-sm sm:text-lg md:text-xl lg:text-2xl font-bold uppercase tracking-wider z-20"
                   >
                     SECURE
                   </motion.div>
@@ -330,7 +330,7 @@ export default function Home() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -30 }}
                     transition={{ duration: 0.6, delay: 0.5 }}
-                    className="absolute bottom-1/4 left-1/4 text-white text-xl md:text-2xl font-bold uppercase tracking-wider z-20"
+                    className="absolute bottom-1/4 left-4 sm:left-8 md:left-1/4 text-white text-sm sm:text-lg md:text-xl lg:text-2xl font-bold uppercase tracking-wider z-20"
                   >
                     LONG-LASTING
                   </motion.div>
@@ -341,7 +341,7 @@ export default function Home() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 30 }}
                     transition={{ duration: 0.6, delay: 0.4 }}
-                    className="absolute top-1/2 right-1/4 -translate-y-1/2 text-white text-xl md:text-2xl font-bold uppercase tracking-wider z-20"
+                    className="absolute top-1/2 right-4 sm:right-8 md:right-1/4 -translate-y-1/2 text-white text-sm sm:text-lg md:text-xl lg:text-2xl font-bold uppercase tracking-wider z-20"
                   >
                     ULTRA-DENSE
                   </motion.div>
@@ -372,43 +372,43 @@ export default function Home() {
                   className="max-w-6xl mx-auto"
                   style={{ willChange: 'opacity, transform' }}
                 >
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-12 px-4">
                     {/* Col 1: 512 PB */}
                     <div className="text-center">
-                      <div className="text-5xl md:text-6xl font-bold text-white mb-2">
+                      <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2">
                         512 PB
                       </div>
-                      <div className="text-sm md:text-base text-gray-400 uppercase tracking-wide">
+                      <div className="text-xs sm:text-sm md:text-base text-gray-400 uppercase tracking-wide">
                         per cm³
                       </div>
                     </div>
 
                     {/* Col 2: 100+ */}
                     <div className="text-center">
-                      <div className="text-5xl md:text-6xl font-bold text-white mb-2">
+                      <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2">
                         100+
                       </div>
-                      <div className="text-sm md:text-base text-gray-400 uppercase tracking-wide">
+                      <div className="text-xs sm:text-sm md:text-base text-gray-400 uppercase tracking-wide">
                         years durability
                       </div>
                     </div>
 
                     {/* Col 3: 99.99% */}
                     <div className="text-center">
-                      <div className="text-5xl md:text-6xl font-bold text-white mb-2">
+                      <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2">
                         99.99%
                       </div>
-                      <div className="text-sm md:text-base text-gray-400 uppercase tracking-wide">
+                      <div className="text-xs sm:text-sm md:text-base text-gray-400 uppercase tracking-wide">
                         accuracy
                       </div>
                     </div>
 
                     {/* Col 4: 0kWh */}
                     <div className="text-center">
-                      <div className="text-5xl md:text-6xl font-bold text-white mb-2">
+                      <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2">
                         0kWh
                       </div>
-                      <div className="text-sm md:text-base text-gray-400 uppercase tracking-wide">
+                      <div className="text-xs sm:text-sm md:text-base text-gray-400 uppercase tracking-wide">
                         energy consumption
                       </div>
                     </div>

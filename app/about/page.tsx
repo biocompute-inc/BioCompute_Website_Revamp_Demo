@@ -51,7 +51,7 @@ export default function About() {
                             scale,
                             opacity
                         }}
-                        className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase whitespace-nowrap tracking-tighter"
+                        className="text-sm sm:text-xl md:text-3xl lg:text-4xl xl:text-5xl font-black uppercase whitespace-nowrap tracking-tighter px-4"
                     >
                         <ShinyText
                             text="WELCOME TO THE STRAND AGE"
@@ -61,22 +61,22 @@ export default function About() {
                             spread={80}
                             direction="right"
                             yoyo={true}
-                            className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase whitespace-nowrap tracking-tighter"
+                            className="text-sm sm:text-xl md:text-3xl lg:text-4xl xl:text-5xl font-black uppercase whitespace-nowrap tracking-tighter"
                         />
                     </motion.div>
                 </div>
             </section>
 
             {/* Vision and Offer Section */}
-            <section className="relative py-16 px-4 sm:px-6 lg:px-8 text-white">
-                <div className="max-w-6xl mx-auto backdrop-blur-xl bg-white/80 rounded-3xl p-8 sm:p-12">
-                    <div className="grid md:grid-cols-2 gap-12">
+            <section className="relative py-12 sm:py-16 px-4 sm:px-6 lg:px-8 text-white">
+                <div className="max-w-6xl mx-auto backdrop-blur-xl bg-white/80 rounded-3xl p-6 sm:p-8 md:p-12">
+                    <div className="grid md:grid-cols-2 gap-8 md:gap-12">
                         {/* Our Vision */}
-                        <div className="space-y-4">
-                            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+                        <div className="space-y-3 sm:space-y-4">
+                            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">
                                 Our Vision
                             </h2>
-                            <p className="text-lg text-gray-700 leading-relaxed">
+                            <p className="text-xs sm:text-sm md:text-base text-gray-700 leading-relaxed">
                                 We envision a future where biotechnology seamlessly integrates with computational innovation,
                                 enabling groundbreaking solutions to the world&apos;s most pressing challenges. Our mission is to
                                 pioneer technologies that bridge the gap between biological systems and computational power,
@@ -89,16 +89,16 @@ export default function About() {
                         </div>
 
                         {/* What We Offer */}
-                        <div className="space-y-4">
-                            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+                        <div className="space-y-3 sm:space-y-4">
+                            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">
                                 What We Offer
                             </h2>
-                            <p className="text-lg text-gray-700 leading-relaxed">
+                            <p className="text-xs sm:text-sm md:text-base text-gray-700 leading-relaxed">
                                 Our portfolio spans innovative biocomputing solutions designed to accelerate research and development.
                                 We provide state-of-the-art platforms that combine biological data processing with advanced
                                 computational algorithms, enabling real-time analysis and insights.
                             </p>
-                            <ul className="text-lg text-gray-700 leading-relaxed space-y-3">
+                            <ul className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed space-y-2 sm:space-y-3">
                                 <li className="flex items-start">
                                     <span className="text-purple font-bold mr-2">•</span>
                                     <span>Advanced DNA computing platforms for complex problem-solving</span>
@@ -122,13 +122,13 @@ export default function About() {
             </section>
 
             {/* Our Team Section */}
-            <section className="relative py-16 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-screen-xl mx-auto backdrop-blur-xl bg-gray-50/80 rounded-3xl p-8 sm:p-12">
-                    <div className="max-w-xl mx-auto text-center mb-12">
-                        <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            <section className="relative py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-screen-xl mx-auto backdrop-blur-xl bg-gray-50/80 rounded-3xl p-6 sm:p-8 md:p-12">
+                    <div className="max-w-xl mx-auto text-center mb-8 sm:mb-12">
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
                             OUR TEAM
                         </h2>
-                        <p className="text-lg text-gray-600">
+                        <p className="text-sm sm:text-base md:text-lg text-gray-600">
                             Working together to make a difference
                         </p>
                     </div>

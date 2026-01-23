@@ -25,10 +25,10 @@ export default function Contact() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Left Side - Text */}
             <div>
-              <h1 className="text-5xl md:text-6xl font-bold mb-8">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
                 GET IN TOUCH
               </h1>
-              <p className="text-xl text-gray-300 mb-8">
+              <p className="text-sm sm:text-base md:text-lg text-gray-300 mb-4 sm:mb-6">
                 Have questions? Need to figure out how DNA can help you with
                 your data storage requirements? We are here to help!
               </p>
@@ -119,12 +119,12 @@ export default function Contact() {
       </section>
 
       {/* Or Email Directly Section */}
-      <section className="bg-dark-secondary py-20 text-center">
+      <section className="bg-dark-secondary py-12 sm:py-16 md:py-20 text-center">
         <div className="max-w-2xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold mb-8">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8">
             OR EMAIL US DIRECTLY
           </h2>
-          <div className="flex items-center justify-center gap-2 text-xl text-gray-300 mb-8">
+          <div className="flex items-center justify-center gap-2 text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8">
             <Mail size={24} />
             <a
               href="mailto:hello@biocomputeinc.com"

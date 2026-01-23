@@ -59,12 +59,12 @@ export default function FAQ() {
   return (
     <div className="bg-white text-dark">
       {/* FAQ Header */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 pt-32">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 pt-24 sm:pt-28 md:pt-32">
+        <div className="text-center mb-8 sm:mb-10 md:mb-12">
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4">
             FREQUENTLY ASKED QUESTIONS
           </h1>
-          <p className="text-gray-600 text-lg">
+          <p className="text-gray-600 text-xs sm:text-sm md:text-base">
             These are the questions that we get asked the most often about
             BioCompute.
             <br />
@@ -84,9 +84,9 @@ export default function FAQ() {
             >
               <button
                 onClick={() => toggleItem(item.id)}
-                className="w-full py-6 flex items-center justify-between hover:bg-gray-50 transition-colors text-left"
+                className="w-full py-4 sm:py-5 md:py-6 flex items-center justify-between hover:bg-gray-50 transition-colors text-left pr-2"
               >
-                <h3 className="text-lg font-bold text-dark">
+                <h3 className="text-sm sm:text-base md:text-lg font-bold text-dark">
                   {item.question}
                 </h3>
                 <ChevronDown
@@ -98,7 +98,7 @@ export default function FAQ() {
 
               {/* Answer - Accordion Content */}
               {expandedId === item.id && (
-                <div className="pb-6 text-gray-700 leading-relaxed max-w-2xl">
+                <div className="pb-4 sm:pb-6 text-sm sm:text-base text-gray-700 leading-relaxed max-w-2xl">
                   {item.answer}
                 </div>
               )}

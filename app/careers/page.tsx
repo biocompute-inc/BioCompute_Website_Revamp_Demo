@@ -23,10 +23,10 @@ export default function Careers() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <p className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">
+              <p className="text-xs sm:text-sm font-bold uppercase tracking-widest text-gray-400 mb-2 sm:mb-3">
                 CAREERS
               </p>
-              <h1 className="text-5xl md:text-6xl font-bold mb-6">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4">
                 Join the company with a
                 <br />
                 bold new vision
@@ -52,9 +52,9 @@ export default function Careers() {
       </section>
 
       {/* Why Join Us Section */}
-      <section className="bg-white text-dark py-20">
+      <section className="bg-white text-dark py-12 sm:py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-8 sm:mb-10 md:mb-12">
             WHY JOIN US?
           </h2>
 
@@ -67,7 +67,7 @@ export default function Careers() {
 
           {/* Job Listings */}
           <div>
-            <h3 className="text-2xl font-bold mb-8">Open Roles</h3>
+            <h3 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8">Open Roles</h3>
 
             <div className="overflow-x-auto">
               <table className="w-full">
