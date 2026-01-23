@@ -71,12 +71,24 @@ export default function Home() {
 
           // Transition to free scroll from section 2
           if (currentSection === 2 && direction > 0) {
-            setCurrentSection(3);
             setIsScrolling(true);
-            setTimeout(() => {
-              container.scrollTo({ top: sectionHeight * 3, behavior: 'smooth' });
-              setTimeout(() => setIsScrolling(false), 400);
-            }, 50);
+            setCurrentSection(3);
+
+            // Force scroll past section 2 immediately
+            container.scrollTo({
+              top: sectionHeight * 2.5,
+              behavior: 'auto'
+            });
+
+            // Then smooth scroll to section 3 area
+            requestAnimationFrame(() => {
+              container.scrollTo({
+                top: sectionHeight * 3,
+                behavior: 'smooth'
+              });
+            });
+
+            setTimeout(() => setIsScrolling(false), 600);
             return;
           }
 
@@ -111,18 +123,25 @@ export default function Home() {
       // If we're at section 2 and scrolling down, allow transition to free scroll
       if (currentSection === 2 && direction > 0) {
         e.preventDefault();
-        setCurrentSection(3);
         setIsScrolling(true);
+        setCurrentSection(3);
 
-        // Give a small push to start scrolling into the next section
+        // Force scroll past section 2 immediately
         const sectionHeight = container.clientHeight;
-        setTimeout(() => {
+        container.scrollTo({
+          top: sectionHeight * 2.5,
+          behavior: 'auto'
+        });
+
+        // Then smooth scroll to section 3 area
+        requestAnimationFrame(() => {
           container.scrollTo({
             top: sectionHeight * 3,
-            behavior: 'smooth',
+            behavior: 'smooth'
           });
-          setTimeout(() => setIsScrolling(false), 400);
-        }, 50);
+        });
+
+        setTimeout(() => setIsScrolling(false), 600);
         return;
       }
 
