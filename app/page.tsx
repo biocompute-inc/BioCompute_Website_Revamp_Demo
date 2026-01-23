@@ -23,163 +23,85 @@ export default function Home() {
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    let scrollTimeout: NodeJS.Timeout;
-    let lastScrollTop = 0;
-    let scrollDelta = 0;
-
-    // Monitor scroll position continuously when in free-scroll mode
-    const handleScroll = () => {
-      if (currentSection >= 3 && !isScrolling) {
-        const scrollTop = container.scrollTop;
-        const sectionHeight = container.clientHeight;
-
-        // If scrolled back to near section 2, transition back to controlled mode
-        if (scrollTop <= sectionHeight * 2 + 100) {
-          setCurrentSection(2);
-          container.scrollTo({
-            top: sectionHeight * 2,
-            behavior: 'smooth',
-          });
-        }
-        return;
-      }
-
-      // Handle touchpad inertial scrolling in controlled sections
-      if (currentSection < 3) {
-        const scrollTop = container.scrollTop;
-        const sectionHeight = container.clientHeight;
-
-        // CRITICAL: Check if we're at section 2 scrolling down - bypass isScrolling check
-        if (currentSection === 2 && scrollTop > sectionHeight * 2.1 && !isScrolling) {
-          // User is trying to scroll past section 2
-          setIsScrolling(true);
-          setCurrentSection(3);
-          scrollDelta = 0; // Reset
-
-          // Aggressively force transition
-          container.style.scrollSnapType = 'none';
-          container.scrollTo({
-            top: sectionHeight * 3.5,
-            behavior: 'smooth'
-          });
-
-          setTimeout(() => {
-            setIsScrolling(false);
-          }, 500);
-          return;
-        }
-
-        // Skip further processing if currently animating
-        if (isScrolling) return;
-
-        // Detect if user scrolled significantly with touchpad
-        const delta = scrollTop - lastScrollTop;
-        scrollDelta += delta;
-
-        // Threshold for touchpad scroll detection (accumulated delta)
-        if (Math.abs(scrollDelta) > sectionHeight * 0.3) {
-          const direction = scrollDelta > 0 ? 1 : -1;
-
-          // Reset delta
-          scrollDelta = 0;
-
-          // Calculate next section
-          const nextSection = Math.max(0, Math.min(2, currentSection + direction));
-
-          // Don't go below 0
-          if (nextSection === 0 && currentSection === 0 && direction < 0) {
-            container.scrollTo({ top: 0, behavior: 'smooth' });
-            return;
-          }
-
-          // Snap to next/previous section
-          setIsScrolling(true);
-          setCurrentSection(nextSection);
-          container.scrollTo({
-            top: nextSection * sectionHeight,
-            behavior: 'smooth',
-          });
-          setTimeout(() => setIsScrolling(false), 800);
-        }
-
-        lastScrollTop = scrollTop;
-      }
-    };
+    let isTransitioning = false;
 
     const handleWheel = (e: WheelEvent) => {
-      const direction = e.deltaY > 0 ? 1 : -1;
-
-      // Allow free scrolling in section 3+
+      // Free scroll mode - allow normal scrolling
       if (currentSection >= 3) {
-        return; // Let the scroll handler above manage the transition back
-      }
-
-      // Prevent scroll during animation
-      if (isScrolling) {
-        e.preventDefault();
-        return;
-      }
-
-      // If we're at section 2 and scrolling down, allow transition to free scroll
-      if (currentSection === 2 && direction > 0) {
-        e.preventDefault();
-        setIsScrolling(true);
-        setCurrentSection(3);
-
-        // Force scroll past section 2 immediately
-        const sectionHeight = container.clientHeight;
-        container.scrollTo({
-          top: sectionHeight * 2.5,
-          behavior: 'auto'
-        });
-
-        // Then smooth scroll to section 3 area
-        requestAnimationFrame(() => {
+        // Check if scrolling back up to section 2
+        if (e.deltaY < 0 && container.scrollTop <= container.clientHeight * 2.5) {
+          e.preventDefault();
+          setCurrentSection(2);
+          container.style.scrollSnapType = 'y mandatory';
           container.scrollTo({
-            top: sectionHeight * 3,
+            top: container.clientHeight * 2,
             behavior: 'smooth'
           });
-        });
-
-        setTimeout(() => setIsScrolling(false), 600);
+        }
         return;
       }
 
-      // If trying to scroll back up from section 0, prevent it
-      if (currentSection === 0 && direction < 0) {
+      // Controlled sections (0, 1, 2)
+      if (isTransitioning) {
         e.preventDefault();
         return;
       }
 
       e.preventDefault();
-      setIsScrolling(true);
+      isTransitioning = true;
 
+      const direction = e.deltaY > 0 ? 1 : -1;
+      const sectionHeight = container.clientHeight;
+
+      // Transition from section 2 to free scroll
+      if (currentSection === 2 && direction > 0) {
+        setCurrentSection(3);
+        container.style.scrollSnapType = 'none';
+
+        // Jump past snap point then smooth scroll
+        setTimeout(() => {
+          container.scrollTo({
+            top: sectionHeight * 2.8,
+            behavior: 'auto'
+          });
+
+          setTimeout(() => {
+            container.scrollTo({
+              top: sectionHeight * 3.5,
+              behavior: 'smooth'
+            });
+            setTimeout(() => { isTransitioning = false; }, 500);
+          }, 50);
+        }, 50);
+        return;
+      }
+
+      // Block scrolling up from section 0
+      if (currentSection === 0 && direction < 0) {
+        isTransitioning = false;
+        return;
+      }
+
+      // Regular section transitions (0 ↔ 1 ↔ 2)
       const nextSection = Math.max(0, Math.min(2, currentSection + direction));
 
-      setCurrentSection(nextSection);
+      if (nextSection !== currentSection) {
+        setCurrentSection(nextSection);
+        container.scrollTo({
+          top: nextSection * sectionHeight,
+          behavior: 'smooth'
+        });
+      }
 
-      // Scroll to the section
-      const sectionHeight = container.clientHeight;
-      container.scrollTo({
-        top: nextSection * sectionHeight,
-        behavior: 'smooth',
-      });
-
-      // Reset scrolling flag after animation
-      scrollTimeout = setTimeout(() => {
-        setIsScrolling(false);
-      }, 800);
+      setTimeout(() => { isTransitioning = false; }, 800);
     };
 
-    container.addEventListener('scroll', handleScroll);
     container.addEventListener('wheel', handleWheel, { passive: false });
 
     return () => {
-      container.removeEventListener('scroll', handleScroll);
       container.removeEventListener('wheel', handleWheel);
-      clearTimeout(scrollTimeout);
     };
-  }, [currentSection, isScrolling, isMounted]);
+  }, [currentSection, isMounted]);
 
   return (
     <>
