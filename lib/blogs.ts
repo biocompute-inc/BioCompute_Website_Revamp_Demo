@@ -1,3 +1,5 @@
+import Parser from 'rss-parser';
+
 export interface Blog {
   id: number;
   title: string;
@@ -20,6 +22,97 @@ export interface Blog {
   category?: string;
 }
 
+export interface SubstackBlogPost {
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  author: string;
+  pubDate: string;
+  image: string | null;
+  link: string;
+}
+
+// RSS Parser with custom fields
+const parser: Parser = new Parser({
+  customFields: {
+    item: [
+      ['content:encoded', 'contentEncoded'],
+      ['enclosure', 'enclosure'],
+    ],
+  },
+});
+
+// Fallback image for posts without featured images
+const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1576075796033-848c2a5f3696?w=800&h=450&fit=crop';
+
+/**
+ * Fetch and parse Substack RSS feed
+ * Uses ISR with 600 seconds revalidation
+ */
+export async function getSubstackBlogs(): Promise<SubstackBlogPost[]> {
+  try {
+    // Fetch RSS feed using modern fetch API to avoid deprecated url.parse()
+    const response = await fetch('https://blog.biocomputeinc.com/feed');
+    const xmlText = await response.text();
+    const feed = await parser.parseString(xmlText);
+
+    return feed.items.map((item, index) => {
+      // Extract featured image from enclosure or fallback
+      let image = FALLBACK_IMAGE;
+      if (item.enclosure && item.enclosure.url) {
+        image = item.enclosure.url;
+      }
+
+      // Generate slug from title or link
+      const slug = item.title
+        ? item.title
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/(^-|-$)/g, '')
+        : `post-${index}`;
+
+      // Extract excerpt from content or description
+      const excerpt = item.contentSnippet || item.content || item.description || '';
+      const plainExcerpt = excerpt.replace(/<[^>]*>/g, '').substring(0, 200);
+
+      // Get full content from content:encoded or content
+      const fullContent = (item as any).contentEncoded || item.content || item.description || '';
+
+      return {
+        slug,
+        title: item.title || 'Untitled Post',
+        excerpt: plainExcerpt,
+        content: fullContent,
+        author: item.creator || 'BioCompute Team',
+        pubDate: item.pubDate || new Date().toISOString(),
+        image,
+        link: item.link || '',
+      };
+    });
+  } catch (error) {
+    console.error('Error fetching Substack feed:', error);
+    return [];
+  }
+}
+
+/**
+ * Get a single blog post by slug
+ */
+export async function getSubstackBlogBySlug(slug: string): Promise<SubstackBlogPost | null> {
+  const blogs = await getSubstackBlogs();
+  return blogs.find(blog => blog.slug === slug) || null;
+}
+
+/**
+ * Get all blog slugs for static path generation
+ */
+export async function getAllBlogSlugs(): Promise<string[]> {
+  const blogs = await getSubstackBlogs();
+  return blogs.map(blog => blog.slug);
+}
+
+// Legacy mock data below (kept for reference, but should use Substack feed)
 export const blogs: Blog[] = [
   {
     id: 1,

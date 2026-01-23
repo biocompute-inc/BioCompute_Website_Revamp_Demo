@@ -1,305 +1,159 @@
-'use client';
-
-import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ChevronLeft, Heart, MessageCircle, Share2, Copy, Check } from 'lucide-react';
-import { getBlogById, getSuggestedBlogs } from '@/lib/blogs';
+import { ChevronLeft } from 'lucide-react';
+import { getSubstackBlogBySlug, getSubstackBlogs, getAllBlogSlugs } from '@/lib/blogs';
 import { notFound } from 'next/navigation';
+
+// ISR revalidation every 600 seconds (10 minutes)
+export const revalidate = 600;
 
 interface BlogDetailPageProps {
   params: Promise<{ id: string }>;
 }
 
+// Generate static params for all blog posts
+export async function generateStaticParams() {
+  const slugs = await getAllBlogSlugs();
+  return slugs.map((slug) => ({
+    id: slug,
+  }));
+}
+
 export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
   const { id } = await params;
-
-  const blog = getBlogById(parseInt(id));
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(blog?.likes || 0);
-  const [showCommentForm, setShowCommentForm] = useState(false);
-  const [commentForm, setCommentForm] = useState({
-    name: '',
-    email: '',
-    comment: '',
-  });
-  const [comments, setComments] = useState(blog?.comments || []);
-  const [copied, setCopied] = useState(false);
+  const blog = await getSubstackBlogBySlug(id);
 
   if (!blog) {
     notFound();
   }
 
-  const suggestedBlogs = getSuggestedBlogs(blog.id, 3);
-
-  const handleLike = () => {
-    if (isLiked) {
-      setLikeCount(likeCount - 1);
-    } else {
-      setLikeCount(likeCount + 1);
-    }
-    setIsLiked(!isLiked);
-  };
-
-  const handleCommentSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (commentForm.name && commentForm.email && commentForm.comment) {
-      const newComment = {
-        id: comments.length + 1,
-        name: commentForm.name,
-        email: commentForm.email,
-        comment: commentForm.comment,
-        date: new Date().toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        }),
-      };
-      setComments([...comments, newComment]);
-      setCommentForm({ name: '', email: '', comment: '' });
-      setShowCommentForm(false);
-    }
-  };
-
-  const handleShare = async () => {
-    const url = typeof window !== 'undefined' ? window.location.href : '';
-    try {
-      await navigator.clipboard.writeText(url);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy URL', err);
-    }
-  };
+  // Get other recent blogs for suggestions
+  const allBlogs = await getSubstackBlogs();
+  const suggestedBlogs = allBlogs
+    .filter(b => b.slug !== blog.slug)
+    .slice(0, 3);
 
   return (
-    <div className="bg-white text-dark">
-      {/* Back Button */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-8">
+    <div className="min-h-screen pt-16">
+      {/* Hero Section with Featured Image */}
+      <div className="relative w-full h-[400px] md:h-[500px] bg-gray-900">
+        <Image
+          src={blog.image || 'https://images.unsplash.com/photo-1576075796033-848c2a5f3696?w=1600&h=900&fit=crop'}
+          alt={blog.title}
+          fill
+          className="object-cover opacity-80"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+
+        {/* Back Button */}
         <Link
           href="/blogs"
-          className="flex items-center gap-2 text-dark hover:text-purple transition-colors w-fit"
+          className="absolute top-8 left-4 md:left-8 flex items-center gap-2 text-white hover:text-gray-200 transition-colors bg-black/30 px-4 py-2 rounded-lg backdrop-blur-sm"
         >
-          <ChevronLeft size={20} />
-          Back
+          <ChevronLeft className="w-5 h-5" />
+          <span>Back to Blogs</span>
         </Link>
-      </div>
 
-      {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">{blog.title}</h1>
-          <p className="text-xl text-gray-600 mb-6">{blog.subtitle}</p>
-
-          {/* Author Info */}
-          <div className="flex items-center gap-4 py-6 border-y border-gray-200">
-            <Image
-              src={blog.author.profileImage}
-              alt={blog.author.name}
-              width={56}
-              height={56}
-              className="rounded-full"
-            />
-            <div>
-              <p className="font-bold text-dark">{blog.author.name}</p>
-              <p className="text-gray-600 text-sm">{blog.date}</p>
+        {/* Title Overlay */}
+        <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">
+              {blog.title}
+            </h1>
+            <div className="flex items-center gap-4 text-white/90">
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 rounded-full bg-purple/30 backdrop-blur-sm flex items-center justify-center">
+                  <span className="text-white font-semibold">
+                    {blog.author.charAt(0).toUpperCase()}
+                  </span>
+                </div>
+                <span className="font-medium">{blog.author}</span>
+              </div>
+              <span>•</span>
+              <span>
+                {new Date(blog.pubDate).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </span>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Featured Image */}
-        <div className="relative w-full h-96 mb-12 rounded-lg overflow-hidden">
-          <Image
-            src={blog.image}
-            alt={blog.title}
-            fill
-            className="object-cover"
+      {/* Blog Content with Prose Styling */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <article className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg p-8 md:p-12">
+          <div
+            className="prose prose-lg prose-gray max-w-none
+              prose-headings:text-dark prose-headings:font-bold
+              prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl
+              prose-p:text-gray-700 prose-p:leading-relaxed
+              prose-a:text-purple prose-a:no-underline hover:prose-a:underline
+              prose-strong:text-dark prose-strong:font-semibold
+              prose-code:text-purple prose-code:bg-purple/10 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
+              prose-pre:bg-gray-900 prose-pre:text-gray-100
+              prose-blockquote:border-l-4 prose-blockquote:border-purple prose-blockquote:pl-4 prose-blockquote:italic
+              prose-img:rounded-lg prose-img:shadow-lg
+              prose-ul:list-disc prose-ol:list-decimal
+              prose-li:text-gray-700"
+            dangerouslySetInnerHTML={{ __html: blog.content }}
           />
-        </div>
 
-        {/* Blog Content */}
-        <div className="prose prose-lg max-w-none mb-12">
-          {blog.content.split('\n\n').map((paragraph, index) => (
-            <p key={index} className="text-gray-700 leading-relaxed mb-6">
-              {paragraph}
-            </p>
-          ))}
-        </div>
-
-        {/* Engagement Section */}
-        <div className="border-y border-gray-200 py-6 mb-12 flex items-center gap-6">
-          {/* Like Button */}
-          <button
-            onClick={handleLike}
-            className="flex items-center gap-2 text-gray-600 hover:text-purple transition-colors"
-          >
-            <Heart
-              size={24}
-              className={isLiked ? 'fill-purple text-purple' : ''}
-            />
-            <span className="font-bold">{likeCount}</span>
-          </button>
-
-          {/* Comment Button */}
-          <button
-            onClick={() => setShowCommentForm(!showCommentForm)}
-            className="flex items-center gap-2 text-gray-600 hover:text-purple transition-colors"
-          >
-            <MessageCircle size={24} />
-            <span className="font-bold">{comments.length}</span>
-          </button>
-
-          {/* Share Button */}
-          <button
-            onClick={handleShare}
-            className="flex items-center gap-2 text-gray-600 hover:text-purple transition-colors ml-auto"
-          >
-            {copied ? (
-              <>
-                <Check size={24} className="text-green-500" />
-                <span className="font-bold text-green-500">Copied!</span>
-              </>
-            ) : (
-              <>
-                <Share2 size={24} />
-                <span className="font-bold">Share</span>
-              </>
-            )}
-          </button>
-        </div>
-
-        {/* Comments Section */}
-        <div className="mb-12">
-          <h3 className="text-2xl font-bold mb-6">Comments ({comments.length})</h3>
-
-          {/* Comment Form */}
-          {showCommentForm && (
-            <form
-              onSubmit={handleCommentSubmit}
-              className="bg-gray-50 rounded-lg p-6 mb-8"
+          {/* Original Post Link */}
+          <div className="mt-12 pt-8 border-t border-gray-200">
+            <a
+              href={blog.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-purple hover:text-purple/80 font-semibold transition-colors"
             >
-              <div className="space-y-4">
-                <input
-                  type="text"
-                  placeholder="Your Name"
-                  value={commentForm.name}
-                  onChange={(e) =>
-                    setCommentForm({ ...commentForm, name: e.target.value })
-                  }
-                  className="w-full border border-gray-300 rounded px-4 py-3 text-dark placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple"
-                  required
-                />
-                <input
-                  type="email"
-                  placeholder="Your Email"
-                  value={commentForm.email}
-                  onChange={(e) =>
-                    setCommentForm({ ...commentForm, email: e.target.value })
-                  }
-                  className="w-full border border-gray-300 rounded px-4 py-3 text-dark placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple"
-                  required
-                />
-                <textarea
-                  placeholder="Your Comment"
-                  value={commentForm.comment}
-                  onChange={(e) =>
-                    setCommentForm({ ...commentForm, comment: e.target.value })
-                  }
-                  className="w-full border border-gray-300 rounded px-4 py-3 text-dark placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple resize-none h-24"
-                  required
-                />
-                <div className="flex gap-4">
-                  <button
-                    type="submit"
-                    className="bg-dark text-white px-6 py-3 rounded font-bold hover:bg-gray-900 transition-colors"
-                  >
-                    Post Comment
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setShowCommentForm(false)}
-                    className="border border-gray-300 text-dark px-6 py-3 rounded font-bold hover:bg-gray-50 transition-colors"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </form>
-          )}
-
-          {/* Comments List */}
-          {comments.length > 0 ? (
-            <div className="space-y-6">
-              {comments.map((comment) => (
-                <div key={comment.id} className="border-b border-gray-200 pb-6 last:border-b-0">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-1">
-                      <p className="font-bold text-dark">{comment.name}</p>
-                      <p className="text-sm text-gray-600 mb-2">{comment.date}</p>
-                      <p className="text-gray-700">{comment.comment}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-8">
-              <p className="text-gray-600">No comments yet. Be the first to comment!</p>
-              {!showCommentForm && (
-                <button
-                  onClick={() => setShowCommentForm(true)}
-                  className="mt-4 text-purple font-bold hover:underline"
-                >
-                  Add a comment
-                </button>
-              )}
-            </div>
-          )}
-        </div>
+              Read original post on Substack →
+            </a>
+          </div>
+        </article>
       </div>
 
       {/* Suggested Blogs Section */}
-      <div className="bg-gray-50 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-dark mb-12">Suggested Blogs</h2>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {suggestedBlogs.map((suggestedBlog) => (
-              <Link
-                key={suggestedBlog.id}
-                href={`/blogs/${suggestedBlog.id}`}
-                className="group"
-              >
-                <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
-                  {/* Image */}
-                  <div className="relative w-full h-48 bg-gray-200 overflow-hidden">
+      {suggestedBlogs.length > 0 && (
+        <section className="bg-gray-50 py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl font-bold text-dark mb-8">More Articles</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {suggestedBlogs.map((suggestedBlog) => (
+                <Link
+                  key={suggestedBlog.slug}
+                  href={`/blogs/${suggestedBlog.slug}`}
+                  className="group block bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="relative aspect-video w-full overflow-hidden bg-gray-100">
                     <Image
-                      src={suggestedBlog.image}
+                      src={suggestedBlog.image || 'https://images.unsplash.com/photo-1576075796033-848c2a5f3696?w=800&h=450&fit=crop'}
                       alt={suggestedBlog.title}
                       fill
-                      className="object-cover group-hover:scale-105 transition-transform"
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      sizes="(max-width: 768px) 100vw, 33vw"
                     />
                   </div>
-
-                  {/* Content */}
                   <div className="p-6">
-                    <p className="text-sm text-gray-500 mb-3">
-                      {suggestedBlog.date}
-                    </p>
-                    <h3 className="text-lg font-bold text-dark mb-2 line-clamp-2 group-hover:text-purple transition-colors">
+                    <h3 className="text-lg font-bold text-dark mb-2 line-clamp-2">
                       {suggestedBlog.title}
                     </h3>
                     <p className="text-gray-600 text-sm line-clamp-2">
-                      {suggestedBlog.subtitle}
+                      {suggestedBlog.excerpt}
                     </p>
+                    <div className="mt-4 text-purple font-semibold text-sm">
+                      Read More →
+                    </div>
                   </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
-      </div>
+        </section>
+      )}
     </div>
   );
 }

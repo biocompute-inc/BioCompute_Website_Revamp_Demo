@@ -69,7 +69,7 @@ export default function About() {
 
             {/* Vision and Offer Section */}
             <section className="relative py-16 px-4 sm:px-6 lg:px-8 text-white">
-                <div className="max-w-6xl mx-auto backdrop-blur-xl bg-white/60 rounded-3xl p-8 sm:p-12">
+                <div className="max-w-6xl mx-auto backdrop-blur-xl bg-white/80 rounded-3xl p-8 sm:p-12">
                     <div className="grid md:grid-cols-2 gap-12">
                         {/* Our Vision */}
                         <div className="space-y-4">
@@ -123,7 +123,7 @@ export default function About() {
 
             {/* Our Team Section */}
             <section className="relative py-16 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-screen-xl mx-auto backdrop-blur-xl bg-gray-50/70 rounded-3xl p-8 sm:p-12">
+                <div className="max-w-screen-xl mx-auto backdrop-blur-xl bg-gray-50/80 rounded-3xl p-8 sm:p-12">
                     <div className="max-w-xl mx-auto text-center mb-12">
                         <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
                             OUR TEAM
