@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import DNABackground from '@/components/DNABackground';
 
 export const metadata: Metadata = {
   title: 'BioCompute Inc. - DNA-Based Data Storage',
@@ -20,7 +19,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-dark text-white">
-        <DNABackground />
         <Header />
         <main>{children}</main>
         <Footer />

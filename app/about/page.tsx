@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import ShinyText from "@/client/components/ui/shinytext";
+import DNABackground from "@/components/DNABackground";
 
 export default function About() {
     const heroRef = useRef<HTMLElement>(null);
@@ -44,6 +45,7 @@ export default function About() {
 
     return (
         <div className="relative min-h-screen">
+            <DNABackground />
 
             {/* Hero Section with GTA VI Style Scroll Animation */}
             <section

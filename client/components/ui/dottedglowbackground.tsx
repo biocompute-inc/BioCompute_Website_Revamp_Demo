@@ -204,11 +204,21 @@ export const DottedGlowBackground = ({
         regenDots();
 
         let last = performance.now();
+        const targetFPS = 30;
+        const frameInterval = 1000 / targetFPS;
+        let frameCount = 0;
 
         const draw = (now: number) => {
             if (stopped) return;
-            const dt = (now - last) / 1000; // seconds
-            last = now;
+
+            // Throttle to 30fps
+            const elapsed = now - last;
+            if (elapsed < frameInterval) {
+                raf = requestAnimationFrame(draw);
+                return;
+            }
+
+            last = now - (elapsed % frameInterval);
             const { width, height } = container.getBoundingClientRect();
 
             ctx.clearRect(0, 0, el.width, el.height);
