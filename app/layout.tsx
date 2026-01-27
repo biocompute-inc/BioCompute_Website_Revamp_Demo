@@ -21,7 +21,9 @@ export default function RootLayout({
       <body className="bg-dark text-white">
         <Header />
         <main>{children}</main>
-        <Footer />
+        <div className="relative z-50">
+          <Footer />
+        </div>
       </body>
     </html>
   );

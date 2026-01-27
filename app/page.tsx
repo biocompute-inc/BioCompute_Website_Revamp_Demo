@@ -280,7 +280,7 @@ export default function Home() {
           radius={2}
           color="rgba(165, 128, 192, 0.4)"
           glowColor="rgba(155, 111, 181, 1)"
-          opacity={0.4}
+          opacity={0.7}
           backgroundOpacity={0}
           speedMin={0.2}
           speedMax={1}
