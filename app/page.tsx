@@ -171,13 +171,6 @@ export default function Home() {
   const [currentSection, setCurrentSection] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const canScrollRef = useRef(true);
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-
-  // Lazy load video
-  useEffect(() => {
-    const timer = setTimeout(() => setIsVideoLoaded(true), 100);
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -322,18 +315,16 @@ export default function Home() {
             willChange: 'transform, opacity',
           }}
         >
-          {isVideoLoaded && (
-            <video
-              src="/devicepulsing.mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="metadata"
-              className="object-contain w-[300px] h-[300px] sm:w-[300px] sm:h-[300px] md:w-[400px] md:h-[400px] lg:w-[350px] lg:h-[350px]"
-              style={{ transform: 'translateZ(0)' }}
-            />
-          )}
+          <video
+            src="/devicepulsing.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            className="object-contain w-[300px] h-[300px] sm:w-[300px] sm:h-[300px] md:w-[400px] md:h-[400px] lg:w-[350px] lg:h-[350px]"
+            style={{ transform: 'translateZ(0)' }}
+          />
         </motion.div>
 
         {/* Sections using memoized components */}
