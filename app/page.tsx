@@ -169,8 +169,29 @@ StatsSection.displayName = 'StatsSection';
 
 export default function Home() {
   const [currentSection, setCurrentSection] = useState(0);
+  const [isVideoVisible, setIsVideoVisible] = useState(true);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const canScrollRef = useRef(true);
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const sectionHeight = container.clientHeight;
+      const scrollTop = container.scrollTop;
+
+      // Hide video if scrolled beyond section 2 (with tighter threshold)
+      if (scrollTop > sectionHeight * 2.05) {
+        setIsVideoVisible(false);
+      } else {
+        setIsVideoVisible(true);
+      }
+    };
+
+    container.addEventListener('scroll', handleScroll);
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -267,45 +288,47 @@ export default function Home() {
         />
 
         {/* Fixed Device Image - Animates based on currentSection */}
-        <motion.div
-          className="fixed z-20 pointer-events-none"
-          initial={{
-            top: '70%',
-            left: '50%',
-            x: '-50%',
-            y: '-50%',
-            scale: 1,
-            opacity: 1,
-          }}
-          animate={{
-            top: currentSection === 0 ? '75%' : currentSection === 1 ? '55%' : '50%',
-            left: '50%',
-            x: '-50%',
-            y: '-50%',
-            scale: currentSection === 0 ? 0.7 : currentSection === 1 ? 1.0 : 0.8,
-            opacity: currentSection < 2 ? 1 : 0,
-          }}
-          transition={{
-            type: 'spring',
-            stiffness: 60,
-            damping: 25,
-            mass: 0.4
-          }}
-          style={{
-            willChange: 'transform, opacity',
-          }}
-        >
-          <video
-            src="/devicepulsing.mp4"
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="metadata"
-            className="object-contain w-[180px] h-[180px] xs:w-[200px] xs:h-[200px] sm:w-[240px] sm:h-[240px] md:w-[280px] md:h-[280px] lg:w-[320px] lg:h-[320px] xl:w-[350px] xl:h-[350px]"
-            style={{ transform: 'translateZ(0)' }}
-          />
-        </motion.div>
+        {isVideoVisible && (
+          <motion.div
+            className="fixed z-20 pointer-events-none"
+            initial={{
+              top: '70%',
+              left: '50%',
+              x: '-50%',
+              y: '-50%',
+              scale: 1,
+              opacity: 1,
+            }}
+            animate={{
+              top: currentSection === 0 ? '75%' : currentSection === 1 ? '55%' : '50%',
+              left: '50%',
+              x: '-50%',
+              y: '-50%',
+              scale: currentSection === 0 ? 0.7 : currentSection === 1 ? 1.0 : 0.8,
+              opacity: currentSection < 2 ? 1 : 0,
+            }}
+            transition={{
+              type: 'spring',
+              stiffness: 60,
+              damping: 25,
+              mass: 0.4
+            }}
+            style={{
+              willChange: 'transform, opacity',
+            }}
+          >
+            <video
+              src="/devicepulsing.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
+              className="object-contain w-[180px] h-[180px] xs:w-[200px] xs:h-[200px] sm:w-[240px] sm:h-[240px] md:w-[280px] md:h-[280px] lg:w-[320px] lg:h-[320px] xl:w-[350px] xl:h-[350px]"
+              style={{ transform: 'translateZ(0)' }}
+            />
+          </motion.div>
+        )}
 
         {/* Sections using memoized components */}
         <HeroSection currentSection={currentSection} setCurrentSection={setCurrentSection} />
@@ -315,8 +338,10 @@ export default function Home() {
 
       {/* Features and BackedBy sections */}
       <Suspense fallback={<div className="min-h-screen bg-black" />}>
-        <Features />
-        <BackedBy />
+        <div className="relative z-50">
+          <Features />
+          <BackedBy />
+        </div>
       </Suspense>
     </>
   );
