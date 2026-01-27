@@ -12,14 +12,14 @@ const BackedBy = lazy(() => import('@/components/sections/BackedBy'));
 // Memoized Section Components for better performance
 const HeroSection = memo(({ currentSection, setCurrentSection }: { currentSection: number; setCurrentSection: (n: number) => void }) => (
   <section
-    className="h-screen w-full snap-start flex items-start justify-center pt-20 md:pt-24 sm:pt-40 relative"
+    className="h-screen w-full snap-start flex items-start justify-center pt-8 xs:pt-12 sm:pt-16 md:pt-20 lg:pt-24 xl:pt-28 relative"
     onMouseEnter={() => setCurrentSection(0)}
     style={{ contentVisibility: 'auto', containIntrinsicSize: '100vh' }}
   >
     <motion.div
       onViewportEnter={() => setCurrentSection(0)}
       viewport={{ amount: 0.5, once: false }}
-      className="text-center px-4 relative z-10"
+      className="text-center px-4 relative z-10 max-w-4xl"
     >
       <AnimatePresence mode="wait">
         {currentSection === 0 && (
@@ -29,7 +29,7 @@ const HeroSection = memo(({ currentSection, setCurrentSection }: { currentSectio
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -30 }}
               transition={{ duration: 0.5, ease: 'easeOut' }}
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold tracking-tight mb-3 sm:mb-4 text-white px-4"
+              className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight mb-2 xs:mb-3 sm:mb-4 text-white px-2 sm:px-4"
             >
               The Future Of <br /> Data Storage Is
             </motion.h1>
@@ -38,7 +38,7 @@ const HeroSection = memo(({ currentSection, setCurrentSection }: { currentSectio
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold relative z-10 px-4"
+              className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold relative z-10 px-2 sm:px-4"
               style={{
                 background: 'linear-gradient(to bottom right, #a580c0, #9b6fb5, #8a5fa5)',
                 WebkitBackgroundClip: 'text',
@@ -75,7 +75,7 @@ const DetailsSection = memo(({ currentSection, setCurrentSection }: { currentSec
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -30 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="absolute top-1/4 left-4 sm:left-8 md:left-1/4 text-white text-sm sm:text-lg md:text-xl lg:text-2xl font-bold uppercase tracking-wider z-20"
+              className="absolute top-1/4 left-2 xs:left-4 sm:left-6 md:left-8 lg:left-12 xl:left-1/4 text-white text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold uppercase tracking-wider z-20"
             >
               SECURE
             </motion.div>
@@ -84,7 +84,7 @@ const DetailsSection = memo(({ currentSection, setCurrentSection }: { currentSec
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -30 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="absolute bottom-1/4 left-4 sm:left-8 md:left-1/4 text-white text-sm sm:text-lg md:text-xl lg:text-2xl font-bold uppercase tracking-wider z-20"
+              className="absolute bottom-1/4 left-2 xs:left-4 sm:left-6 md:left-8 lg:left-12 xl:left-1/4 text-white text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold uppercase tracking-wider z-20"
             >
               LONG-LASTING
             </motion.div>
@@ -93,7 +93,7 @@ const DetailsSection = memo(({ currentSection, setCurrentSection }: { currentSec
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 30 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="absolute top-1/2 right-4 sm:right-8 md:right-1/4 -translate-y-1/2 text-white text-sm sm:text-lg md:text-xl lg:text-2xl font-bold uppercase tracking-wider z-20"
+              className="absolute top-1/2 right-2 xs:right-4 sm:right-6 md:right-8 lg:right-12 xl:right-1/4 -translate-y-1/2 text-white text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold uppercase tracking-wider z-20"
             >
               ULTRA-DENSE
             </motion.div>
@@ -114,7 +114,7 @@ const StatsSection = memo(({ currentSection, setCurrentSection }: { currentSecti
     <motion.div
       onViewportEnter={() => setCurrentSection(2)}
       viewport={{ amount: 0.5, once: false }}
-      className="w-full px-8"
+      className="w-full px-4 sm:px-6 md:px-8"
     >
       <AnimatePresence mode="wait">
         {currentSection === 2 && (
@@ -125,36 +125,36 @@ const StatsSection = memo(({ currentSection, setCurrentSection }: { currentSecti
             transition={{ duration: 0.6, ease: 'easeOut' }}
             className="max-w-6xl mx-auto"
           >
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-12 px-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 xs:gap-6 sm:gap-8 md:gap-10 lg:gap-12 px-2 sm:px-4">
               <div className="text-center">
-                <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2">
+                <div className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-1 sm:mb-2">
                   512 PB
                 </div>
-                <div className="text-xs sm:text-sm md:text-base text-gray-400 uppercase tracking-wide">
+                <div className="text-[10px] xs:text-xs sm:text-sm md:text-base text-gray-400 uppercase tracking-wide">
                   per cm³
                 </div>
               </div>
               <div className="text-center">
-                <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2">
+                <div className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-1 sm:mb-2">
                   100+
                 </div>
-                <div className="text-xs sm:text-sm md:text-base text-gray-400 uppercase tracking-wide">
+                <div className="text-[10px] xs:text-xs sm:text-sm md:text-base text-gray-400 uppercase tracking-wide">
                   years durability
                 </div>
               </div>
               <div className="text-center">
-                <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2">
+                <div className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-1 sm:mb-2">
                   99.99%
                 </div>
-                <div className="text-xs sm:text-sm md:text-base text-gray-400 uppercase tracking-wide">
+                <div className="text-[10px] xs:text-xs sm:text-sm md:text-base text-gray-400 uppercase tracking-wide">
                   accuracy
                 </div>
               </div>
               <div className="text-center">
-                <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2">
+                <div className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-1 sm:mb-2">
                   0kWh
                 </div>
-                <div className="text-xs sm:text-sm md:text-base text-gray-400 uppercase tracking-wide">
+                <div className="text-[10px] xs:text-xs sm:text-sm md:text-base text-gray-400 uppercase tracking-wide">
                   energy consumption
                 </div>
               </div>
@@ -255,10 +255,10 @@ export default function Home() {
         {/* Dotted Glow Background - Fixed across all sections */}
         <DottedGlowBackground
           className="fixed inset-0 z-[5]"
-          gap={30}
-          radius={3}
+          gap={20}
+          radius={2}
           color="rgba(165, 128, 192, 0.4)"
-          glowColor="rgba(155, 111, 181, 0.85)"
+          glowColor="rgba(155, 111, 181, 1)"
           opacity={0.4}
           backgroundOpacity={0}
           speedMin={0.2}
@@ -277,34 +277,14 @@ export default function Home() {
             scale: 1,
             opacity: 1,
           }}
-          animate={
-            currentSection === 0
-              ? {
-                top: '68%',
-                left: '50%',
-                x: '-50%',
-                y: '-50%',
-                scale: 0.9,
-                opacity: 1,
-              }
-              : currentSection === 1
-                ? {
-                  top: '50%',
-                  left: '50%',
-                  x: '-50%',
-                  y: '-50%',
-                  scale: 1.2,
-                  opacity: 1,
-                }
-                : {
-                  top: '50%',
-                  left: '50%',
-                  x: '-50%',
-                  y: '-50%',
-                  scale: 0.8,
-                  opacity: 0,
-                }
-          }
+          animate={{
+            top: currentSection === 0 ? '75%' : currentSection === 1 ? '55%' : '50%',
+            left: '50%',
+            x: '-50%',
+            y: '-50%',
+            scale: currentSection === 0 ? 0.7 : currentSection === 1 ? 1.0 : 0.8,
+            opacity: currentSection < 2 ? 1 : 0,
+          }}
           transition={{
             type: 'spring',
             stiffness: 60,
@@ -322,7 +302,7 @@ export default function Home() {
             muted
             playsInline
             preload="metadata"
-            className="object-contain w-[300px] h-[300px] sm:w-[300px] sm:h-[300px] md:w-[400px] md:h-[400px] lg:w-[350px] lg:h-[350px]"
+            className="object-contain w-[180px] h-[180px] xs:w-[200px] xs:h-[200px] sm:w-[240px] sm:h-[240px] md:w-[280px] md:h-[280px] lg:w-[320px] lg:h-[320px] xl:w-[350px] xl:h-[350px]"
             style={{ transform: 'translateZ(0)' }}
           />
         </motion.div>
