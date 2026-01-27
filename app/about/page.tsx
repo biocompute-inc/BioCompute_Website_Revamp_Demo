@@ -35,6 +35,11 @@ export default function About() {
             name: "Sai Pooja",
             title: "Bio-Engineer"
         },
+        {
+            avatar: "/franci.jpeg",
+            name: "Franci",
+            title: "Bio-Engineer"
+        }
     ]
 
     return (
