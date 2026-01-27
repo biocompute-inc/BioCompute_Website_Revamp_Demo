@@ -13,8 +13,8 @@ export default function About() {
         offset: ["start start", "end start"]
     });
 
-    const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 3, 10]);
-    const opacity = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [1, 1, 0.3, 0]);
+    const scale = useTransform(scrollYProgress, [0, 0.6, 1], [1, 8, 20]);
+    const opacity = useTransform(scrollYProgress, [0, 0.4, 0.7, 1], [1, 1, 0.3, 0]);
     const team = [
         {
             avatar: "/Anaghaupdated.jpeg",
@@ -50,32 +50,60 @@ export default function About() {
             {/* Hero Section with GTA VI Style Scroll Animation */}
             <section
                 ref={heroRef}
-                className="relative h-[300vh]"
+                className="relative h-[150vh]"
             >
-                <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+                <div className="sticky top-0 h-screen w-full flex items-center justify-center bg-opacity-10 overflow-hidden">
                     <motion.div
                         style={{
                             scale,
                             opacity
                         }}
-                        className="text-sm sm:text-xl md:text-3xl lg:text-4xl xl:text-5xl font-black uppercase whitespace-nowrap tracking-tighter px-4"
+                        className=" px-4 origin-center text-center"
                     >
-                        <ShinyText
-                            text="WELCOME TO THE STRAND AGE"
-                            speed={3}
-                            color="#ffffff"
-                            shineColor="#9b6fb5"
-                            spread={80}
-                            direction="right"
-                            yoyo={true}
-                            className="text-sm sm:text-xl md:text-3xl lg:text-4xl xl:text-5xl font-black uppercase whitespace-nowrap tracking-tighter"
-                        />
+                        <div className="flex flex-col items-center gap-1">
+                            <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif" }}>
+                                <ShinyText
+                                    text="WELCOME"
+                                    speed={3}
+                                    color="#ffffff"
+                                    shineColor="#9b6fb5"
+                                    spread={80}
+                                    direction="right"
+                                    yoyo={true}
+                                    className="text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-medium tracking-[0.3em] pb-4"
+                                />
+                            </div>
+                            <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif" }}>
+                                <ShinyText
+                                    text="TO THE"
+                                    speed={3}
+                                    color="#ffffff"
+                                    shineColor="#9b6fb5"
+                                    spread={80}
+                                    direction="right"
+                                    yoyo={true}
+                                    className="text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-extralight tracking-[0.4em] opacity-80"
+                                />
+                            </div>
+                            <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif" }}>
+                                <ShinyText
+                                    text="STRAND AGE"
+                                    speed={3}
+                                    color="#ffffff"
+                                    shineColor="#9b6fb5"
+                                    spread={80}
+                                    direction="right"
+                                    yoyo={true}
+                                    className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight pb-8"
+                                />
+                            </div>
+                        </div>
                     </motion.div>
                 </div>
             </section>
 
             {/* Vision and Offer Section */}
-            <section className="relative py-12 sm:py-16 px-4 sm:px-6 lg:px-8 text-white">
+            <section className="relative -mt-32 py-12 sm:py-16 px-4 sm:px-6 lg:px-8 text-white">
                 <div className="max-w-6xl mx-auto backdrop-blur-xl bg-white/80 rounded-3xl p-6 sm:p-8 md:p-12">
                     <div className="grid md:grid-cols-2 gap-8 md:gap-12">
                         {/* Our Vision */}
