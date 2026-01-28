@@ -14,7 +14,7 @@ export default function About() {
     });
 
     const scale = useTransform(scrollYProgress, [0, 0.6, 1], [1, 8, 20]);
-    const opacity = useTransform(scrollYProgress, [0, 0.4, 0.7, 1], [1, 1, 0.3, 0]);
+    const opacity = useTransform(scrollYProgress, [0, 0.5, 0.8, 1], [1, 0.6, 0.2, 0]);
     const team = [
         {
             avatar: "/Anaghaupdated.jpeg",

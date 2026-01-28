@@ -12,7 +12,7 @@ const BackedBy = lazy(() => import('@/components/sections/BackedBy'));
 // Memoized Section Components for better performance
 const HeroSection = memo(({ currentSection, setCurrentSection }: { currentSection: number; setCurrentSection: (n: number) => void }) => (
   <section
-    className="h-screen w-full snap-start flex items-start justify-center pt-8 xs:pt-12 sm:pt-16 md:pt-20 lg:pt-24 xl:pt-28 relative"
+    className="h-screen w-full snap-start flex items-start justify-center pt-40 xs:pt-72 sm:pt-56 md:pt-52 lg:pt-48 xl:pt-40 relative"
     onMouseEnter={() => setCurrentSection(0)}
     style={{ contentVisibility: 'auto', containIntrinsicSize: '100vh' }}
   >
@@ -67,39 +67,7 @@ const DetailsSection = memo(({ currentSection, setCurrentSection }: { currentSec
       viewport={{ amount: 0.5, once: false }}
       className="relative w-full h-full flex items-center justify-center"
     >
-      <AnimatePresence mode="wait">
-        {currentSection === 1 && (
-          <>
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="absolute top-1/4 left-2 xs:left-4 sm:left-6 md:left-8 lg:left-12 xl:left-1/4 text-white text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold uppercase tracking-wider z-20"
-            >
-              SECURE
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="absolute bottom-1/4 left-2 xs:left-4 sm:left-6 md:left-8 lg:left-12 xl:left-1/4 text-white text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold uppercase tracking-wider z-20"
-            >
-              LONG-LASTING
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 30 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="absolute top-1/2 right-2 xs:right-4 sm:right-6 md:right-8 lg:right-12 xl:right-1/4 -translate-y-1/2 text-white text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold uppercase tracking-wider z-20"
-            >
-              ULTRA-DENSE
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+      {/* Text labels moved outside to main for proper z-index stacking */}
     </motion.div>
   </section>
 ));
@@ -170,8 +138,25 @@ StatsSection.displayName = 'StatsSection';
 export default function Home() {
   const [currentSection, setCurrentSection] = useState(0);
   const [isVideoVisible, setIsVideoVisible] = useState(true);
+  const [screenSize, setScreenSize] = useState('xl');
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const canScrollRef = useRef(true);
+
+  // Detect screen size
+  useEffect(() => {
+    const updateScreenSize = () => {
+      const width = window.innerWidth;
+      if (width < 475) setScreenSize('xs');
+      else if (width < 640) setScreenSize('sm');
+      else if (width < 768) setScreenSize('md');
+      else if (width < 1024) setScreenSize('lg');
+      else setScreenSize('xl');
+    };
+
+    updateScreenSize();
+    window.addEventListener('resize', updateScreenSize);
+    return () => window.removeEventListener('resize', updateScreenSize);
+  }, []);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -290,9 +275,9 @@ export default function Home() {
         {/* Fixed Device Image - Animates based on currentSection */}
         {isVideoVisible && (
           <motion.div
-            className="fixed z-20 pointer-events-none"
+            className="fixed z-10 pointer-events-none"
             initial={{
-              top: '70%',
+              top: '50%',
               left: '50%',
               x: '-50%',
               y: '-50%',
@@ -300,11 +285,39 @@ export default function Home() {
               opacity: 1,
             }}
             animate={{
-              top: currentSection === 0 ? '75%' : currentSection === 1 ? '55%' : '50%',
+              top: currentSection === 0
+                ? screenSize === 'xs' ? '60%'
+                  : screenSize === 'sm' ? '60%'
+                    : screenSize === 'md' ? '70%'
+                      : screenSize === 'lg' ? '75%'
+                        : '80%'  // xl
+                : currentSection === 1
+                  ? screenSize === 'xs' ? '55%'
+                    : screenSize === 'sm' ? '55%'
+                      : screenSize === 'md' ? '55%'
+                        : screenSize === 'lg' ? '55%'
+                          : '55%'  // xl
+                  : '50%',
               left: '50%',
               x: '-50%',
               y: '-50%',
-              scale: currentSection === 0 ? 0.7 : currentSection === 1 ? 1.0 : 0.8,
+              scale: currentSection === 0
+                ? screenSize === 'xs' ? 1.3
+                  : screenSize === 'sm' ? 1.3
+                    : screenSize === 'md' ? 0.7
+                      : screenSize === 'lg' ? 0.7
+                        : 0.7  // xl
+                : currentSection === 1
+                  ? screenSize === 'xs' ? 1.6
+                    : screenSize === 'sm' ? 2
+                      : screenSize === 'md' ? 1.4
+                        : screenSize === 'lg' ? 1.5
+                          : 1.3  // xl
+                  : screenSize === 'xs' ? 0.8
+                    : screenSize === 'sm' ? 0.8
+                      : screenSize === 'md' ? 0.8
+                        : screenSize === 'lg' ? 0.8
+                          : 0.8,  // xl
               opacity: currentSection < 2 ? 1 : 0,
             }}
             transition={{
@@ -315,6 +328,7 @@ export default function Home() {
             }}
             style={{
               willChange: 'transform, opacity',
+              zIndex: 10,
             }}
           >
             <video
@@ -325,10 +339,48 @@ export default function Home() {
               playsInline
               preload="metadata"
               className="object-contain w-[180px] h-[180px] xs:w-[200px] xs:h-[200px] sm:w-[240px] sm:h-[240px] md:w-[280px] md:h-[280px] lg:w-[320px] lg:h-[320px] xl:w-[350px] xl:h-[350px]"
-              style={{ transform: 'translateZ(0)' }}
+              style={{ transform: 'translateZ(0)', mixBlendMode: 'normal' }}
             />
           </motion.div>
         )}
+
+        {/* Fixed Text Labels - Render outside sections for proper z-index */}
+        <AnimatePresence mode="wait">
+          {currentSection === 1 && (
+            <>
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -30 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="fixed top-1/4 left-2 xs:left-4 sm:left-6 md:left-8 lg:left-12 xl:left-1/4 text-white text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold uppercase tracking-wider z-50 pointer-events-none backdrop-blur-sm bg-black/20 px-3 py-2 rounded-lg"
+                style={{ zIndex: 50 }}
+              >
+                SECURE
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -30 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                className="fixed bottom-1/4 left-2 xs:left-4 sm:left-6 md:left-8 lg:left-12 xl:left-1/4 text-white text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold uppercase tracking-wider z-50 pointer-events-none backdrop-blur-sm bg-black/20 px-3 py-2 rounded-lg"
+                style={{ zIndex: 50 }}
+              >
+                LONG-LASTING
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 30 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="fixed top-1/2 right-2 xs:right-4 sm:right-6 md:right-8 lg:right-12 xl:right-1/4 -translate-y-1/2 text-white text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold uppercase tracking-wider z-50 pointer-events-none backdrop-blur-sm bg-black/20 px-3 py-2 rounded-lg"
+                style={{ zIndex: 50 }}
+              >
+                ULTRA-DENSE
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
 
         {/* Sections using memoized components */}
         <HeroSection currentSection={currentSection} setCurrentSection={setCurrentSection} />
