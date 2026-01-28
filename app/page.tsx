@@ -12,7 +12,7 @@ const BackedBy = lazy(() => import('@/components/sections/BackedBy'));
 // Memoized Section Components for better performance
 const HeroSection = memo(({ currentSection, setCurrentSection }: { currentSection: number; setCurrentSection: (n: number) => void }) => (
   <section
-    className="h-screen w-full snap-start flex items-start justify-center pt-40 xs:pt-72 sm:pt-56 md:pt-52 lg:pt-48 xl:pt-40 relative"
+    className="h-screen w-full snap-start flex items-start justify-center pt-40 xs:pt-72 sm:pt-56 md:pt-52 lg:pt-48 xl:pt-32 relative"
     onMouseEnter={() => setCurrentSection(0)}
     style={{ contentVisibility: 'auto', containIntrinsicSize: '100vh' }}
   >
@@ -261,14 +261,14 @@ export default function Home() {
         {/* Dotted Glow Background - Fixed across all sections */}
         <DottedGlowBackground
           className="fixed inset-0 z-[5]"
-          gap={20}
-          radius={2}
+          gap={30}
+          radius={3}
           color="rgba(165, 128, 192, 0.4)"
           glowColor="rgba(155, 111, 181, 1)"
           opacity={0.7}
           backgroundOpacity={0}
           speedMin={0.2}
-          speedMax={1}
+          speedMax={0.4}
           speedScale={1}
         />
 
@@ -290,7 +290,7 @@ export default function Home() {
                   : screenSize === 'sm' ? '60%'
                     : screenSize === 'md' ? '70%'
                       : screenSize === 'lg' ? '75%'
-                        : '80%'  // xl
+                        : '75%'  // xl
                 : currentSection === 1
                   ? screenSize === 'xs' ? '55%'
                     : screenSize === 'sm' ? '55%'
