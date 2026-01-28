@@ -34,7 +34,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
     .slice(0, 3);
 
   return (
-    <div className="min-h-screen pt-16">
+    <div className="min-h-screen pt-16 bg-[#E8E0F5]">
       {/* Hero Section with Featured Image */}
       <div className="relative w-full h-[400px] md:h-[500px] bg-gray-900">
         <Image
@@ -49,7 +49,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
         {/* Back Button */}
         <Link
           href="/blogs"
-          className="absolute top-8 left-4 md:left-8 flex items-center gap-2 text-white hover:text-gray-200 transition-colors bg-black/30 px-4 py-2 rounded-lg backdrop-blur-sm"
+          className="absolute top-8 left-4 md:left-8 flex items-center gap-2 text-white hover:text-gray-200 transition-colors bg-black/30 px-4 py-2 backdrop-blur-sm"
         >
           <ChevronLeft className="w-5 h-5" />
           <span>Back to Blogs</span>
@@ -85,7 +85,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
 
       {/* Blog Content with Prose Styling */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <article className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg p-8 md:p-12">
+        <article className="bg-white shadow-lg p-8 md:p-12">
           <div
             className="prose prose-lg prose-gray max-w-none
               prose-headings:text-dark prose-headings:font-bold
@@ -118,7 +118,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
 
       {/* Suggested Blogs Section */}
       {suggestedBlogs.length > 0 && (
-        <section className="bg-gray-50 py-16">
+        <section className="bg-[#D5C7E8] py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-dark mb-8">More Articles</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -126,7 +126,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
                 <Link
                   key={suggestedBlog.slug}
                   href={`/blogs/${suggestedBlog.slug}`}
-                  className="group block bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
+                  className="group block bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
                 >
                   <div className="relative aspect-video w-full overflow-hidden bg-gray-100">
                     <Image

@@ -23,18 +23,21 @@ export default function Careers() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <p className="text-xs sm:text-sm font-bold uppercase tracking-widest text-gray-400 mb-2 sm:mb-3">
+              <p className="text-4xl sm:text-5xl font-bold uppercase tracking-widest text-white mb-28 sm:mb-14">
                 CAREERS
               </p>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4">
+              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4">
                 Join the company with a
                 <br />
                 bold new vision
               </h1>
-              <button className="bg-black text-white px-6 py-3 rounded font-bold hover:bg-dark-secondary transition-colors flex items-center gap-2">
+              <a
+                href="#open-roles"
+                className="bg-white text-black px-4 py-2 rounded font-bold hover:bg-gray-600 hover:text-white transition-colors inline-flex items-center gap-2 w-fit"
+              >
                 Open Roles
                 <span>↓</span>
-              </button>
+              </a>
             </div>
 
             {/* DNA Image Placeholder */}
@@ -66,7 +69,7 @@ export default function Careers() {
           </div>
 
           {/* Job Listings */}
-          <div>
+          <div id="open-roles" className="scroll-mt-20">
             <h3 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8">Open Roles</h3>
 
             <div className="overflow-x-auto">
@@ -104,7 +107,7 @@ export default function Careers() {
                       <td className="py-4 px-4 text-right">
                         <Link
                           href={`/careers/${job.id}`}
-                          className="bg-black text-white px-6 py-2 rounded font-bold hover:bg-gray-900 transition-colors inline-block"
+                          className="bg-black text-white px-6 py-2 rounded font-bold hover:bg-white transition-all duration-100 border-black border hover:text-black  inline-block"
                         >
                           Apply
                         </Link>

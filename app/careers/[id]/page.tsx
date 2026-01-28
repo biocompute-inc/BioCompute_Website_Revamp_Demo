@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
 import { getJobById, jobOpenings } from '@/lib/jobs';
 import { notFound } from 'next/navigation';
+import ApplyModal from './ApplyModal';
 
 export function generateStaticParams() {
   return jobOpenings.map((job) => ({
@@ -10,13 +11,14 @@ export function generateStaticParams() {
 }
 
 interface JobDetailPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: JobDetailPageProps) {
-  const job = getJobById(parseInt(params.id));
+  const { id } = await params;
+  const job = getJobById(parseInt(id));
   if (!job) return { title: 'Job Not Found' };
   return {
     title: `${job.title} - BioCompute Inc.`,
@@ -24,8 +26,9 @@ export async function generateMetadata({ params }: JobDetailPageProps) {
   };
 }
 
-export default function JobDetailPage({ params }: JobDetailPageProps) {
-  const job = getJobById(parseInt(params.id));
+export default async function JobDetailPage({ params }: JobDetailPageProps) {
+  const { id } = await params;
+  const job = getJobById(parseInt(id));
 
   if (!job) {
     notFound();
@@ -73,10 +76,8 @@ export default function JobDetailPage({ params }: JobDetailPageProps) {
           </section>
         </div>
 
-        {/* Apply Button */}
-        <button className="bg-black text-white px-8 py-4 rounded font-bold hover:bg-gray-900 transition-colors">
-          Apply Now
-        </button>
+        {/* Apply Button and Modal */}
+        <ApplyModal jobTitle={job.title} />
       </div>
     </div>
   );

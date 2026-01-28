@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState, useRef, useEffect } from 'react';
 import { Mail } from 'lucide-react';
 
 export default function Contact() {
@@ -9,8 +9,23 @@ export default function Contact() {
     email: '',
     linkedin: '',
     message: '',
-    category: 'Individual',
+    category: '',
   });
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Auto-resize textarea as user types
+  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const textarea = e.target;
+    setFormData({ ...formData, message: textarea.value });
+
+    // Reset height to recalculate
+    textarea.style.height = '0px';
+    const scrollHeight = textarea.scrollHeight;
+
+    // Set new height with min/max constraints
+    const newHeight = Math.max(40, Math.min(scrollHeight, 400));
+    textarea.style.height = `${newHeight}px`;
+  };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -19,8 +34,8 @@ export default function Contact() {
   };
 
   return (
-    <div className="pt-16">
-      <section className="min-h-screen bg-dark flex items-center py-20">
+    <div className="pt-0">
+      <section className="min-h-screen bg-dark flex items-center py-4">
         <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Left Side - Text */}
@@ -80,6 +95,7 @@ export default function Contact() {
                     setFormData({ ...formData, category: e.target.value })
                   }
                 >
+                  <option value="" disabled className="bg-dark text-gray-400">Select Category</option>
                   <option className="bg-dark text-white">Individual</option>
                   <option className="bg-dark text-white">Enterprise</option>
                 </select>
@@ -95,13 +111,12 @@ export default function Contact() {
 
               <div>
                 <textarea
+                  ref={textareaRef}
                   placeholder="Your Message"
-                  rows={4}
-                  className="w-full bg-transparent border-b border-gray-400 pb-3 text-white placeholder-gray-400 focus:outline-none focus:border-purple transition-colors resize-none"
+                  className="w-full bg-transparent border-b border-gray-400 pb-3 text-white placeholder-gray-400 focus:outline-none focus:border-purple transition-colors resize-none overflow-hidden"
+                  style={{ height: '40px' }}
                   value={formData.message}
-                  onChange={(e) =>
-                    setFormData({ ...formData, message: e.target.value })
-                  }
+                  onChange={handleTextareaChange}
                 />
               </div>
 
@@ -119,12 +134,12 @@ export default function Contact() {
       </section>
 
       {/* Or Email Directly Section */}
-      <section className="bg-dark-secondary py-12 sm:py-16 md:py-20 text-center">
+      <section className="bg-white text-black py-12 sm:py-16 md:py-20 text-center">
         <div className="max-w-2xl mx-auto px-4">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8">
             OR EMAIL US DIRECTLY
           </h2>
-          <div className="flex items-center justify-center gap-2 text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8">
+          <div className="flex items-center  justify-center gap-2 text-base sm:text-lg md:text-xl text-black mb-6 sm:mb-8">
             <Mail size={24} />
             <a
               href="mailto:hello@biocomputeinc.com"
@@ -133,8 +148,8 @@ export default function Contact() {
               hello@biocomputeinc.com
             </a>
           </div>
-          <button className="border border-white text-white px-8 py-3 rounded font-bold hover:bg-white hover:text-dark transition-colors">
-            Email Us →
+          <button className="border border-black text-black px-8 py-3 rounded font-bold hover:bg-black hover:text-white transition-colors">
+            <a href="mailto:hello@biocomputeinc.com">Email Us →</a>
           </button>
         </div>
       </section>

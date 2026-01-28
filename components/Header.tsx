@@ -10,7 +10,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-[100] bg-dark/60 backdrop-blur-xl border-b border-dark-secondary">
+    <header className="fixed top-0 left-0 right-0 z-[100] bg-dark/60 backdrop-blur-xl border-b border-dark-secondary mt-5 px-16 rounded-full mx-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2 text-xl font-bold">
@@ -18,15 +18,15 @@ export default function Header() {
             <Image
               src="/logoLG.png"
               alt="BioCompute"
-              width={150}
-              height={100}
+              width={180}
+              height={120}
               className="hidden md:block"
             />
             <Image
               src="/logoSM.png"
               alt="BioCompute"
-              width={100}
-              height={30}
+              width={120}
+              height={36}
               className="block md:hidden"
             />
           </Link>
@@ -114,7 +114,7 @@ export default function Header() {
               <Link
                 href="/contact"
                 onClick={() => setMobileMenuOpen(false)}
-                className="mx-4 border border-white px-6 py-2 rounded hover:bg-white hover:text-dark transition-colors text-center"
+                className="mx-4 border border-white px-6 pt-4 rounded-3xl hover:bg-white hover:text-dark transition-colors text-center"
               >
                 Contact Us
               </Link>

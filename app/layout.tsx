@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: 'BioCompute Inc. - DNA-Based Data Storage',
   description: 'The Future of Data Storage is DNA',
   icons: {
-    icon: '/logoSM.png',
+    icon: '/faviconfinal.png',
   },
 };
 
