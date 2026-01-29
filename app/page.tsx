@@ -2,138 +2,27 @@
 
 import { useState, useRef, useEffect, lazy, Suspense, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
 import { DottedGlowBackground } from '@/client/components/ui/dottedglowbackground';
 
 // Lazy load heavy components
 const Features = lazy(() => import('@/components/sections/Features'));
 const BackedBy = lazy(() => import('@/components/sections/BackedBy'));
 
-// Memoized Section Components for better performance
-const HeroSection = memo(({ currentSection, setCurrentSection }: { currentSection: number; setCurrentSection: (n: number) => void }) => (
+// --- SECTION PLACEHOLDERS ---
+const SectionPlaceholder = memo(({ onEnter, index }: { onEnter: (n: number) => void; index: number }) => (
   <section
-    className="h-screen w-full snap-start flex items-start justify-center pt-40 xs:pt-72 sm:pt-56 md:pt-52 lg:pt-48 xl:pt-32 relative"
-    onMouseEnter={() => setCurrentSection(0)}
+    className="h-screen w-full snap-start relative"
+    onMouseEnter={() => onEnter(index)}
     style={{ contentVisibility: 'auto', containIntrinsicSize: '100vh' }}
   >
     <motion.div
-      onViewportEnter={() => setCurrentSection(0)}
+      onViewportEnter={() => onEnter(index)}
       viewport={{ amount: 0.5, once: false }}
-      className="text-center px-4 relative z-10 max-w-4xl"
-    >
-      <AnimatePresence mode="wait">
-        {currentSection === 0 && (
-          <>
-            <motion.h1
-              initial={{ opacity: 0, y: -30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -30 }}
-              transition={{ duration: 0.5, ease: 'easeOut' }}
-              className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight mb-2 xs:mb-3 sm:mb-4 text-white px-2 sm:px-4"
-            >
-              The Future Of <br /> Data Storage Is
-            </motion.h1>
-            <motion.h2
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' }}
-              className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold relative z-10 px-2 sm:px-4"
-              style={{
-                background: 'linear-gradient(to bottom right, #a580c0, #9b6fb5, #8a5fa5)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
-              }}
-            >
-              DNA
-            </motion.h2>
-          </>
-        )}
-      </AnimatePresence>
-    </motion.div>
+      className="w-full h-full pointer-events-none"
+    />
   </section>
 ));
-HeroSection.displayName = 'HeroSection';
-
-const DetailsSection = memo(({ currentSection, setCurrentSection }: { currentSection: number; setCurrentSection: (n: number) => void }) => (
-  <section
-    className="h-screen w-full snap-start flex items-center justify-center relative"
-    onMouseEnter={() => setCurrentSection(1)}
-    style={{ contentVisibility: 'auto', containIntrinsicSize: '100vh' }}
-  >
-    <motion.div
-      onViewportEnter={() => setCurrentSection(1)}
-      viewport={{ amount: 0.5, once: false }}
-      className="relative w-full h-full flex items-center justify-center"
-    >
-      {/* Text labels moved outside to main for proper z-index stacking */}
-    </motion.div>
-  </section>
-));
-DetailsSection.displayName = 'DetailsSection';
-
-const StatsSection = memo(({ currentSection, setCurrentSection }: { currentSection: number; setCurrentSection: (n: number) => void }) => (
-  <section
-    className="h-screen w-full snap-start flex items-center justify-center relative"
-    onMouseEnter={() => setCurrentSection(2)}
-    style={{ contentVisibility: 'auto', containIntrinsicSize: '100vh' }}
-  >
-    <motion.div
-      onViewportEnter={() => setCurrentSection(2)}
-      viewport={{ amount: 0.5, once: false }}
-      className="w-full px-4 sm:px-6 md:px-8"
-    >
-      <AnimatePresence mode="wait">
-        {currentSection === 2 && (
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="max-w-6xl mx-auto"
-          >
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 xs:gap-6 sm:gap-8 md:gap-10 lg:gap-12 px-2 sm:px-4">
-              <div className="text-center">
-                <div className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-1 sm:mb-2">
-                  512 PB
-                </div>
-                <div className="text-[10px] xs:text-xs sm:text-sm md:text-base text-gray-400 uppercase tracking-wide">
-                  per cm³
-                </div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-1 sm:mb-2">
-                  100+
-                </div>
-                <div className="text-[10px] xs:text-xs sm:text-sm md:text-base text-gray-400 uppercase tracking-wide">
-                  years durability
-                </div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-1 sm:mb-2">
-                  99.99%
-                </div>
-                <div className="text-[10px] xs:text-xs sm:text-sm md:text-base text-gray-400 uppercase tracking-wide">
-                  accuracy
-                </div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-1 sm:mb-2">
-                  0kWh
-                </div>
-                <div className="text-[10px] xs:text-xs sm:text-sm md:text-base text-gray-400 uppercase tracking-wide">
-                  energy consumption
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  </section>
-));
-StatsSection.displayName = 'StatsSection';
+SectionPlaceholder.displayName = 'SectionPlaceholder';
 
 export default function Home() {
   const [currentSection, setCurrentSection] = useState(0);
@@ -152,32 +41,27 @@ export default function Home() {
       else if (width < 1024) setScreenSize('lg');
       else setScreenSize('xl');
     };
-
     updateScreenSize();
     window.addEventListener('resize', updateScreenSize);
     return () => window.removeEventListener('resize', updateScreenSize);
   }, []);
 
+  // Scroll Visibility Logic
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
-
     const handleScroll = () => {
-      const sectionHeight = container.clientHeight;
-      const scrollTop = container.scrollTop;
-
-      // Hide video if scrolled beyond section 2 (with tighter threshold)
-      if (scrollTop > sectionHeight * 2.05) {
+      if (container.scrollTop > container.clientHeight * 2.5) {
         setIsVideoVisible(false);
       } else {
         setIsVideoVisible(true);
       }
     };
-
     container.addEventListener('scroll', handleScroll);
     return () => container.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Custom Wheel Logic
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
@@ -185,9 +69,8 @@ export default function Home() {
     const handleWheel = (e: WheelEvent) => {
       const scrollingDown = e.deltaY > 0;
 
-      // Section 3+ - free scrolling, check for return to section 2
       if (currentSection === 3) {
-        if (!scrollingDown && container.scrollTop < container.clientHeight * 2.5) {
+        if (!scrollingDown && container.scrollTop < container.clientHeight * 2.8) {
           e.preventDefault();
           setCurrentSection(2);
           canScrollRef.current = false;
@@ -198,7 +81,6 @@ export default function Home() {
         return;
       }
 
-      // Sections 0-2 - controlled scrolling
       if (!canScrollRef.current) {
         e.preventDefault();
         return;
@@ -206,33 +88,27 @@ export default function Home() {
 
       e.preventDefault();
       canScrollRef.current = false;
-
       const sectionHeight = container.clientHeight;
 
-      // At section 0, can't go up
       if (currentSection === 0 && !scrollingDown) {
         canScrollRef.current = true;
         return;
       }
 
-      // At section 2, scrolling down goes to free scroll
       if (currentSection === 2 && scrollingDown) {
         setCurrentSection(3);
         container.style.scrollSnapType = 'none';
-
         setTimeout(() => {
-          container.scrollTo({ top: sectionHeight * 2.5, behavior: 'auto' });
+          container.scrollTo({ top: sectionHeight * 2.8, behavior: 'auto' });
           setTimeout(() => {
-            container.scrollTo({ top: sectionHeight * 3.5, behavior: 'smooth' });
+            container.scrollTo({ top: sectionHeight * 3.1, behavior: 'smooth' });
             setTimeout(() => { canScrollRef.current = true; }, 600);
           }, 100);
         }, 100);
         return;
       }
 
-      // Normal navigation between sections 0, 1, 2
       const newSection = scrollingDown ? currentSection + 1 : currentSection - 1;
-
       if (newSection >= 0 && newSection <= 2) {
         setCurrentSection(newSection);
         container.scrollTo({ top: newSection * sectionHeight, behavior: 'smooth' });
@@ -246,149 +122,210 @@ export default function Home() {
     return () => container.removeEventListener('wheel', handleWheel);
   }, [currentSection]);
 
+  // --- TEXT ANIMATION VARIANTS ---
+
+  const titleVariants = {
+    section0: {
+      scale: 1.6,
+      y: -30,           // Section 0 Vertical Position
+      opacity: 1,
+      marginBottom: "1rem"
+    },
+    section1: {
+      scale: 1,
+      y: 20,          // <--- CHANGED: Different Y value for Section 1 (Simulates Padding)
+      opacity: 1,
+      marginBottom: "1rem"
+    },
+    hidden: {
+      scale: 0.8,
+      y: -50,
+      opacity: 0,
+      marginBottom: "0rem"
+    }
+  };
+
+  const dnaVariants = {
+    section0: {
+      scale: 1.5,
+      y: 0,           // DNA stays neutral in Y
+      opacity: 1,
+      letterSpacing: "0.05em"
+    },
+    section1: {
+      scale: 1,
+      y: 0,           // DNA stays neutral in Y
+      opacity: 1,
+      letterSpacing: "0em"
+    },
+    hidden: {
+      scale: 0.8,
+      y: 0,
+      opacity: 0,
+      letterSpacing: "0em"
+    }
+  };
+
   return (
     <>
       <main
         ref={scrollContainerRef}
         className={`h-screen w-full overflow-y-scroll scrollbar-hide bg-black ${currentSection < 3 ? 'snap-y snap-mandatory' : ''
           }`}
-        style={{
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
-          scrollBehavior: 'smooth',
-        }}
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', scrollBehavior: 'smooth' }}
       >
-        {/* Dotted Glow Background - Fixed across all sections */}
         <DottedGlowBackground
           className="fixed inset-0 z-[5]"
-          gap={30}
+          gap={35}
           radius={3}
           color="rgba(165, 128, 192, 0.4)"
           glowColor="rgba(155, 111, 181, 1)"
           opacity={0.7}
           backgroundOpacity={0}
           speedMin={0.2}
-          speedMax={0.4}
+          speedMax={0.3}
           speedScale={1}
         />
 
-        {/* Fixed Device Image - Animates based on currentSection */}
+        {/* --- FIXED TEXT CONTAINER --- */}
+        <motion.div
+          className="fixed inset-0 z-20 flex flex-col items-center justify-center pointer-events-none"
+          animate={{
+            // Layout position movement
+            top: currentSection === 0 ? '0%' : currentSection === 1 ? '-25%' : '-50%',
+            opacity: currentSection < 2 ? 1 : 0
+          }}
+          transition={{ duration: 0.8, ease: "easeInOut" }}
+        >
+          <div className="text-center px-4">
+            {/* Tagline Animation */}
+            <motion.h1
+              variants={titleVariants}
+              initial="section0"
+              animate={currentSection === 0 ? "section0" : currentSection === 1 ? "section1" : "hidden"}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
+              className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight pb-2 text-white px-2 sm:px-4 leading-tight"
+            >
+              The Future Of <br /> Data Storage Is
+            </motion.h1>
+
+            {/* DNA Animation */}
+            <motion.h2
+              variants={dnaVariants}
+              initial="section0"
+              animate={currentSection === 0 ? "section0" : currentSection === 1 ? "section1" : "hidden"}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
+              className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold relative z-10 px-2 sm:px-4"
+              style={{
+                background: 'linear-gradient(to bottom right, #a580c0, #9b6fb5, #8a5fa5)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                display: 'inline-block'
+              }}
+            >
+              DNA
+            </motion.h2>
+          </div>
+        </motion.div>
+
+        {/* --- FIXED DEVICE VIDEO --- */}
         {isVideoVisible && (
           <motion.div
             className="fixed z-10 pointer-events-none"
-            initial={{
-              top: '50%',
-              left: '50%',
-              x: '-50%',
-              y: '-50%',
-              scale: 1,
-              opacity: 1,
-            }}
+            initial={{ top: '100%', left: '50%', x: '-50%', y: '-50%', scale: 1 }}
             animate={{
               top: currentSection === 0
-                ? screenSize === 'xs' ? '60%'
-                  : screenSize === 'sm' ? '60%'
-                    : screenSize === 'md' ? '70%'
-                      : screenSize === 'lg' ? '75%'
-                        : '75%'  // xl
+                ? '110%'
                 : currentSection === 1
-                  ? screenSize === 'xs' ? '55%'
-                    : screenSize === 'sm' ? '55%'
-                      : screenSize === 'md' ? '55%'
-                        : screenSize === 'lg' ? '55%'
-                          : '55%'  // xl
-                  : '50%',
-              left: '50%',
-              x: '-50%',
-              y: '-50%',
+                  ? '75%'
+                  : '45%',
               scale: currentSection === 0
-                ? screenSize === 'xs' ? 1.3
-                  : screenSize === 'sm' ? 1.3
-                    : screenSize === 'md' ? 0.7
-                      : screenSize === 'lg' ? 0.7
-                        : 0.7  // xl
+                ? 1.2
                 : currentSection === 1
-                  ? screenSize === 'xs' ? 1.6
-                    : screenSize === 'sm' ? 2
-                      : screenSize === 'md' ? 1.4
-                        : screenSize === 'lg' ? 1.5
-                          : 1.3  // xl
-                  : screenSize === 'xs' ? 0.8
-                    : screenSize === 'sm' ? 0.8
-                      : screenSize === 'md' ? 0.8
-                        : screenSize === 'lg' ? 0.8
-                          : 0.8,  // xl
-              opacity: currentSection < 2 ? 1 : 0,
+                  ? 0.7
+                  : 0.8,
+              opacity: currentSection < 3 ? 1 : 0,
             }}
-            transition={{
-              type: 'spring',
-              stiffness: 60,
-              damping: 25,
-              mass: 0.4
-            }}
-            style={{
-              willChange: 'transform, opacity',
-              zIndex: 10,
-            }}
+            transition={{ type: 'spring', stiffness: 45, damping: 20 }}
+            style={{ willChange: 'transform, opacity, top' }}
           >
             <video
               src="/devicepulsing.mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="metadata"
-              className="object-contain w-[180px] h-[180px] xs:w-[200px] xs:h-[200px] sm:w-[240px] sm:h-[240px] md:w-[280px] md:h-[280px] lg:w-[320px] lg:h-[320px] xl:w-[350px] xl:h-[350px]"
-              style={{ transform: 'translateZ(0)', mixBlendMode: 'normal' }}
+              autoPlay loop muted playsInline
+              className="object-contain w-[250px] h-[250px] md:w-[350px] md:h-[350px] xl:w-[400px] xl:h-[400px]"
             />
           </motion.div>
         )}
 
-        {/* Fixed Text Labels - Render outside sections for proper z-index */}
-        <AnimatePresence mode="wait">
-          {currentSection === 1 && (
+        {/* --- SLIDE 2: FLOATING LABELS --- */}
+        <AnimatePresence>
+          {currentSection === 2 && (
             <>
               <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -30 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="fixed top-1/4 left-2 xs:left-4 sm:left-6 md:left-8 lg:left-12 xl:left-1/4 text-white text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold uppercase tracking-wider z-50 pointer-events-none backdrop-blur-sm bg-black/20 px-3 py-2 rounded-lg"
-                style={{ zIndex: 50 }}
+                initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="fixed top-[35%] left-[10%] xl:left-[32%] text-white text-xl md:text-2xl font-bold uppercase tracking-widest z-30"
               >
                 SECURE
               </motion.div>
               <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -30 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                className="fixed bottom-1/4 left-2 xs:left-4 sm:left-6 md:left-8 lg:left-12 xl:left-1/4 text-white text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold uppercase tracking-wider z-50 pointer-events-none backdrop-blur-sm bg-black/20 px-3 py-2 rounded-lg"
-                style={{ zIndex: 50 }}
-              >
-                LONG-LASTING
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 30 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="fixed top-1/2 right-2 xs:right-4 sm:right-6 md:right-8 lg:right-12 xl:right-1/4 -translate-y-1/2 text-white text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold uppercase tracking-wider z-50 pointer-events-none backdrop-blur-sm bg-black/20 px-3 py-2 rounded-lg"
-                style={{ zIndex: 50 }}
+                initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="fixed top-[45%] right-[10%] xl:right-[26%] text-white text-xl md:text-2xl font-bold uppercase tracking-widest z-30"
               >
                 ULTRA-DENSE
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="fixed top-[55%] left-[12%] xl:left-[25%] text-white text-xl md:text-2xl font-bold uppercase tracking-widest z-30"
+              >
+                LONG-LASTING
               </motion.div>
             </>
           )}
         </AnimatePresence>
 
-        {/* Sections using memoized components */}
-        <HeroSection currentSection={currentSection} setCurrentSection={setCurrentSection} />
-        <DetailsSection currentSection={currentSection} setCurrentSection={setCurrentSection} />
-        <StatsSection currentSection={currentSection} setCurrentSection={setCurrentSection} />
+        {/* --- SLIDE 2: BOTTOM STATS --- */}
+        <AnimatePresence>
+          {currentSection === 2 && (
+            <motion.div
+              initial={{ y: '100%' }}
+              animate={{ y: '0%' }}
+              exit={{ y: '100%' }}
+              transition={{ duration: 0.5, ease: "circOut" }}
+              className="fixed bottom-0 left-0 w-full bg-black/80 backdrop-blur-md border-t border-white/10 py-8 z-40"
+            >
+              <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-white mb-1">512 PB</div>
+                  <div className="text-xs text-gray-400 uppercase tracking-widest">per cm³</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-white mb-1">100+</div>
+                  <div className="text-xs text-gray-400 uppercase tracking-widest">years durability</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-white mb-1">99.99%</div>
+                  <div className="text-xs text-gray-400 uppercase tracking-widest">accuracy</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-white mb-1">0kWh</div>
+                  <div className="text-xs text-gray-400 uppercase tracking-widest">energy consumption</div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* --- INVISIBLE SCROLL TARGETS --- */}
+        <SectionPlaceholder index={0} onEnter={setCurrentSection} />
+        <SectionPlaceholder index={1} onEnter={setCurrentSection} />
+        <SectionPlaceholder index={2} onEnter={setCurrentSection} />
+
       </main>
 
-      {/* Features and BackedBy sections */}
       <Suspense fallback={<div className="min-h-screen bg-black" />}>
         <div className="relative z-50">
           <Features />

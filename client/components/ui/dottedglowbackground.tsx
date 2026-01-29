@@ -44,8 +44,8 @@ type DottedGlowBackgroundProps = {
  */
 export const DottedGlowBackground = ({
     className,
-    gap = 12,
-    radius = 2,
+    gap = 25,
+    radius = 3,
     color = "rgba(0,0,0,0.7)",
     darkColor,
     glowColor = "rgba(0, 170, 255, 0.85)",
