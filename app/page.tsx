@@ -265,21 +265,21 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="fixed top-[35%] left-[10%] xl:left-[32%] text-white text-xl md:text-2xl font-bold uppercase tracking-widest z-30"
+                className="fixed top-[35%] left-[10%] xl:left-[32%] text-white text-xl md:text-3xl font-bold uppercase tracking-widest z-30"
               >
                 SECURE
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="fixed top-[45%] right-[10%] xl:right-[26%] text-white text-xl md:text-2xl font-bold uppercase tracking-widest z-30"
+                className="fixed top-[45%] right-[10%] xl:right-[24%] text-white text-xl md:text-3xl font-bold uppercase tracking-widest z-30"
               >
                 ULTRA-DENSE
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
-                className="fixed top-[55%] left-[12%] xl:left-[25%] text-white text-xl md:text-2xl font-bold uppercase tracking-widest z-30"
+                className="fixed top-[55%] left-[12%] xl:left-[23%] text-white text-xl md:text-3xl font-bold uppercase tracking-widest z-30"
               >
                 LONG-LASTING
               </motion.div>

@@ -7,7 +7,7 @@ export default function OurPartners() {
       <div className="bg-white xl:pb-5 xs:pt-8 sm:pt-10 xl:pt-4 pb-3 xs:pb-4 px-6 xs:px-8 sm:px-10">
         <div className="flex items-center justify-center gap-4">
           <div className="flex-1 h-px bg-gray-300"></div>
-          <h1 className="text-lg xs:text-xl sm:text-2xl md:text-3xl text-center font-semibold font-inter text-black/70 whitespace-nowrap">
+          <h1 className="text-lg xs:text-xl sm:text-2xl md:text-3xl text-center font-semibold font-inter text-black/80 whitespace-nowrap">
             WE&apos;RE BACKED BY
           </h1>
           <div className="flex-1 h-px bg-gray-300"></div>
@@ -15,7 +15,7 @@ export default function OurPartners() {
       </div>
       <div className="w-full mb-0 inline-flex flex-nowrap overflow-hidden px-4 xs:px-5 sm:px-6 pb-0 bg-white">
         <motion.div
-          className="flex gap-8 xs:gap-10 sm:gap-12 md:gap-14 flex-none pr-8 xs:pr-10 sm:pr-12 md:pr-14"
+          className="flex gap-8 xs:gap-10 py-2 sm:gap-12 md:gap-14 flex-none pr-8 xs:pr-10 sm:pr-12 md:pr-14"
           animate={{
             translateX: "-50%",
           }}
