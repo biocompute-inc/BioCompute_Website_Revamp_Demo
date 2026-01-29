@@ -33,6 +33,12 @@ export default function Header() {
 
           <nav className="hidden md:flex items-center gap-8">
             <Link
+              href="/howitworks"
+              className={`hover:text-purple transition-colors ${pathname === '/howitworks' ? 'border-b-2 border-purple text-purple' : ''}`}
+            >
+              How It Works
+            </Link>
+            <Link
               href="/about"
               className={`hover:text-purple transition-colors ${pathname === '/about' ? 'border-b-2 border-purple text-purple' : ''
                 }`}
@@ -79,6 +85,13 @@ export default function Header() {
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-dark-secondary">
             <nav className="flex flex-col py-4 space-y-4">
+              <Link
+                href="/howitworks"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`px-4 py-2 hover:bg-dark-secondary transition-colors ${pathname === '/howitworks' ? 'text-purple border-l-4 border-purple' : ''}`}
+              >
+                How It Works
+              </Link>
               <Link
                 href="/about"
                 onClick={() => setMobileMenuOpen(false)}
