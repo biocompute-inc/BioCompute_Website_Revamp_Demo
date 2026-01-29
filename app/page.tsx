@@ -176,7 +176,7 @@ export default function Home() {
       >
         <DottedGlowBackground
           className="fixed inset-0 z-[5]"
-          gap={35}
+          gap={60}
           radius={3}
           color="rgba(165, 128, 192, 0.4)"
           glowColor="rgba(155, 111, 181, 1)"

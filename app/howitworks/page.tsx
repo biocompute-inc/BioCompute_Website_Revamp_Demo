@@ -116,7 +116,7 @@ export default function HowItWorks() {
 
             {/* Header */}
             <div className="absolute top-20 left-0 w-full z-20 text-center px-4 pointer-events-none">
-                <h1 className="text-3xl md:text-5xl font-bold text-white tracking-tight">How It Works</h1>
+                {/* <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">How It Works</h1> */}
             </div>
 
             {/* SLIDER TRACK */}
