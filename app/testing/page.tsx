@@ -1,188 +1,239 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin'; // Optional: for smoother click-to-scroll
-import { useGSAP } from '@gsap/react';
-import {
-    Server,
-    Dna,
-    Vault,
-    ScanLine,
-    MonitorPlay
-} from 'lucide-react';
-// import DNABackground from '@/components/DNABackground';
+import React, { useState, useEffect, useRef } from 'react';
 
-// Register plugins
-if (typeof window !== 'undefined') {
-    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+// --- Types ---
+interface CarouselItem {
+    image: string;
+    title: string;
+    desc: string;
+    time?: number;
 }
 
-const steps = [
+const imageArray: CarouselItem[] = [
     {
-        id: 0,
-        title: "Digital Encoding",
-        subtitle: "01. Encoding",
-        description: "Binary data (0s and 1s) is translated into the four nucleotide bases of DNA: A, C, G, T.",
-        icon: <Server className="w-16 h-16 md:w-32 md:h-32 text-purple-400" />,
+        image: "https://picsum.photos/id/117/1000/1000",
+        title: "Netflix原創影集《誰是被害者》宣傳曲",
+        desc: "許瑋甯《每個人都是鬼》by湯包(湯明憲)"
     },
     {
-        id: 1,
-        title: "Synthesis",
-        subtitle: "02. Writing",
-        description: "Advanced enzymatic processes physically synthesize these sequences into synthetic DNA strands.",
-        icon: <Dna className="w-16 h-16 md:w-32 md:h-32 text-purple-400" />,
+        image: "https://picsum.photos/id/137/1000/1000",
+        title: "微電影《喜歡可以嗎》主題曲",
+        desc: "曹祐寧《兩小勿猜》by姚書寰(姚頭)/曜花"
     },
     {
-        id: 2,
-        title: "The Vault",
-        subtitle: "03. Storage",
-        description: "DNA is preserved in ultra-dense, cold storage vaults. A single gram can store terabytes for centuries.",
-        icon: <Vault className="w-16 h-16 md:w-32 md:h-32 text-purple-400" />,
+        image: "https://picsum.photos/id/153/1000/1000",
+        title: "首支個人單曲",
+        desc: "亮哲《囡仔》by亮哲"
     },
     {
-        id: 3,
-        title: "Sequencing",
-        subtitle: "04. Reading",
-        description: "When files are retrieved, high-speed sequencers read the nucleotide order back into digital format.",
-        icon: <ScanLine className="w-16 h-16 md:w-32 md:h-32 text-purple-400" />,
-    },
-    {
-        id: 4,
-        title: "Decoding",
-        subtitle: "05. Restoration",
-        description: "The sequence is decoded back into binary, perfectly restoring the original files.",
-        icon: <MonitorPlay className="w-16 h-16 md:w-32 md:h-32 text-purple-400" />,
-    },
+        image: "https://picsum.photos/id/265/1000/1000",
+        title: "新加坡新銳創作歌手",
+        desc: "卓振聲《以後》by方炯鎵，卓振聲"
+    }
 ];
 
-export default function HowItWorks() {
-    const container = useRef<HTMLDivElement>(null);
-    const slider = useRef<HTMLDivElement>(null);
-    const triggerRef = useRef<ScrollTrigger | null>(null);
-    const [activeStep, setActiveStep] = useState(0);
+export default function CarouselPage() {
+    const [screenX, setScreenX] = useState(0);
+    const [dataArray, setDataArray] = useState<CarouselItem[]>(imageArray);
+    const [nowIndex, setNowIndex] = useState(4); // Default visibleAmount
+    const [isAnimate, setIsAnimate] = useState(true);
+    const [isMouseDown, setIsMouseDown] = useState(false);
+    const [startX, setStartX] = useState(0);
+    const [diffX, setDiffX] = useState(0);
+    const [movingStatus, setMovingStatus] = useState(1);
 
-    useGSAP(() => {
-        const panels = gsap.utils.toArray(".panel");
-        const totalPanels = panels.length;
+    const visibleAmount = 4;
+    const carouselPostWidth = screenX > 900 ? 400 : screenX;
+    const carouselPostMargin = 40;
 
-        const anim = gsap.to(panels, {
-            xPercent: -100 * (totalPanels - 1),
-            ease: "none",
-            scrollTrigger: {
-                trigger: container.current,
-                pin: true,
-                scrub: 1,
-                snap: 1 / (totalPanels - 1),
-                end: () => "+=" + (slider.current?.scrollWidth || window.innerWidth),
-                // UPDATE LOGIC: Map scroll progress (0-1) to active step index
-                onUpdate: (self) => {
-                    const progress = self.progress;
-                    // Calculate index (0 to 4) based on progress
-                    const newIndex = Math.round(progress * (totalPanels - 1));
-                    setActiveStep(newIndex);
-                }
-            }
-        });
+    // Initialization & Resize
+    useEffect(() => {
+        setScreenX(window.innerWidth);
+        const handleResize = () => setScreenX(window.innerWidth);
+        window.addEventListener('resize', handleResize);
 
-        // Store reference to trigger for click-navigation
-        triggerRef.current = anim.scrollTrigger;
+        // Infinite Array Setup
+        const behindData = imageArray.slice(0, visibleAmount);
+        const beforeData = imageArray.slice(-visibleAmount);
+        const newData = [...beforeData, ...imageArray, ...behindData].map((item, index) => ({
+            ...item,
+            time: new Date().getTime() + index
+        }));
+        setDataArray(newData);
 
-    }, { scope: container });
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
-    // Handle Tab Click
-    const jumpToStep = (index: number) => {
-        const trigger = triggerRef.current;
-        if (!trigger || !container.current) return;
-
-        // Calculate the exact scroll position for this step
-        const totalScrollDistance = trigger.end - trigger.start;
-        const progressPerStep = 1 / (steps.length - 1);
-        const targetScroll = trigger.start + (totalScrollDistance * (progressPerStep * index));
-
-        // Scroll there smoothly
-        gsap.to(window, { scrollTo: targetScroll, duration: 1, ease: "power2.out" });
+    const changeImagePosition = (offset: number) => {
+        setIsAnimate(true);
+        setNowIndex((prev) => prev + offset);
     };
 
+    const handleTransitionEnd = () => {
+        if (nowIndex >= dataArray.length - visibleAmount) {
+            setIsAnimate(false);
+            setNowIndex(visibleAmount);
+        } else if (nowIndex <= 0) {
+            setIsAnimate(false);
+            setNowIndex(dataArray.length - (visibleAmount * 2));
+        }
+    };
+
+    const handleInteractionStart = (e: any) => {
+        const x = e.touches ? e.touches[0].clientX : e.clientX;
+        setIsMouseDown(true);
+        setStartX(x);
+    };
+
+    const handleInteractionMove = (e: any) => {
+        if (!isMouseDown) return;
+        const x = e.touches ? e.touches[0].clientX : e.clientX;
+        const currentDiff = startX - x;
+        setDiffX(currentDiff);
+        setMovingStatus(-currentDiff < 0 ? -1 : 1);
+    };
+
+    const handleInteractionEnd = (e: any) => {
+        if (!isMouseDown) return;
+        const x = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+        const finalDiff = startX - x;
+        const maxDiffX = carouselPostWidth / 2;
+
+        let targetIndex = nowIndex;
+        if (finalDiff > maxDiffX) targetIndex++;
+        else if (finalDiff < -maxDiffX) targetIndex--;
+
+        setIsMouseDown(false);
+        setIsAnimate(true);
+        setNowIndex(targetIndex);
+        setStartX(0);
+        setDiffX(0);
+    };
+
+    const computedTranslateX = -nowIndex * carouselPostWidth - (carouselPostMargin * nowIndex);
+
+    const getMovingStyle = (index: number) => {
+        const styles = { x: -diffX, z: 0, opacity: 1 };
+        if (!isMouseDown) {
+            if (nowIndex > index) { styles.z = -carouselPostWidth; styles.opacity = 0; }
+            styles.x = 0;
+            return styles;
+        }
+        if (movingStatus === 1) {
+            if (nowIndex - 1 === index) {
+                const z = -carouselPostWidth - diffX;
+                styles.z = z > 0 ? 0 : z;
+                styles.opacity = -diffX / carouselPostWidth;
+            } else if (nowIndex > index) { styles.z = -carouselPostWidth; styles.opacity = 0; }
+        } else {
+            if (nowIndex === index) {
+                styles.z = -diffX;
+                styles.opacity = 1 - Math.abs(diffX / carouselPostWidth);
+            } else if (nowIndex > index) { styles.z = -carouselPostWidth; styles.opacity = 0; }
+        }
+        return styles;
+    };
+
+    if (screenX === 0) return null;
+
     return (
-        <div ref={container} className="relative w-full h-screen overflow-hidden bg-black flex flex-col">
+        <div className="mainWrapper">
+            <style dangerouslySetInnerHTML={{
+                __html: `
+        .mainWrapper {
+          width: 100%; height: 100vh; display: flex; justify-content: center; 
+          align-items: center; background: #000; overflow: hidden; font-family: sans-serif;
+        }
+        .carouselContainer { width: 100%; display: flex; justify-content: center; position: relative; }
+        .carouselArea { 
+          width: 100%; white-space: nowrap; position: relative; margin-left: 240px; 
+          border-radius: 10px; perspective: 1000px;
+        }
+        @media (max-width: 900px) { .carouselArea { margin-left: 0; } }
+        .carouselPosts { position: relative; transition: 0.5s cubic-bezier(0.2, 1, 0.6, 1); perspective: 600px; cursor: grab; }
+        .carouselPosts:active { cursor: grabbing; }
+        .animateStop { transition: 0s !important; }
+        .carouselPostBox { 
+          display: inline-block; transition: 0.5s; user-select: none; position: relative;
+          transform-style: preserve-3d;
+        }
+        .carouselPostBox-image { 
+          width: 100%; min-height: 400px; background-position: center; 
+          background-size: cover; border-radius: 8px; 
+        }
+        .carouselPostBox-title { margin-top: 24px; font-size: 20px; font-weight: bold; color: #fff; text-align: center; white-space: normal; }
+        .carouselPostBox-desc { margin-top: 16px; opacity: 0.5; font-size: 14px; color: #fff; text-align: center; white-space: normal; }
+        .controlLeft, .controlRight {
+          width: 45px; height: 45px; display: flex; justify-content: center; align-items: center;
+          border: 1px solid #fff; border-radius: 50%; color: #fff; position: absolute;
+          top: 50%; transform: translateY(-50%); cursor: pointer; z-index: 100; transition: 0.3s;
+        }
+        .controlLeft:hover, .controlRight:hover { background: #fff; color: #000; }
+        .controlLeft { left: 20px; } .controlRight { right: 20px; }
+        .carouselPostBox-bar { border-bottom: 1px solid #fff; padding-bottom: 40px; margin-bottom: 10px; transition: 0.5s; }
+        .carouselPostBox-bar::after {
+          content: ''; display: block; height: 8px; width: 8px; position: absolute;
+          bottom: -4px; left: calc(50% - 4px); background: #fff; transform: rotate(45deg);
+        }
+      `}} />
 
-            {/* Background */}
-            <div className="absolute inset-0 z-0">
-                {/* <DNABackground /> */}
-                <div className="absolute inset-0 bg-black/60" />
-            </div>
-
-            {/* Header */}
-            <div className="absolute top-20 left-0 w-full z-20 text-center px-4 pointer-events-none">
-                <h1 className="text-3xl md:text-5xl font-bold text-white tracking-tight">How It Works</h1>
-            </div>
-
-            {/* SLIDER TRACK */}
-            <div ref={slider} className="flex h-full w-[500%]">
-                {steps.map((step) => (
+            <div className="carouselContainer">
+                <div className="carouselArea">
                     <div
-                        key={step.id}
-                        className="panel relative w-screen h-full flex flex-col md:flex-row items-center justify-center gap-8 md:gap-24 p-6 box-border border-r border-white/5"
+                        className={`carouselPosts ${isAnimate ? '' : 'animateStop'}`}
+                        onMouseDown={handleInteractionStart}
+                        onTouchStart={handleInteractionStart}
+                        onMouseMove={handleInteractionMove}
+                        onTouchMove={handleInteractionMove}
+                        onMouseUp={handleInteractionEnd}
+                        onTouchEnd={handleInteractionEnd}
+                        onTransitionEnd={handleTransitionEnd}
                     >
-                        {/* Icon Box */}
-                        <div className="w-48 h-48 md:w-[450px] md:h-[450px] flex-shrink-0 bg-gradient-to-br from-purple-900/20 to-black border border-purple-500/20 rounded-[2.5rem] flex items-center justify-center shadow-[0_0_80px_rgba(168,85,247,0.15)] backdrop-blur-sm">
-                            {step.icon}
-                        </div>
-
-                        {/* Text Content */}
-                        <div className="max-w-xl text-center md:text-left">
-                            <div className="text-sm md:text-base text-purple-400 font-bold uppercase tracking-widest mb-2">
-                                {step.subtitle}
-                            </div>
-                            <h3 className="text-3xl md:text-6xl font-bold text-white mb-6">
-                                {step.title}
-                            </h3>
-                            <p className="text-base md:text-xl text-gray-300 leading-relaxed font-light">
-                                {step.description}
-                            </p>
-                        </div>
-                    </div>
-                ))}
-            </div>
-
-            {/* BOTTOM NAVIGATION TABS */}
-            <div className="absolute bottom-0 w-full z-30 bg-gradient-to-t from-black via-black/90 to-transparent pt-12 pb-6">
-                <div className="max-w-6xl mx-auto px-4">
-                    <div className="flex justify-between md:justify-center items-end border-t border-white/10 pt-4 md:gap-4">
-                        {steps.map((step, index) => {
-                            const isActive = index === activeStep;
-
+                        {dataArray.map((item, index) => {
+                            const { x, z, opacity } = getMovingStyle(index);
                             return (
-                                <button
-                                    key={step.id}
-                                    onClick={() => jumpToStep(index)}
-                                    className={`
-                       group relative flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer flex-1 pb-4
-                       ${isActive ? 'opacity-100' : 'opacity-40 hover:opacity-70'}
-                     `}
+                                <div
+                                    key={item.time || index}
+                                    className={`carouselPostBox ${isAnimate ? '' : 'animateStop'}`}
+                                    style={{
+                                        width: carouselPostWidth,
+                                        marginRight: carouselPostMargin,
+                                        transform: `translateX(${computedTranslateX + x}px) translateZ(${z}px)`,
+                                        opacity: opacity,
+                                    }}
                                 >
-                                    {/* Step Title (Moves up when active) */}
-                                    <span className={`
-                        text-[9px] md:text-xs font-bold uppercase tracking-widest text-white transition-transform duration-300
-                        ${isActive ? 'translate-y-0' : 'translate-y-2'}
-                      `}>
-                                        {step.title}
-                                    </span>
+                                    <div className="carouselPostBox-image" style={{ backgroundImage: `url(${item.image})` }} />
+                                    <div className="carouselPostBox-title">{item.title}</div>
+                                    <div className="carouselPostBox-desc">{item.desc}</div>
+                                </div>
+                            );
+                        })}
+                    </div>
 
-                                    {/* Progress Bar (Glows when active) */}
-                                    <div className={`
-                        h-1 w-full rounded-full transition-all duration-500
-                        ${isActive ? 'bg-purple-500 shadow-[0_0_15px_#a855f7] scale-x-100' : 'bg-white/20 scale-x-90'}
-                      `} />
-                                </button>
-                            )
+                    <div className="flex" style={{ perspective: '600px' }}>
+                        {dataArray.map((_, index) => {
+                            const { x, z, opacity } = getMovingStyle(index);
+                            return (
+                                <div
+                                    key={`bar-${index}`}
+                                    className={`carouselPostBox-bar ${isAnimate ? '' : 'animateStop'}`}
+                                    style={{
+                                        width: carouselPostWidth,
+                                        paddingRight: carouselPostMargin,
+                                        transform: `translateX(${computedTranslateX + x}px) translateZ(${(z * 2) / 3}px)`,
+                                        opacity: opacity,
+                                        position: 'relative'
+                                    }}
+                                />
+                            );
                         })}
                     </div>
                 </div>
-            </div>
 
+                <button className="controlLeft" onClick={() => changeImagePosition(-1)}>‹</button>
+                <button className="controlRight" onClick={() => changeImagePosition(1)}>›</button>
+            </div>
         </div>
     );
 }
