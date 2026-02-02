@@ -6,7 +6,7 @@ import { Mail, MapPin, Linkedin, Github } from 'lucide-react';
 export default function Footer() {
   return (
     <footer className="bg-black border-t border-dark">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid md:grid-cols-4 gap-12 mb-12">
           {/* Company Links */}
           <div>
@@ -91,8 +91,8 @@ export default function Footer() {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-dark pt-8">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+        <div className="border-t border-dark ">
+          <div className="flex flex-col md:flex-row items-center justify-center ">
             <p className="text-gray-500 text-sm">
               © Copyright 2026 BioCompute Inc.
             </p>

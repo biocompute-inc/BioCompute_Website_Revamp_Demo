@@ -3,16 +3,17 @@
 import { useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin'; // Optional: for smoother click-to-scroll
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { useGSAP } from '@gsap/react';
 import {
     Server,
     Dna,
     Vault,
     ScanLine,
-    MonitorPlay
+    MonitorPlay,
+    ChevronLeft,  // Added Icon
+    ChevronRight  // Added Icon
 } from 'lucide-react';
-// import DNABackground from '@/components/DNABackground';
 
 // Register plugins
 if (typeof window !== 'undefined') {
@@ -76,32 +77,30 @@ export default function HowItWorks() {
                 scrub: 1,
                 snap: 1 / (totalPanels - 1),
                 end: () => "+=" + (slider.current?.scrollWidth || window.innerWidth),
-                // UPDATE LOGIC: Map scroll progress (0-1) to active step index
                 onUpdate: (self) => {
                     const progress = self.progress;
-                    // Calculate index (0 to 4) based on progress
                     const newIndex = Math.round(progress * (totalPanels - 1));
                     setActiveStep(newIndex);
                 }
             }
         });
 
-        // Store reference to trigger for click-navigation
         triggerRef.current = anim.scrollTrigger;
 
     }, { scope: container });
 
-    // Handle Tab Click
+    // Handle Tab Click / Navigation
     const jumpToStep = (index: number) => {
+        // Boundary checks
+        if (index < 0 || index >= steps.length) return;
+
         const trigger = triggerRef.current;
         if (!trigger || !container.current) return;
 
-        // Calculate the exact scroll position for this step
         const totalScrollDistance = trigger.end - trigger.start;
         const progressPerStep = 1 / (steps.length - 1);
         const targetScroll = trigger.start + (totalScrollDistance * (progressPerStep * index));
 
-        // Scroll there smoothly
         gsap.to(window, { scrollTo: targetScroll, duration: 1, ease: "power2.out" });
     };
 
@@ -110,7 +109,6 @@ export default function HowItWorks() {
 
             {/* Background */}
             <div className="absolute inset-0 z-0">
-                {/* <DNABackground /> */}
                 <div className="absolute inset-0 bg-black/60" />
             </div>
 
@@ -147,39 +145,78 @@ export default function HowItWorks() {
                 ))}
             </div>
 
-            {/* BOTTOM NAVIGATION TABS */}
+            {/* BOTTOM NAVIGATION CONTAINER */}
             <div className="absolute bottom-0 w-full z-30 bg-gradient-to-t from-black via-black/90 to-transparent pt-12 pb-6">
-                <div className="max-w-6xl mx-auto px-4">
-                    <div className="flex justify-between md:justify-center items-end border-t border-white/10 pt-4 md:gap-4">
+                <div className="max-w-7xl mx-auto px-4 flex items-end gap-2 md:gap-6">
+
+                    {/* --- PREV ARROW --- */}
+                    <button
+                        onClick={() => jumpToStep(activeStep - 1)}
+                        disabled={activeStep === 0}
+                        className={`
+                          group relative p-3 md:p-3 mb-3 rounded-full border border-white/10 bg-white/5 
+                          transition-all duration-300 flex-shrink-0
+                          ${activeStep === 0
+                                ? 'opacity-30 cursor-not-allowed'
+                                : 'opacity-100 hover:bg-purple-500/20 hover:border-purple-500/50 cursor-pointer'}
+                        `}
+                    >
+                        <ChevronLeft className={`w-5 h-5 md:w-4 md:h-4 text-white transition-transform duration-300 ${activeStep !== 0 && 'group-hover:-translate-x-1'}`} />
+                    </button>
+
+                    {/* --- TABS (Flex Grow to fill space) --- */}
+                    <div className="flex-1 flex justify-between md:justify-center items-end border-t border-white/10 pt-4 md:gap-4">
                         {steps.map((step, index) => {
                             const isActive = index === activeStep;
-
                             return (
                                 <button
                                     key={step.id}
                                     onClick={() => jumpToStep(index)}
                                     className={`
-                       group relative flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer flex-1 pb-4
-                       ${isActive ? 'opacity-100' : 'opacity-40 hover:opacity-70'}
-                     `}
+                                      group relative flex flex-col items-center gap-3 transition-all duration-300 cursor-pointer flex-1 pb-4
+                                      ${isActive ? 'opacity-100' : 'opacity-40 hover:opacity-70'}
+                                    `}
                                 >
-                                    {/* Step Title (Moves up when active) */}
+                                    {/* Step Title */}
                                     <span className={`
-                        text-[9px] md:text-xs font-bold uppercase tracking-widest text-white transition-transform duration-300
-                        ${isActive ? 'translate-y-0' : 'translate-y-2'}
-                      `}>
+                                      hidden md:block text-[9px] md:text-xs font-bold uppercase tracking-widest text-white transition-transform duration-300
+                                      ${isActive ? 'translate-y-0' : 'translate-y-2'}
+                                    `}>
                                         {step.title}
                                     </span>
+                                    {/* Mobile Only Index */}
+                                    <span className={`
+                                      md:hidden text-[9px] font-bold text-white transition-transform duration-300
+                                      ${isActive ? 'translate-y-0' : 'translate-y-2'}
+                                    `}>
+                                        0{index + 1}
+                                    </span>
 
-                                    {/* Progress Bar (Glows when active) */}
+                                    {/* Progress Bar */}
                                     <div className={`
-                        h-1 w-full rounded-full transition-all duration-500
-                        ${isActive ? 'bg-purple-500 shadow-[0_0_15px_#a855f7] scale-x-100' : 'bg-white/20 scale-x-90'}
-                      `} />
+                                      h-1 w-full rounded-full transition-all duration-500
+                                      ${isActive ? 'bg-purple-500 shadow-[0_0_15px_#a855f7] scale-x-100' : 'bg-white/20 scale-x-90'}
+                                    `} />
                                 </button>
-                            )
+                            );
                         })}
                     </div>
+
+                    {/* --- NEXT ARROW --- */}
+                    <button
+                        onClick={() => jumpToStep(activeStep + 1)}
+                        disabled={activeStep === steps.length - 1}
+                        className={`
+                          group relative p-3 md:p-3 mb-3 rounded-full border border-white/10 bg-white/5 
+                          transition-all duration-300 flex-shrink-0
+                          ${activeStep === steps.length - 1
+                                ? 'opacity-30 cursor-not-allowed'
+                                : 'opacity-100 hover:bg-purple-500/20 hover:border-purple-500/50 cursor-pointer'}
+                        `}
+                    >
+                        <ChevronRight className={`w-5 h-5 md:w-4 md:h-4 text-white transition-transform duration-300 ${activeStep !== steps.length - 1 && 'group-hover:translate-x-1'}`} />
+                    </button>
+
                 </div>
             </div>
 

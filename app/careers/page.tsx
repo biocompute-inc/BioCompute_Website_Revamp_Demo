@@ -23,7 +23,7 @@ export default function Careers() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <p className="text-4xl sm:text-5xl font-bold uppercase tracking-widest text-white mb-28 sm:mb-14">
+              <p className="text-2xl mt-3 font-medium uppercase tracking-widest text-white mb-2">
                 CAREERS
               </p>
               <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4">

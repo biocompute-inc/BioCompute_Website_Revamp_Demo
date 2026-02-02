@@ -44,18 +44,30 @@ export default function Features() {
       </div>
 
       {/* How It Works Image Section */}
-      <div className="bg-[#efe4f4] pt-8">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6">HOW IT WORKS</h2>
-        <div className="w-full mx-auto">
-          <Image
-            src="/howitworks1.png"
-            alt="How it works diagram"
-            width={900}
-            height={400}
-            className="w-full h-auto rounded-lg shadow-md"
-            style={{ width: '100%', height: 'auto' }}
-            priority
-          />
+      <div className="bg-purple/10 py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
+            HOW IT WORKS
+          </h2>
+
+          {/* Steps Flow */}
+          <div className="overflow-x-auto pb-6">
+            <div className="flex items-center justify-center gap-3 md:gap-4 min-w-max md:min-w-full">
+              {steps.map((step, index) => (
+                <div key={index} className="flex items-center gap-3 md:gap-4">
+                  <div className="flex flex-col items-center">
+                    <div className="text-3xl md:text-4xl mb-2">{step.icon}</div>
+                    <p className="text-center text-xs md:text-sm font-medium whitespace-nowrap">
+                      {step.label}
+                    </p>
+                  </div>
+                  {index < steps.length - 1 && (
+                    <div className="text-2xl text-gray-400 mx-2 hidden sm:block">→</div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
