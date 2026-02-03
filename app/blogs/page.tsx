@@ -44,9 +44,9 @@ export default function BlogsPage() {
   }, [searchQuery, blogs]);
 
   return (
-    <div className="min-h-screen pt-16 bg-white">
+    <div className="min-h-screen pt-16 bg-white scroll-smooth">
       {/* Header - Full Width */}
-      <div className="bg-white  p-8 md:p-20 ">
+      <div className="bg-white p-8 md:p-20 transition-all duration-300 ease-in-out">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
@@ -76,7 +76,7 @@ export default function BlogsPage() {
       </div>
 
       {/* Blog Grid with Layout Guardrails */}
-      <div className="max-w-7xl mx-auto px-4  sm:px-6 lg:px-8 pb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 transition-all duration-300 ease-in-out">
         {isLoading ? (
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             {/* Header Skeleton */}
@@ -122,12 +122,12 @@ export default function BlogsPage() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 will-change-transform">
             {filteredBlogs.map((blog) => (
               <Link
                 key={blog.slug}
                 href={`/blogs/${blog.slug}`}
-                className="group block border-black border bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
+                className="group block border-black border bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 ease-out transform hover:-translate-y-1">
 
                 {/* Fixed Aspect Ratio Image Container */}
                 <div className="relative aspect-video w-full overflow-hidden bg-gray-100">
@@ -135,7 +135,7 @@ export default function BlogsPage() {
                     src={blog.image || 'https://images.unsplash.com/photo-1576075796033-848c2a5f3696?w=800&h=450&fit=crop'}
                     alt={blog.title}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
                 </div>

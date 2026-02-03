@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect, lazy, Suspense, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { DottedGlowBackground } from '@/client/components/ui/dottedglowbackground';
 
 // Lazy load heavy components
 const Features = lazy(() => import('@/components/sections/Features'));
@@ -25,9 +24,10 @@ const SectionPlaceholder = memo(({ onEnter, index }: { onEnter: (n: number) => v
 SectionPlaceholder.displayName = 'SectionPlaceholder';
 
 // --- ANIMATION CONFIG ---
-// A "Luxury" Ease: Starts moderately fast, then brakes smoothly.
-const LUXURY_EASE = [0.2, 1, 0.3, 1];
-const TRANSITION_SETTINGS = { duration: 2.5, ease: LUXURY_EASE };
+// Smooth, fluid easing for premium feel
+const SMOOTH_EASE = [0.25, 0.1, 0.25, 1];
+const TRANSITION_SETTINGS = { duration: 1, ease: SMOOTH_EASE };
+const SCROLL_LOCK_DURATION = 1000;
 
 export default function Home() {
   const [currentSection, setCurrentSection] = useState(0);
@@ -101,9 +101,8 @@ export default function Home() {
 
           setTimeout(() => {
             canScrollRef.current = true;
-            // Optional: Re-enable snap if you want it to feel rigid again
             container.style.scrollSnapType = 'y mandatory';
-          }, 1000);
+          }, SCROLL_LOCK_DURATION);
         }
         return;
       }
@@ -131,13 +130,11 @@ export default function Home() {
         behavior: 'smooth'
       });
 
-      // LOCK DURATION: Matches the transition duration (1.2s)
+      // LOCK DURATION: Matches the transition duration
       setTimeout(() => {
         canScrollRef.current = true;
-        // Re-enable snap only after the movement is totally done.
-        // This ensures proper alignment without the "jitter".
         container.style.scrollSnapType = 'y mandatory';
-      }, 1200);
+      }, SCROLL_LOCK_DURATION);
     };
 
     container.addEventListener('wheel', handleWheel, { passive: false });
@@ -167,7 +164,7 @@ export default function Home() {
       opacity: 0,
       filter: "blur(8px)",
       marginBottom: "0rem",
-      transition: { duration: 0.8, ease: [0.4, 0, 0.2, 1] }
+      transition: { duration: 0.6, ease: SMOOTH_EASE }
     }
   };
 
@@ -192,7 +189,7 @@ export default function Home() {
       opacity: 0,
       letterSpacing: "0em",
       filter: "blur(8px)",
-      transition: { duration: 0.8, ease: [0.4, 0, 0.2, 1] }
+      transition: { duration: 0.6, ease: SMOOTH_EASE }
     }
   };
 
@@ -228,7 +225,7 @@ export default function Home() {
           }}
           transition={TRANSITION_SETTINGS}
           style={{
-            willChange: currentSection < 2 ? 'transform, opacity' : 'auto',
+            willChange: 'transform, opacity',
             transform: 'translateZ(0)',
             backfaceVisibility: 'hidden'
           }}
@@ -281,7 +278,7 @@ export default function Home() {
             }}
             transition={TRANSITION_SETTINGS}
             style={{
-              willChange: currentSection < 3 ? 'transform, opacity' : 'auto',
+              willChange: 'transform, opacity',
               transform: 'translateZ(0)',
               backfaceVisibility: 'hidden'
             }}
@@ -302,9 +299,9 @@ export default function Home() {
                 initial={{ opacity: 0, x: -30, scale: 0.95 }}
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={{ opacity: 0, x: -30, scale: 0.95 }}
-                transition={{ duration: 0.6, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                transition={{ duration: 0.5, delay: 0.15, ease: SMOOTH_EASE }}
                 className="fixed top-[35%] left-[10%] xl:left-[32%] text-white text-xl md:text-3xl font-bold uppercase tracking-widest z-30"
-                style={{ transform: 'translateZ(0)' }}
+                style={{ transform: 'translateZ(0)', willChange: 'transform, opacity' }}
               >
                 SECURE
               </motion.div>
@@ -312,9 +309,9 @@ export default function Home() {
                 initial={{ opacity: 0, x: 30, scale: 0.95 }}
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={{ opacity: 0, x: 30, scale: 0.95 }}
-                transition={{ duration: 0.6, delay: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                transition={{ duration: 0.5, delay: 0.25, ease: SMOOTH_EASE }}
                 className="fixed top-[45%] right-[10%] xl:right-[24%] text-white text-xl md:text-3xl font-bold uppercase tracking-widest z-30"
-                style={{ transform: 'translateZ(0)' }}
+                style={{ transform: 'translateZ(0)', willChange: 'transform, opacity' }}
               >
                 ULTRA-DENSE
               </motion.div>
@@ -322,9 +319,9 @@ export default function Home() {
                 initial={{ opacity: 0, x: -30, scale: 0.95 }}
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={{ opacity: 0, x: -30, scale: 0.95 }}
-                transition={{ duration: 0.6, delay: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                transition={{ duration: 0.5, delay: 0.35, ease: SMOOTH_EASE }}
                 className="fixed top-[55%] left-[12%] xl:left-[23%] text-white text-xl md:text-3xl font-bold uppercase tracking-widest z-30"
-                style={{ transform: 'translateZ(0)' }}
+                style={{ transform: 'translateZ(0)', willChange: 'transform, opacity' }}
               >
                 LONG-LASTING
               </motion.div>
@@ -339,9 +336,9 @@ export default function Home() {
               initial={{ y: '100%' }}
               animate={{ y: '0%' }}
               exit={{ y: '100%' }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
+              transition={{ duration: 0.6, delay: 0.1, ease: SMOOTH_EASE }}
               className="fixed bottom-0 left-0 w-full bg-black/80 backdrop-blur-md border-t border-white/10 py-8 z-40"
-              style={{ transform: 'translateZ(0)' }}
+              style={{ transform: 'translateZ(0)', willChange: 'transform' }}
             >
               <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
                 <div className="text-center">
