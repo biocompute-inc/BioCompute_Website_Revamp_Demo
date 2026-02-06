@@ -79,10 +79,10 @@ export default function JobDetailPage() {
             <p className="text-gray-700 leading-relaxed">{job.description}</p>
           </section>
 
-          {/* Requirements */}
+          {/* Who are we looking for */}
           <section>
             <h2 className="text-2xl font-bold mb-4">Who Are We Looking For?</h2>
-            <p className="text-gray-700 leading-relaxed">{job.requirements}</p>
+            <p className="text-gray-700 leading-relaxed">{job.whoWeAreLookingFor}</p>
           </section>
 
           {/* How to Apply */}
