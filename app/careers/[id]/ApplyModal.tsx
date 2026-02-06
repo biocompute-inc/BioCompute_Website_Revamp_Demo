@@ -1,22 +1,24 @@
 'use client';
 
 import { useState } from 'react';
-import { Upload, X } from 'lucide-react';
+import { X } from 'lucide-react';
 
 interface ApplyModalProps {
+    jobId: number;
     jobTitle: string;
 }
 
-export default function ApplyModal({ jobTitle }: ApplyModalProps) {
+export default function ApplyModal({ jobId, jobTitle }: ApplyModalProps) {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
         phone: '',
         linkedIn: '',
+        resume: '',
         coverLetter: '',
     });
-    const [resumeFile, setResumeFile] = useState<File | null>(null);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData({
@@ -25,19 +27,42 @@ export default function ApplyModal({ jobTitle }: ApplyModalProps) {
         });
     };
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            setResumeFile(e.target.files[0]);
-        }
-    };
-
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle form submission (e.g., send to API)
-        console.log('Form submitted:', { formData, resumeFile });
-        // Reset and close
-        setIsModalOpen(false);
-        alert('Application submitted successfully!');
+        setIsSubmitting(true);
+
+        try {
+            const response = await fetch('https://biocompute-cms.onrender.com/api/applications', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    jobId,
+                    ...formData,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to submit application');
+            }
+
+            alert('Application submitted successfully!');
+            setFormData({
+                fullName: '',
+                email: '',
+                phone: '',
+                linkedIn: '',
+                resume: '',
+                coverLetter: '',
+            });
+            setIsModalOpen(false);
+        } catch (error) {
+            console.error('Error submitting application:', error);
+            alert('Failed to submit application. Please try again.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -134,31 +159,21 @@ export default function ApplyModal({ jobTitle }: ApplyModalProps) {
                                 />
                             </div>
 
-                            {/* Resume Upload */}
+                            {/* Resume URL */}
                             <div>
                                 <label htmlFor="resume" className="block text-sm font-semibold text-dark mb-2">
-                                    Resume/CV *
+                                    Resume/CV Link *
                                 </label>
-                                <div className="border-2 border-dashed border-gray-300 rounded p-6 text-center hover:border-purple transition-colors">
-                                    <input
-                                        type="file"
-                                        id="resume"
-                                        accept=".pdf,.doc,.docx"
-                                        required
-                                        onChange={handleFileChange}
-                                        className="hidden"
-                                    />
-                                    <label
-                                        htmlFor="resume"
-                                        className="cursor-pointer flex flex-col items-center gap-2"
-                                    >
-                                        <Upload size={32} className="text-gray-400" />
-                                        <span className="text-sm text-gray-600">
-                                            {resumeFile ? resumeFile.name : 'Click to upload or drag and drop'}
-                                        </span>
-                                        <span className="text-xs text-gray-400">PDF, DOC, DOCX (max 10MB)</span>
-                                    </label>
-                                </div>
+                                <input
+                                    type="url"
+                                    id="resume"
+                                    name="resume"
+                                    required
+                                    value={formData.resume}
+                                    onChange={handleInputChange}
+                                    className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-purple transition-colors"
+                                    placeholder="https://drive.google.com/file/... or https://dropbox.com/..."
+                                />
                             </div>
 
                             {/* Cover Letter */}
@@ -188,9 +203,10 @@ export default function ApplyModal({ jobTitle }: ApplyModalProps) {
                                 </button>
                                 <button
                                     type="submit"
-                                    className="flex-1 px-6 py-3 bg-purple text-white rounded font-semibold hover:bg-purple-600 transition-colors"
+                                    disabled={isSubmitting}
+                                    className="flex-1 px-6 py-3 bg-purple text-white rounded font-semibold hover:bg-purple-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
-                                    Submit Application
+                                    {isSubmitting ? 'Submitting...' : 'Submit Application'}
                                 </button>
                             </div>
                         </form>

@@ -1,34 +1,50 @@
+'use client';
+
 import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
-import { getJobById, jobOpenings } from '@/lib/jobs';
-import { notFound } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 import ApplyModal from './ApplyModal';
+import { useEffect, useState } from 'react';
 
-export function generateStaticParams() {
-  return jobOpenings.map((job) => ({
-    id: job.id.toString(),
-  }));
+interface Job {
+  id: number;
+  title: string;
+  location: string;
+  type: string;
+  description: string;
+  requirements: string;
+  howToApply: string;
 }
 
-interface JobDetailPageProps {
-  params: Promise<{
-    id: string;
-  }>;
-}
+export default function JobDetailPage() {
+  const params = useParams();
+  const id = params.id as string;
+  const [job, setJob] = useState<Job | null>(null);
+  const [loading, setLoading] = useState(true);
 
-export async function generateMetadata({ params }: JobDetailPageProps) {
-  const { id } = await params;
-  const job = getJobById(parseInt(id));
-  if (!job) return { title: 'Job Not Found' };
-  return {
-    title: `${job.title} - BioCompute Inc.`,
-    description: `Join our team as a ${job.title} in ${job.location}`,
-  };
-}
+  useEffect(() => {
+    fetch(`https://biocompute-cms.onrender.com/api/jobs/${id}`)
+      .then(res => {
+        if (!res.ok) throw new Error('Job not found');
+        return res.json();
+      })
+      .then(data => {
+        setJob(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Error fetching job:', err);
+        setLoading(false);
+      });
+  }, [id]);
 
-export default async function JobDetailPage({ params }: JobDetailPageProps) {
-  const { id } = await params;
-  const job = getJobById(parseInt(id));
+  if (loading) {
+    return (
+      <div className="bg-white text-dark min-h-screen flex items-center justify-center">
+        <p className="text-gray-600">Loading job details...</p>
+      </div>
+    );
+  }
 
   if (!job) {
     notFound();
@@ -77,7 +93,7 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
         </div>
 
         {/* Apply Button and Modal */}
-        <ApplyModal jobTitle={job.title} />
+        <ApplyModal jobId={job.id} jobTitle={job.title} />
       </div>
     </div>
   );

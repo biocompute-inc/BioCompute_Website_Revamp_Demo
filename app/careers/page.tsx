@@ -1,17 +1,38 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { jobOpenings } from '@/lib/jobs';
+
+interface Job {
+  id: number;
+  title: string;
+  location: string;
+  type: string;
+}
 
 export default function Careers() {
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 3;
-  const totalPages = Math.ceil(jobOpenings.length / itemsPerPage);
 
-  const currentJobs = jobOpenings.slice(
+  useEffect(() => {
+    fetch('https://biocompute-cms.onrender.com/api/jobs')
+      .then(res => res.json())
+      .then(data => {
+        setJobs(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Error fetching jobs:', err);
+        setLoading(false);
+      });
+  }, []);
+
+  const totalPages = Math.ceil(jobs.length / itemsPerPage);
+  const currentJobs = jobs.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -72,87 +93,99 @@ export default function Careers() {
           <div id="open-roles" className="scroll-mt-20">
             <h3 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8">Open Roles</h3>
 
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b-2 border-gray-300">
-                    <th className="text-left py-4 px-4 font-bold text-gray-600 uppercase text-sm">
-                      ROLE
-                    </th>
-                    <th className="text-left py-4 px-4 font-bold text-gray-600 uppercase text-sm">
-                      LOCATION
-                    </th>
-                    <th className="text-left py-4 px-4 font-bold text-gray-600 uppercase text-sm">
-                      TYPE
-                    </th>
-                    <th className="text-right py-4 px-4" />
-                  </tr>
-                </thead>
-                <tbody>
-                  {currentJobs.map((job) => (
-                    <tr
-                      key={job.id}
-                      className="border-b border-gray-200 hover:bg-gray-50 transition-colors"
-                    >
-                      <td className="py-4 px-4 text-dark font-medium">
-                        <Link
-                          href={`/careers/${job.id}`}
-                          className="hover:text-purple transition-colors cursor-pointer"
+            {loading ? (
+              <div className="text-center py-12">
+                <p className="text-gray-600">Loading job openings...</p>
+              </div>
+            ) : jobs.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-gray-600">No open positions at the moment.</p>
+              </div>
+            ) : (
+              <>
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b-2 border-gray-300">
+                        <th className="text-left py-4 px-4 font-bold text-gray-600 uppercase text-sm">
+                          ROLE
+                        </th>
+                        <th className="text-left py-4 px-4 font-bold text-gray-600 uppercase text-sm">
+                          LOCATION
+                        </th>
+                        <th className="text-left py-4 px-4 font-bold text-gray-600 uppercase text-sm">
+                          TYPE
+                        </th>
+                        <th className="text-right py-4 px-4" />
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {currentJobs.map((job) => (
+                        <tr
+                          key={job.id}
+                          className="border-b border-gray-200 hover:bg-gray-50 transition-colors"
                         >
-                          {job.title}
-                        </Link>
-                      </td>
-                      <td className="py-4 px-4 text-gray-600">{job.location}</td>
-                      <td className="py-4 px-4 text-gray-600">{job.type}</td>
-                      <td className="py-4 px-4 text-right">
-                        <Link
-                          href={`/careers/${job.id}`}
-                          className="bg-black text-white px-6 py-2 rounded font-bold hover:bg-white transition-all duration-100 border-black border hover:text-black  inline-block"
-                        >
-                          Apply
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                          <td className="py-4 px-4 text-dark font-medium">
+                            <Link
+                              href={`/careers/${job.id}`}
+                              className="hover:text-purple transition-colors cursor-pointer"
+                            >
+                              {job.title}
+                            </Link>
+                          </td>
+                          <td className="py-4 px-4 text-gray-600">{job.location}</td>
+                          <td className="py-4 px-4 text-gray-600">{job.type}</td>
+                          <td className="py-4 px-4 text-right">
+                            <Link
+                              href={`/careers/${job.id}`}
+                              className="bg-black text-white px-6 py-2 rounded font-bold hover:bg-white transition-all duration-100 border-black border hover:text-black  inline-block"
+                            >
+                              Apply
+                            </Link>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
 
-            {/* Pagination */}
-            <div className="flex items-center justify-start gap-2 mt-8">
-              <button
-                onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                disabled={currentPage === 1}
-                className="border border-gray-300 px-4 py-2 rounded text-dark disabled:text-gray-300 disabled:border-gray-300 hover:bg-gray-100 transition-colors"
-              >
-                <ChevronLeft size={20} />
-              </button>
-
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                (page) => (
+                {/* Pagination */}
+                <div className="flex items-center justify-start gap-2 mt-8">
                   <button
-                    key={page}
-                    onClick={() => setCurrentPage(page)}
-                    className={`w-10 h-10 rounded text-sm font-bold transition-colors ${currentPage === page
-                      ? 'bg-black text-white'
-                      : 'border border-gray-300 text-dark hover:bg-gray-100'
-                      }`}
+                    onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                    disabled={currentPage === 1}
+                    className="border border-gray-300 px-4 py-2 rounded text-dark disabled:text-gray-300 disabled:border-gray-300 hover:bg-gray-100 transition-colors"
                   >
-                    {page}
+                    <ChevronLeft size={20} />
                   </button>
-                )
-              )}
 
-              <button
-                onClick={() =>
-                  setCurrentPage(Math.min(totalPages, currentPage + 1))
-                }
-                disabled={currentPage === totalPages}
-                className="border border-gray-300 px-4 py-2 rounded text-dark disabled:text-gray-300 disabled:border-gray-300 hover:bg-gray-100 transition-colors"
-              >
-                <ChevronRight size={20} />
-              </button>
-            </div>
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                    (page) => (
+                      <button
+                        key={page}
+                        onClick={() => setCurrentPage(page)}
+                        className={`w-10 h-10 rounded text-sm font-bold transition-colors ${currentPage === page
+                          ? 'bg-black text-white'
+                          : 'border border-gray-300 text-dark hover:bg-gray-100'
+                          }`}
+                      >
+                        {page}
+                      </button>
+                    )
+                  )}
+
+                  <button
+                    onClick={() =>
+                      setCurrentPage(Math.min(totalPages, currentPage + 1))
+                    }
+                    disabled={currentPage === totalPages}
+                    className="border border-gray-300 px-4 py-2 rounded text-dark disabled:text-gray-300 disabled:border-gray-300 hover:bg-gray-100 transition-colors"
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </section>
