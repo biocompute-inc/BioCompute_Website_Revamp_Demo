@@ -2,6 +2,13 @@
 
 import { useState, useRef, useEffect, lazy, Suspense, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import {
+  VIDEO_ANIMATION_CONFIG,
+  TEXT_ANIMATION_CONFIG,
+  FLOATING_LABELS_CONFIG,
+  getScreenSize,
+  type ScreenSize
+} from '@/lib/responsive-config';
 
 // Lazy load heavy components
 const Features = lazy(() => import('@/components/sections/Features'));
@@ -32,19 +39,14 @@ const SCROLL_LOCK_DURATION = 1000;
 export default function Home() {
   const [currentSection, setCurrentSection] = useState(0);
   const [isVideoVisible, setIsVideoVisible] = useState(true);
-  const [screenSize, setScreenSize] = useState('xl');
+  const [screenSize, setScreenSize] = useState<ScreenSize>('xl');
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const canScrollRef = useRef(true);
 
   // Screen Size Logic
   useEffect(() => {
     const updateScreenSize = () => {
-      const width = window.innerWidth;
-      if (width < 475) setScreenSize('xs');
-      else if (width < 640) setScreenSize('sm');
-      else if (width < 768) setScreenSize('md');
-      else if (width < 1024) setScreenSize('lg');
-      else setScreenSize('xl');
+      setScreenSize(getScreenSize(window.innerWidth));
     };
     updateScreenSize();
     window.addEventListener('resize', updateScreenSize);
@@ -142,18 +144,19 @@ export default function Home() {
   }, [currentSection]);
 
   // --- TEXT VARIANTS (Added Blur for smoothness) ---
+  const textConfig = TEXT_ANIMATION_CONFIG[screenSize];
 
   const titleVariants = {
     section0: {
-      scale: 1.6,
-      y: -30,
+      scale: textConfig.titleScale.section0,
+      y: textConfig.titleY.section0,
       opacity: 1,
       marginBottom: "1rem",
       transition: TRANSITION_SETTINGS
     },
     section1: {
-      scale: 1,
-      y: 20,
+      scale: textConfig.titleScale.section1,
+      y: textConfig.titleY.section1,
       opacity: 1,
       marginBottom: "1rem",
       transition: TRANSITION_SETTINGS
@@ -170,15 +173,15 @@ export default function Home() {
 
   const dnaVariants = {
     section0: {
-      scale: 1.5,
-      y: 0,
+      scale: textConfig.dnaScale.section0,
+      y: textConfig.dnaY.section0,
       opacity: 1,
       letterSpacing: "0.05em",
       transition: TRANSITION_SETTINGS
     },
     section1: {
-      scale: 1,
-      y: 0,
+      scale: textConfig.dnaScale.section1,
+      y: textConfig.dnaY.section1,
       opacity: 1,
       letterSpacing: "0em",
       transition: TRANSITION_SETTINGS
@@ -220,7 +223,11 @@ export default function Home() {
         <motion.div
           className="fixed inset-0 z-20 flex flex-col items-center justify-center pointer-events-none"
           animate={{
-            top: currentSection === 0 ? '0%' : currentSection === 1 ? '-25%' : '-50%',
+            top: currentSection === 0
+              ? textConfig.containerTop.section0
+              : currentSection === 1
+                ? textConfig.containerTop.section1
+                : '-50%',
             opacity: currentSection < 2 ? 1 : 0
           }}
           transition={TRANSITION_SETTINGS}
@@ -262,18 +269,24 @@ export default function Home() {
         {isVideoVisible && (
           <motion.div
             className="fixed z-10 pointer-events-none"
-            initial={{ top: '100%', left: '50%', x: '-50%', y: '-50%', scale: 1 }}
+            initial={{
+              top: VIDEO_ANIMATION_CONFIG[screenSize].section0.top,
+              left: '50%',
+              x: '-50%',
+              y: '-50%',
+              scale: VIDEO_ANIMATION_CONFIG[screenSize].section0.scale
+            }}
             animate={{
               top: currentSection === 0
-                ? '110%'
+                ? VIDEO_ANIMATION_CONFIG[screenSize].section0.top
                 : currentSection === 1
-                  ? '75%'
-                  : '45%',
+                  ? VIDEO_ANIMATION_CONFIG[screenSize].section1.top
+                  : VIDEO_ANIMATION_CONFIG[screenSize].section2.top,
               scale: currentSection === 0
-                ? 1.2
+                ? VIDEO_ANIMATION_CONFIG[screenSize].section0.scale
                 : currentSection === 1
-                  ? 0.7
-                  : 0.8,
+                  ? VIDEO_ANIMATION_CONFIG[screenSize].section1.scale
+                  : VIDEO_ANIMATION_CONFIG[screenSize].section2.scale,
               opacity: currentSection < 3 ? 1 : 0,
             }}
             transition={TRANSITION_SETTINGS}
@@ -286,7 +299,11 @@ export default function Home() {
             <video
               src="/devicepulsing.mp4"
               autoPlay loop muted playsInline
-              className="object-contain w-[250px] h-[250px] md:w-[350px] md:h-[350px] xl:w-[400px] xl:h-[400px]"
+              style={{
+                width: `${VIDEO_ANIMATION_CONFIG[screenSize].width}px`,
+                height: `${VIDEO_ANIMATION_CONFIG[screenSize].height}px`,
+              }}
+              className="object-contain"
             />
           </motion.div>
         )}
@@ -300,8 +317,13 @@ export default function Home() {
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={{ opacity: 0, x: -30, scale: 0.95 }}
                 transition={{ duration: 0.5, delay: 0.15, ease: SMOOTH_EASE }}
-                className="fixed top-[35%] left-[10%] xl:left-[32%] text-white text-xl md:text-3xl font-bold uppercase tracking-widest z-30"
-                style={{ transform: 'translateZ(0)', willChange: 'transform, opacity' }}
+                className="fixed text-white text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold uppercase tracking-widest z-30 backdrop-blur-xl p-1 rounded-lg"
+                style={{
+                  top: FLOATING_LABELS_CONFIG[screenSize].secure.top,
+                  left: FLOATING_LABELS_CONFIG[screenSize].secure.left,
+                  transform: 'translateZ(0)',
+                  willChange: 'transform, opacity'
+                }}
               >
                 SECURE
               </motion.div>
@@ -310,8 +332,13 @@ export default function Home() {
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={{ opacity: 0, x: 30, scale: 0.95 }}
                 transition={{ duration: 0.5, delay: 0.25, ease: SMOOTH_EASE }}
-                className="fixed top-[45%] right-[10%] xl:right-[24%] text-white text-xl md:text-3xl font-bold uppercase tracking-widest z-30"
-                style={{ transform: 'translateZ(0)', willChange: 'transform, opacity' }}
+                className="fixed text-white text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold uppercase tracking-widest z-30 backdrop-blur-xl p-1 rounded-lg"
+                style={{
+                  top: FLOATING_LABELS_CONFIG[screenSize].ultraDense.top,
+                  right: FLOATING_LABELS_CONFIG[screenSize].ultraDense.right,
+                  transform: 'translateZ(0)',
+                  willChange: 'transform, opacity'
+                }}
               >
                 ULTRA-DENSE
               </motion.div>
@@ -320,8 +347,13 @@ export default function Home() {
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={{ opacity: 0, x: -30, scale: 0.95 }}
                 transition={{ duration: 0.5, delay: 0.35, ease: SMOOTH_EASE }}
-                className="fixed top-[55%] left-[12%] xl:left-[23%] text-white text-xl md:text-3xl font-bold uppercase tracking-widest z-30"
-                style={{ transform: 'translateZ(0)', willChange: 'transform, opacity' }}
+                className="fixed text-white text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold uppercase backdrop-blur-xl p-1 rounded-lg tracking-widest z-30"
+                style={{
+                  top: FLOATING_LABELS_CONFIG[screenSize].longLasting.top,
+                  left: FLOATING_LABELS_CONFIG[screenSize].longLasting.left,
+                  transform: 'translateZ(0)',
+                  willChange: 'transform, opacity'
+                }}
               >
                 LONG-LASTING
               </motion.div>
@@ -337,25 +369,25 @@ export default function Home() {
               animate={{ y: '0%' }}
               exit={{ y: '100%' }}
               transition={{ duration: 0.6, delay: 0.1, ease: SMOOTH_EASE }}
-              className="fixed bottom-0 left-0 w-full bg-black/80 backdrop-blur-md border-t border-white/10 py-8 z-40"
+              className="fixed bottom-0 left-0 w-full bg-black/80 backdrop-blur-md border-t border-white/10 py-4 sm:py-6 md:py-8 z-40"
               style={{ transform: 'translateZ(0)', willChange: 'transform' }}
             >
-              <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-white mb-1">512 PB</div>
-                  <div className="text-xs text-gray-400 uppercase tracking-widest">per cm³</div>
+                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-0.5 sm:mb-1">512 PB</div>
+                  <div className="text-[10px] sm:text-xs text-gray-400 uppercase tracking-widest">per cm³</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-white mb-1">100+</div>
-                  <div className="text-xs text-gray-400 uppercase tracking-widest">years durability</div>
+                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-0.5 sm:mb-1">100+</div>
+                  <div className="text-[10px] sm:text-xs text-gray-400 uppercase tracking-widest">years durability</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-white mb-1">99.99%</div>
-                  <div className="text-xs text-gray-400 uppercase tracking-widest">accuracy</div>
+                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-0.5 sm:mb-1">99.99%</div>
+                  <div className="text-[10px] sm:text-xs text-gray-400 uppercase tracking-widest">accuracy</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-white mb-1">0kWh</div>
-                  <div className="text-xs text-gray-400 uppercase tracking-widest">energy consumption</div>
+                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-0.5 sm:mb-1">0kWh</div>
+                  <div className="text-[10px] sm:text-xs text-gray-400 uppercase tracking-widest">energy consumption</div>
                 </div>
               </div>
             </motion.div>

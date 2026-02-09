@@ -26,35 +26,35 @@ const steps = [
         title: "Digital Encoding",
         subtitle: "01. Encoding",
         description: "Binary data (0s and 1s) is translated into the four nucleotide bases of DNA: A, C, G, T.",
-        icon: <Server className="w-16 h-16 md:w-32 md:h-32 text-purple-400" />,
+        icon: <Server className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 lg:w-32 lg:h-32 text-purple-400" />,
     },
     {
         id: 1,
         title: "Synthesis",
         subtitle: "02. Writing",
         description: "Advanced enzymatic processes physically synthesize these sequences into synthetic DNA strands.",
-        icon: <Dna className="w-16 h-16 md:w-32 md:h-32 text-purple-400" />,
+        icon: <Dna className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 lg:w-32 lg:h-32 text-purple-400" />,
     },
     {
         id: 2,
         title: "The Vault",
         subtitle: "03. Storage",
         description: "DNA is preserved in ultra-dense, cold storage vaults. A single gram can store terabytes for centuries.",
-        icon: <Vault className="w-16 h-16 md:w-32 md:h-32 text-purple-400" />,
+        icon: <Vault className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 lg:w-32 lg:h-32 text-purple-400" />,
     },
     {
         id: 3,
         title: "Sequencing",
         subtitle: "04. Reading",
         description: "When files are retrieved, high-speed sequencers read the nucleotide order back into digital format.",
-        icon: <ScanLine className="w-16 h-16 md:w-32 md:h-32 text-purple-400" />,
+        icon: <ScanLine className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 lg:w-32 lg:h-32 text-purple-400" />,
     },
     {
         id: 4,
         title: "Decoding",
         subtitle: "05. Restoration",
         description: "The sequence is decoded back into binary, perfectly restoring the original files.",
-        icon: <MonitorPlay className="w-16 h-16 md:w-32 md:h-32 text-purple-400" />,
+        icon: <MonitorPlay className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 lg:w-32 lg:h-32 text-purple-400" />,
     },
 ];
 
@@ -122,22 +122,22 @@ export default function HowItWorks() {
                 {steps.map((step) => (
                     <div
                         key={step.id}
-                        className="panel relative w-screen h-full flex flex-col md:flex-row items-center justify-center gap-8 md:gap-24 p-6 box-border border-r border-white/5"
+                        className="panel relative w-screen h-full flex flex-col md:flex-row items-center justify-center gap-4 sm:gap-6 md:gap-24 p-4 sm:p-6 box-border border-r border-white/5"
                     >
                         {/* Icon Box */}
-                        <div className="w-48 h-48 md:w-[450px] md:h-[450px] flex-shrink-0 bg-gradient-to-br from-purple-900/20 to-black border border-purple-500/20 rounded-[2.5rem] flex items-center justify-center shadow-[0_0_80px_rgba(168,85,247,0.15)] backdrop-blur-sm">
+                        <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-64 md:h-64 lg:w-[450px] lg:h-[450px] flex-shrink-0 bg-gradient-to-br from-purple-900/20 to-black border border-purple-500/20 rounded-2xl sm:rounded-3xl md:rounded-[2.5rem] flex items-center justify-center shadow-[0_0_80px_rgba(168,85,247,0.15)] backdrop-blur-sm">
                             {step.icon}
                         </div>
 
                         {/* Text Content */}
-                        <div className="max-w-xl text-center md:text-left">
-                            <div className="text-sm md:text-base text-purple-400 font-bold uppercase tracking-widest mb-2">
+                        <div className="max-w-xl text-center md:text-left px-4">
+                            <div className="text-xs sm:text-sm md:text-base text-purple-400 font-bold uppercase tracking-widest mb-2">
                                 {step.subtitle}
                             </div>
-                            <h3 className="text-3xl md:text-6xl font-bold text-white mb-6">
+                            <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-3 sm:mb-4 md:mb-6">
                                 {step.title}
                             </h3>
-                            <p className="text-base md:text-xl text-gray-300 leading-relaxed font-light">
+                            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-300 leading-relaxed font-light">
                                 {step.description}
                             </p>
                         </div>

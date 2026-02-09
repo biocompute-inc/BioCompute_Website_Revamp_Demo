@@ -40,21 +40,21 @@ export default function Careers() {
   return (
     <div className="pt-16">
       {/* Hero Section */}
-      <section className="bg-dark py-20 relative overflow-hidden">
+      <section className="bg-dark py-12 sm:py-16 md:py-20 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-center">
             <div>
-              <p className="text-2xl mt-3 font-medium uppercase tracking-widest text-white mb-2">
+              <p className="text-lg sm:text-xl md:text-2xl mt-3 font-medium uppercase tracking-widest text-white mb-2">
                 CAREERS
               </p>
-              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4">
+              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 leading-tight">
                 Join the company with a
                 <br />
                 bold new vision
               </h1>
               <a
                 href="#open-roles"
-                className="bg-white text-black px-4 py-2 rounded font-bold hover:bg-gray-600 hover:text-white transition-colors inline-flex items-center gap-2 w-fit"
+                className="bg-white text-black px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 rounded font-bold hover:bg-gray-600 hover:text-white transition-colors inline-flex items-center gap-2 w-fit text-sm sm:text-base"
               >
                 Open Roles
                 <span>↓</span>
@@ -68,7 +68,7 @@ export default function Careers() {
                 alt="DNA Careers"
                 width={400}
                 height={400}
-                className="object-contain"
+                className="object-contain w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96"
               />
             </div>
           </div>
@@ -103,7 +103,8 @@ export default function Careers() {
               </div>
             ) : (
               <>
-                <div className="overflow-x-auto">
+                {/* Desktop Table View */}
+                <div className="hidden md:block overflow-x-auto">
                   <table className="w-full">
                     <thead>
                       <tr className="border-b-2 border-gray-300">
@@ -138,7 +139,7 @@ export default function Careers() {
                           <td className="py-4 px-4 text-right">
                             <Link
                               href={`/careers/${job.id}`}
-                              className="bg-black text-white px-6 py-2 rounded font-bold hover:bg-white transition-all duration-100 border-black border hover:text-black  inline-block"
+                              className="bg-black text-white px-6 py-2 rounded font-bold hover:bg-white transition-all duration-100 border-black border hover:text-black inline-block"
                             >
                               Apply
                             </Link>
@@ -149,12 +150,45 @@ export default function Careers() {
                   </table>
                 </div>
 
+                {/* Mobile Card View */}
+                <div className="md:hidden space-y-4">
+                  {currentJobs.map((job) => (
+                    <div
+                      key={job.id}
+                      className="border border-gray-300 rounded-lg p-4 hover:border-purple transition-colors"
+                    >
+                      <h3 className="text-lg font-bold text-dark mb-2">
+                        <Link
+                          href={`/careers/${job.id}`}
+                          className="hover:text-purple transition-colors"
+                        >
+                          {job.title}
+                        </Link>
+                      </h3>
+                      <div className="space-y-1 mb-4">
+                        <p className="text-sm text-gray-600">
+                          <span className="font-semibold">Location:</span> {job.location}
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          <span className="font-semibold">Type:</span> {job.type}
+                        </p>
+                      </div>
+                      <Link
+                        href={`/careers/${job.id}`}
+                        className="bg-black text-white px-4 py-2 rounded font-bold hover:bg-white transition-all duration-100 border-black border hover:text-black inline-block w-full text-center"
+                      >
+                        Apply
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+
                 {/* Pagination */}
-                <div className="flex items-center justify-start gap-2 mt-8">
+                <div className="flex items-center justify-start gap-2 mt-6 sm:mt-8">
                   <button
                     onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                     disabled={currentPage === 1}
-                    className="border border-gray-300 px-4 py-2 rounded text-dark disabled:text-gray-300 disabled:border-gray-300 hover:bg-gray-100 transition-colors"
+                    className="border border-gray-300 px-2 sm:px-4 py-2 rounded text-dark disabled:text-gray-300 disabled:border-gray-300 hover:bg-gray-100 transition-colors"
                   >
                     <ChevronLeft size={20} />
                   </button>
@@ -164,7 +198,7 @@ export default function Careers() {
                       <button
                         key={page}
                         onClick={() => setCurrentPage(page)}
-                        className={`w-10 h-10 rounded text-sm font-bold transition-colors ${currentPage === page
+                        className={`w-8 h-8 sm:w-10 sm:h-10 rounded text-xs sm:text-sm font-bold transition-colors ${currentPage === page
                           ? 'bg-black text-white'
                           : 'border border-gray-300 text-dark hover:bg-gray-100'
                           }`}
@@ -179,7 +213,7 @@ export default function Careers() {
                       setCurrentPage(Math.min(totalPages, currentPage + 1))
                     }
                     disabled={currentPage === totalPages}
-                    className="border border-gray-300 px-4 py-2 rounded text-dark disabled:text-gray-300 disabled:border-gray-300 hover:bg-gray-100 transition-colors"
+                    className="border border-gray-300 px-2 sm:px-4 py-2 rounded text-dark disabled:text-gray-300 disabled:border-gray-300 hover:bg-gray-100 transition-colors"
                   >
                     <ChevronRight size={20} />
                   </button>

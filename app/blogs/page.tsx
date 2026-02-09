@@ -46,28 +46,28 @@ export default function BlogsPage() {
   return (
     <div className="min-h-screen pt-16 bg-white scroll-smooth">
       {/* Header - Full Width */}
-      <div className="bg-white p-8 md:p-20 transition-all duration-300 ease-in-out">
+      <div className="bg-white p-4 sm:p-6 md:p-12 lg:p-20 transition-all duration-300 ease-in-out">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 sm:gap-6">
             <div>
-              <p className="text-2xl mt-3 font-medium uppercase tracking-widest text-gray-600 mb-2">
+              <p className="text-lg sm:text-xl md:text-2xl mt-3 font-medium uppercase tracking-widest text-gray-600 mb-2">
                 BLOGS
               </p>
-              <h1 className="text-base md:text-4xl font-bold text-dark">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-dark">
                 Insights & Updates
               </h1>
             </div>
 
             {/* Search Bar (right side on md+) */}
             <div className="w-full md:w-1/3">
-              <div className="relative bg-gray-100 rounded-md px-3 mt-8 py-2">
+              <div className="relative bg-gray-100 rounded-md px-3 py-2">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" size={20} />
                 <input
                   type="text"
                   placeholder="Search blogs..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-transparent focus:outline-none text-gray-900 placeholder-gray-500"
+                  className="w-full pl-10 pr-4 py-2 bg-transparent focus:outline-none text-gray-900 placeholder-gray-500 text-sm sm:text-base"
                 />
               </div>
             </div>
@@ -76,7 +76,7 @@ export default function BlogsPage() {
       </div>
 
       {/* Blog Grid with Layout Guardrails */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 transition-all duration-300 ease-in-out">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 sm:pb-16 transition-all duration-300 ease-in-out">
         {isLoading ? (
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             {/* Header Skeleton */}

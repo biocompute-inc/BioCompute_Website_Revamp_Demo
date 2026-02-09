@@ -53,42 +53,42 @@ export default function JobDetailPage() {
   return (
     <div className="bg-white text-dark">
       {/* Job Header */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 pt-32">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16 pt-20 sm:pt-24 md:pt-32">
         {/* Back Button */}
         <Link
           href="/careers"
-          className="flex items-center gap-2 text-dark hover:text-purple transition-colors mb-8 w-fit"
+          className="flex items-center gap-2 text-dark hover:text-purple transition-colors mb-6 sm:mb-8 w-fit text-sm sm:text-base"
         >
           <ChevronLeft size={20} />
           Back
         </Link>
 
         {/* Job Title Section */}
-        <div className="mb-12">
-          <h1 className="text-5xl md:text-6xl font-bold mb-4">{job.title}</h1>
-          <p className="text-gray-600 text-lg font-medium">
+        <div className="mb-8 sm:mb-10 md:mb-12">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 leading-tight">{job.title}</h1>
+          <p className="text-gray-600 text-base sm:text-lg font-medium">
             {job.location} | {job.type}
           </p>
         </div>
 
         {/* Job Sections */}
-        <div className="space-y-12 mb-16">
+        <div className="space-y-8 sm:space-y-10 md:space-y-12 mb-12 sm:mb-14 md:mb-16">
           {/* Job Description */}
           <section>
-            <h2 className="text-2xl font-bold mb-4">Job Description</h2>
-            <p className="text-gray-700 leading-relaxed">{job.description}</p>
+            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Job Description</h2>
+            <p className="text-gray-700 leading-relaxed text-sm sm:text-base">{job.description}</p>
           </section>
 
           {/* Who are we looking for */}
           <section>
-            <h2 className="text-2xl font-bold mb-4">Who Are We Looking For?</h2>
-            <p className="text-gray-700 leading-relaxed">{job.whoWeAreLookingFor}</p>
+            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Who Are We Looking For?</h2>
+            <p className="text-gray-700 leading-relaxed text-sm sm:text-base">{job.whoWeAreLookingFor}</p>
           </section>
 
           {/* How to Apply */}
           <section>
-            <h2 className="text-2xl font-bold mb-4">How To Apply?</h2>
-            <p className="text-gray-700 leading-relaxed">{job.howToApply}</p>
+            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">How To Apply?</h2>
+            <p className="text-gray-700 leading-relaxed text-sm sm:text-base">{job.howToApply}</p>
           </section>
         </div>
 
