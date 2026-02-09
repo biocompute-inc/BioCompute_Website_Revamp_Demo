@@ -19,9 +19,9 @@ export default function Header() {
             <Image
               src="/logoLG.png"
               alt="BioCompute"
-              width={160}
-              height={53}
-              className="hidden lg:block w-auto h-10 lg:h-12 xl:h-14"
+              width={180}
+              height={30}
+              className="hidden lg:block w-auto "
               priority
             />
             {/* Tablet Logo */}
@@ -35,10 +35,10 @@ export default function Header() {
             />
             {/* Mobile Logo */}
             <Image
-              src="/logoSM.png"
+              src="/logoLG.png"
               alt="BioCompute"
-              width={90}
-              height={30}
+              width={150}
+              height={150}
               className="block md:hidden w-auto h-7"
               priority
             />

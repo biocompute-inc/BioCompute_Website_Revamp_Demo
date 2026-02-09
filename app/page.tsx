@@ -317,7 +317,7 @@ export default function Home() {
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={{ opacity: 0, x: -30, scale: 0.95 }}
                 transition={{ duration: 0.5, delay: 0.15, ease: SMOOTH_EASE }}
-                className="fixed text-white text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold uppercase tracking-widest z-30 backdrop-blur-xl p-1 rounded-lg"
+                className="fixed text-white text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold uppercase tracking-widest z-30 backdrop-blur-sm p-2 rounded-lg"
                 style={{
                   top: FLOATING_LABELS_CONFIG[screenSize].secure.top,
                   left: FLOATING_LABELS_CONFIG[screenSize].secure.left,
@@ -332,7 +332,7 @@ export default function Home() {
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={{ opacity: 0, x: 30, scale: 0.95 }}
                 transition={{ duration: 0.5, delay: 0.25, ease: SMOOTH_EASE }}
-                className="fixed text-white text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold uppercase tracking-widest z-30 backdrop-blur-xl p-1 rounded-lg"
+                className="fixed text-white text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold uppercase tracking-widest z-30 backdrop-blur-sm p-2 rounded-lg"
                 style={{
                   top: FLOATING_LABELS_CONFIG[screenSize].ultraDense.top,
                   right: FLOATING_LABELS_CONFIG[screenSize].ultraDense.right,
@@ -347,7 +347,7 @@ export default function Home() {
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={{ opacity: 0, x: -30, scale: 0.95 }}
                 transition={{ duration: 0.5, delay: 0.35, ease: SMOOTH_EASE }}
-                className="fixed text-white text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold uppercase backdrop-blur-xl p-1 rounded-lg tracking-widest z-30"
+                className="fixed text-white text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold uppercase backdrop-blur-lg p-2 rounded-backdrop-blur-sm tracking-widest z-30"
                 style={{
                   top: FLOATING_LABELS_CONFIG[screenSize].longLasting.top,
                   left: FLOATING_LABELS_CONFIG[screenSize].longLasting.left,

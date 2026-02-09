@@ -147,7 +147,7 @@ export default function About() {
                         }}
                         className=" px-4 origin-center text-center"
                     >
-                        <div className="flex flex-col items-center gap-1">
+                        <div className="flex flex-col z-40 items-center gap-1">
                             <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif" }}>
                                 <ShinyText
                                     text="WELCOME"

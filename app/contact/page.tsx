@@ -35,9 +35,9 @@ export default function Contact() {
 
   return (
     <div className="pt-0">
-      <section className="min-h-screen bg-dark flex items-center py-4">
+      <section className="min-h-screen bg-dark flex my-24 sm:my-64 items-start py-4">
         <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-12 items-start">
             {/* Left Side - Text */}
             <div>
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
@@ -113,7 +113,7 @@ export default function Contact() {
                 <textarea
                   ref={textareaRef}
                   placeholder="Your Message"
-                  className="w-full bg-transparent border-b border-gray-400 pb-3 text-white placeholder-gray-400 focus:outline-none focus:border-purple transition-colors resize-none overflow-hidden"
+                  className="w-full bg-transparent border-b border-gray-400 pb-3 text-white placeholder-gray-400 focus:outline-none focus:border-purple transition-colors resize-y overflow-hidden"
                   style={{ height: '40px' }}
                   value={formData.message}
                   onChange={handleTextareaChange}

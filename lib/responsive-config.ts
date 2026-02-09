@@ -38,7 +38,7 @@ export const VIDEO_ANIMATION_CONFIG = {
     },
     md: {
         // Medium devices (640px - 768px)
-        section0: { scale: 2.3, top: '105%' },
+        section0: { scale: 2.3, top: '110%' },
         section1: { scale: 1, top: '75%' },
         section2: { scale: 1, top: '45%' },
         width: 280,
@@ -55,15 +55,15 @@ export const VIDEO_ANIMATION_CONFIG = {
     xl: {
         // Extra large devices (1024px+)
         section0: { scale: 1.5, top: '105%' },
-        section1: { scale: 1, top: '72%' },
+        section1: { scale: 1, top: '75%' },
         section2: { scale: 1, top: '48%' },
         width: 400,
         height: 400,
     },
     '2xl': {
         // 2xl devices (1536px+)
-        section0: { scale: 1.5, top: '110%' },
-        section1: { scale: 0.8, top: '70%' },
+        section0: { scale: 1.5, top: '120%' },
+        section1: { scale: 0.8, top: '75%' },
         section2: { scale: 0.9, top: '50%' },
         width: 450,
         height: 450,

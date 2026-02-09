@@ -84,7 +84,7 @@ export default function FAQ() {
             >
               <button
                 onClick={() => toggleItem(item.id)}
-                className="w-full py-4 sm:py-5 md:py-6 flex items-center justify-between hover:bg-gray-50 transition-colors text-left pr-2"
+                className="w-full py-4 sm:py-5 md:py-6 px-2 flex items-center justify-between hover:bg-gray-50 transition-colors text-left"
               >
                 <h3 className="text-sm sm:text-base md:text-lg font-bold text-dark">
                   {item.question}
@@ -98,7 +98,7 @@ export default function FAQ() {
 
               {/* Answer - Accordion Content */}
               {expandedId === item.id && (
-                <div className="pb-4 sm:pb-6 text-sm sm:text-base text-gray-700 leading-relaxed max-w-2xl">
+                <div className="pb-4 sm:pb-6 px-2 text-sm sm:text-base text-gray-700 leading-relaxed">
                   {item.answer}
                 </div>
               )}

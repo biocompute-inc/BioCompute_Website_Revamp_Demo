@@ -35,9 +35,9 @@ export default function Features() {
           <div className="flex justify-center md:justify-end">
             <Link
               href="/contact"
-              className="border-2 border-dark px-6 sm:px-8 py-3 sm:py-4 rounded text-dark hover:bg-dark hover:text-white transition-colors font-bold text-sm sm:text-base"
+              className="border-2 mx-6 border-dark px-6 sm:px-8 py-3 sm:py-4 rounded text-dark hover:bg-dark hover:text-white transition-colors font-bold text-sm sm:text-base"
             >
-              CONTACT US →
+              CONTACT US
             </Link>
           </div>
         </div>
