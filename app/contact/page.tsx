@@ -11,6 +11,11 @@ export default function Contact() {
     message: '',
     category: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: 'success' | 'error' | null;
+    message: string;
+  }>({ type: null, message: '' });
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Auto-resize textarea as user types
@@ -27,10 +32,57 @@ export default function Contact() {
     textarea.style.height = `${newHeight}px`;
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // TODO: Add form submission logic
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: '' });
+
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('linkedin', formData.linkedin);
+      formDataToSend.append('category', formData.category);
+      formDataToSend.append('message', formData.message);
+
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        body: formDataToSend,
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus({
+          type: 'success',
+          message: 'Message sent successfully! We\'ll get back to you soon.',
+        });
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          linkedin: '',
+          message: '',
+          category: '',
+        });
+        if (textareaRef.current) {
+          textareaRef.current.style.height = '40px';
+        }
+      } else {
+        setSubmitStatus({
+          type: 'error',
+          message: result.message || 'Failed to send message. Please try again.',
+        });
+      }
+    } catch (error) {
+      setSubmitStatus({
+        type: 'error',
+        message: 'An error occurred. Please try again later.',
+      });
+      console.error('Form submission error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -60,6 +112,7 @@ export default function Contact() {
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
+                  required
                 />
               </div>
 
@@ -72,6 +125,7 @@ export default function Contact() {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
+                  required
                 />
               </div>
 
@@ -117,16 +171,29 @@ export default function Contact() {
                   style={{ height: '40px' }}
                   value={formData.message}
                   onChange={handleTextareaChange}
+                  required
                 />
               </div>
 
-
+              {/* Status Message */}
+              {submitStatus.type && (
+                <div
+                  className={`p-4 rounded ${
+                    submitStatus.type === 'success'
+                      ? 'bg-green-500/20 text-green-300 border border-green-500/50'
+                      : 'bg-red-500/20 text-red-300 border border-red-500/50'
+                  }`}
+                >
+                  {submitStatus.message}
+                </div>
+              )}
 
               <button
                 type="submit"
-                className="w-full bg-white text-dark font-bold py-3 rounded hover:bg-gray-200 transition-colors mt-8"
+                disabled={isSubmitting}
+                className="w-full bg-white text-dark font-bold py-3 rounded hover:bg-gray-200 transition-colors mt-8 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Send
+                {isSubmitting ? 'Sending...' : 'Send'}
               </button>
             </form>
           </div>
