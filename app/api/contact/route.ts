@@ -1,10 +1,19 @@
 import { NextResponse, NextRequest } from 'next/server';
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer'; // Use import instead of require for TS
 
 export async function POST(request: NextRequest) {
-  const username = process.env.NEXT_PUBLIC_EMAIL_USERNAME;
-  const password = process.env.NEXT_PUBLIC_EMAIL_PASSWORD;
-  const mymail = process.env.NEXT_PUBLIC_PERSONAL_EMAIL;
+  // 1. Read the SECURE variables (No NEXT_PUBLIC prefix)
+  const username = process.env.EMAIL_USERNAME;
+  const password = process.env.EMAIL_PASSWORD;
+  const mymail = process.env.PERSONAL_EMAIL;
+
+  // Safety Check: Ensure vars exist before trying to send
+  if (!username || !password || !mymail) {
+    return NextResponse.json(
+      { message: 'Server configuration error: Missing email credentials' },
+      { status: 500 }
+    );
+  }
 
   console.log('Processing contact form request');
 
@@ -19,22 +28,24 @@ export async function POST(request: NextRequest) {
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       port: 587,
-      tls: {
-        ciphers: 'SSLv3',
-        rejectUnauthorized: false,
-      },
+      secure: false, // Use false for port 587
       auth: {
         user: username,
         pass: password,
       },
+      // Only keep this if absolutely necessary. It bypasses security checks.
+      // tls: {
+      //   rejectUnauthorized: false 
+      // }
     });
 
-    const mail = await transporter.sendMail({
-      from: `"${name}" <${email}>`,
+    await transporter.sendMail({
+      from: `"${name}" <${username}>`, // Gmail often forces the 'from' to be the authenticated user
+      replyTo: email as string, // This ensures when you hit reply, it goes to the user
       to: mymail,
-      replyTo: email,
       subject: `Website Contact Form - ${category || 'General Inquiry'}`,
       text: message as string,
+      // ... keep your existing HTML code here ...
       html: `<div style="background-color: #EFE4F4; padding: 40px 0; font-family: Arial, sans-serif; line-height: 1.6; color: #333; border-radius: 8px;">
         <div style="
           max-width: 600px;

@@ -87,7 +87,7 @@ export default function Contact() {
 
   return (
     <div className="pt-0">
-      <section className="min-h-screen bg-dark flex my-24 sm:my-64 items-start py-4">
+      <section className="bg-dark flex mt-48 sm:mt-64 mb-10 items-start py-4 pb-8">
         <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-start">
             {/* Left Side - Text */}
@@ -178,11 +178,10 @@ export default function Contact() {
               {/* Status Message */}
               {submitStatus.type && (
                 <div
-                  className={`p-4 rounded ${
-                    submitStatus.type === 'success'
-                      ? 'bg-green-500/20 text-green-300 border border-green-500/50'
-                      : 'bg-red-500/20 text-red-300 border border-red-500/50'
-                  }`}
+                  className={`p-4 rounded ${submitStatus.type === 'success'
+                    ? 'bg-green-500/20 text-green-300 border border-green-500/50'
+                    : 'bg-red-500/20 text-red-300 border border-red-500/50'
+                    }`}
                 >
                   {submitStatus.message}
                 </div>
