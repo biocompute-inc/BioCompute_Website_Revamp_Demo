@@ -1,5 +1,6 @@
 'use client';
 
+import ScrollStack, { ScrollStackItem } from '@/client/components/ui/ScrollStack';
 import React, { useState, useEffect, useRef } from 'react';
 
 // --- Types ---
@@ -137,103 +138,84 @@ export default function CarouselPage() {
 
     if (screenX === 0) return null;
 
+    const timelineData = [
+        {
+            title: "Aug 2023",
+            cardTitle: "The Spark 💡",
+            cardSubtitle: "Conceptualization",
+            cardDetailedText: "Anagha, frustrated with Google cloud and her academic project, conceptualizes data storage in DNA without de novo synthesis",
+        },
+        {
+            title: "Jan 2024",
+            cardTitle: "Foundation 🚀",
+            cardSubtitle: "BioCompute Established",
+            cardDetailedText: "BioCompute is set up. We are backed by Emergent Ventures, gradCapital",
+        },
+        {
+            title: "July 2024",
+            cardTitle: "Incubation Begins 🔬",
+            cardSubtitle: "CCAMP Incubation",
+            cardDetailedText: "Incubated at CCAMP. Work on first proof of concept begins",
+        },
+        {
+            title: "Jan 2025",
+            cardTitle: "Home Lab Setup 🏠",
+            cardSubtitle: "Garage Beginnings",
+            cardDetailedText: "Set up home lab",
+        },
+        {
+            title: "April 2025",
+            cardTitle: "First Success ✅",
+            cardSubtitle: "Proof of Concept",
+            cardDetailedText: "First proof of concept achieved, we are able to write data into DNA and retrieve it successfully",
+        },
+        {
+            title: "May 2025",
+            cardTitle: "Pre-Seed Round 💰",
+            cardSubtitle: "Funding Secured",
+            cardDetailedText: "Pre-seed round from 1517, gradCapital and angel investors",
+        },
+        {
+            title: "July 2025",
+            cardTitle: "Team Growth 👥",
+            cardSubtitle: "Expansion",
+            cardDetailedText: "Set up our own lab in Koramangala, team grows to 6",
+        },
+        {
+            title: "Oct 2025",
+            cardTitle: "Automation 🤖",
+            cardSubtitle: "Scaling Up",
+            cardDetailedText: "Automated bio lab to accelerate scale up",
+        }
+    ];
+
     return (
-        <div className="mainWrapper">
-            <style dangerouslySetInnerHTML={{
-                __html: `
-        .mainWrapper {
-          width: 100%; height: 100vh; display: flex; justify-content: center; 
-          align-items: center; background: #000; overflow: hidden; font-family: sans-serif;
-        }
-        .carouselContainer { width: 100%; display: flex; justify-content: center; position: relative; }
-        .carouselArea { 
-          width: 100%; white-space: nowrap; position: relative; margin-left: 240px; 
-          border-radius: 10px; perspective: 1000px;
-        }
-        @media (max-width: 900px) { .carouselArea { margin-left: 0; } }
-        .carouselPosts { position: relative; transition: 0.5s cubic-bezier(0.2, 1, 0.6, 1); perspective: 600px; cursor: grab; }
-        .carouselPosts:active { cursor: grabbing; }
-        .animateStop { transition: 0s !important; }
-        .carouselPostBox { 
-          display: inline-block; transition: 0.5s; user-select: none; position: relative;
-          transform-style: preserve-3d;
-        }
-        .carouselPostBox-image { 
-          width: 100%; min-height: 400px; background-position: center; 
-          background-size: cover; border-radius: 8px; 
-        }
-        .carouselPostBox-title { margin-top: 24px; font-size: 20px; font-weight: bold; color: #fff; text-align: center; white-space: normal; }
-        .carouselPostBox-desc { margin-top: 16px; opacity: 0.5; font-size: 14px; color: #fff; text-align: center; white-space: normal; }
-        .controlLeft, .controlRight {
-          width: 45px; height: 45px; display: flex; justify-content: center; align-items: center;
-          border: 1px solid #fff; border-radius: 50%; color: #fff; position: absolute;
-          top: 50%; transform: translateY(-50%); cursor: pointer; z-index: 100; transition: 0.3s;
-        }
-        .controlLeft:hover, .controlRight:hover { background: #fff; color: #000; }
-        .controlLeft { left: 20px; } .controlRight { right: 20px; }
-        .carouselPostBox-bar { border-bottom: 1px solid #fff; padding-bottom: 40px; margin-bottom: 10px; transition: 0.5s; }
-        .carouselPostBox-bar::after {
-          content: ''; display: block; height: 8px; width: 8px; position: absolute;
-          bottom: -4px; left: calc(50% - 4px); background: #fff; transform: rotate(45deg);
-        }
-      `}} />
+        <ScrollStack
+            itemDistance={80}
+            itemScale={0.04}
+            baseScale={0.9}
+            itemStackDistance={35}
+            stackPosition="15%"
+            scaleEndPosition="5%"
+            useWindowScroll={false}
+            className="h-full"
+        >
+            {timelineData.map((item, index) => (
+                <ScrollStackItem key={index} itemClassName="bg-[#0f0518] shadow-[0_0_50px_rgba(139,92,246,0.1)] border border-purple-500/30 flex flex-col justify-center">
+                    <div className="flex flex-col h-full justify-center">
+                        <div className="flex items-center gap-3 mb-4">
+                            <span className="text-purple-400 text-xs font-bold tracking-widest uppercase bg-purple-900/40 px-3 py-1 rounded-full w-fit border border-purple-500/30">
+                                {item.title}
+                            </span>
+                            <div className="h-px bg-purple-500/30 flex-grow"></div>
+                        </div>
 
-            <div className="carouselContainer">
-                <div className="carouselArea">
-                    <div
-                        className={`carouselPosts ${isAnimate ? '' : 'animateStop'}`}
-                        onMouseDown={handleInteractionStart}
-                        onTouchStart={handleInteractionStart}
-                        onMouseMove={handleInteractionMove}
-                        onTouchMove={handleInteractionMove}
-                        onMouseUp={handleInteractionEnd}
-                        onTouchEnd={handleInteractionEnd}
-                        onTransitionEnd={handleTransitionEnd}
-                    >
-                        {dataArray.map((item, index) => {
-                            const { x, z, opacity } = getMovingStyle(index);
-                            return (
-                                <div
-                                    key={item.time || index}
-                                    className={`carouselPostBox ${isAnimate ? '' : 'animateStop'}`}
-                                    style={{
-                                        width: carouselPostWidth,
-                                        marginRight: carouselPostMargin,
-                                        transform: `translateX(${computedTranslateX + x}px) translateZ(${z}px)`,
-                                        opacity: opacity,
-                                    }}
-                                >
-                                    <div className="carouselPostBox-image" style={{ backgroundImage: `url(${item.image})` }} />
-                                    <div className="carouselPostBox-title">{item.title}</div>
-                                    <div className="carouselPostBox-desc">{item.desc}</div>
-                                </div>
-                            );
-                        })}
+                        <h3 className="text-white text-2xl font-bold mb-2">{item.cardTitle}</h3>
+                        <h4 className="text-purple-300 text-base font-semibold mb-4">{item.cardSubtitle}</h4>
+                        <p className="text-gray-300 text-lg leading-relaxed">{item.cardDetailedText}</p>
                     </div>
-
-                    <div className="flex" style={{ perspective: '600px' }}>
-                        {dataArray.map((_, index) => {
-                            const { x, z, opacity } = getMovingStyle(index);
-                            return (
-                                <div
-                                    key={`bar-${index}`}
-                                    className={`carouselPostBox-bar ${isAnimate ? '' : 'animateStop'}`}
-                                    style={{
-                                        width: carouselPostWidth,
-                                        paddingRight: carouselPostMargin,
-                                        transform: `translateX(${computedTranslateX + x}px) translateZ(${(z * 2) / 3}px)`,
-                                        opacity: opacity,
-                                        position: 'relative'
-                                    }}
-                                />
-                            );
-                        })}
-                    </div>
-                </div>
-
-                <button className="controlLeft" onClick={() => changeImagePosition(-1)}>‹</button>
-                <button className="controlRight" onClick={() => changeImagePosition(1)}>›</button>
-            </div>
-        </div>
+                </ScrollStackItem>
+            ))}
+        </ScrollStack>
     );
 }

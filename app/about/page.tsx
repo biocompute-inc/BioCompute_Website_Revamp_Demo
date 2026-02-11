@@ -1,16 +1,11 @@
 "use client";
 import Image from "next/image";
-import { useRef, useState, useCallback, useEffect } from "react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import ShinyText from "@/client/components/ui/shinytext";
 import DNABackground from "@/components/DNABackground";
-import dynamic from "next/dynamic"; // Import dynamic for SSR handling
-
-// Dynamically import Chrono to avoid Hydration Error
-const Timeline = dynamic(() => import('primereact/timeline').then((mod) => mod.Timeline), {
-    ssr: false,
-    loading: () => <div className="text-purple-400 text-center py-20">Loading Timeline...</div>
-});
+import ScrollStack, { ScrollStackItem } from "@/client/components/ui/ScrollStack";
 
 export default function About() {
     const heroRef = useRef<HTMLElement>(null);
@@ -29,78 +24,51 @@ export default function About() {
             title: "Aug 2023",
             cardTitle: "The Spark 💡",
             cardSubtitle: "Conceptualization",
-            cardDetailedText: "Anagha, frustrated with Google cloud and her academic project, conceptualizes data storage in DNA without de novo synthesis.",
+            cardDetailedText: "Anagha, frustrated with Google cloud and her academic project, conceptualizes data storage in DNA without de novo synthesis",
         },
         {
             title: "Jan 2024",
             cardTitle: "Foundation 🚀",
             cardSubtitle: "BioCompute Established",
-            cardDetailedText: "BioCompute is set up. We are backed by Emergent Ventures and gradCapital, setting the stage for deep-tech innovation.",
+            cardDetailedText: "BioCompute is set up. We are backed by Emergent Ventures, gradCapital",
         },
         {
             title: "July 2024",
             cardTitle: "Incubation Begins 🔬",
             cardSubtitle: "CCAMP Incubation",
-            cardDetailedText: "Officially incubated at CCAMP. Work on the first proof of concept begins in earnest.",
+            cardDetailedText: "Incubated at CCAMP. Work on first proof of concept begins",
         },
         {
             title: "Jan 2025",
             cardTitle: "Home Lab Setup 🏠",
             cardSubtitle: "Garage Beginnings",
-            cardDetailedText: "Set up a dedicated home lab to accelerate rapid prototyping and hardware testing.",
+            cardDetailedText: "Set up home lab",
         },
         {
             title: "April 2025",
             cardTitle: "First Success ✅",
             cardSubtitle: "Proof of Concept",
-            cardDetailedText: "First major milestone achieved: We successfully wrote data into DNA and retrieved it with high accuracy.",
+            cardDetailedText: "First proof of concept achieved, we are able to write data into DNA and retrieve it successfully",
         },
         {
             title: "May 2025",
             cardTitle: "Pre-Seed Round 💰",
             cardSubtitle: "Funding Secured",
-            cardDetailedText: "Closed pre-seed round from 1517, gradCapital, and key angel investors to fuel growth.",
+            cardDetailedText: "Pre-seed round from 1517, gradCapital and angel investors",
         },
         {
             title: "July 2025",
             cardTitle: "Team Growth 👥",
             cardSubtitle: "Expansion",
-            cardDetailedText: "Established our own dedicated lab in Koramangala. The core team grows to 6 diverse engineers.",
+            cardDetailedText: "Set up our own lab in Koramangala, team grows to 6",
         },
         {
             title: "Oct 2025",
             cardTitle: "Automation 🤖",
             cardSubtitle: "Scaling Up",
-            cardDetailedText: "Implemented automated bio-lab workflows to drastically accelerate experiment throughput and scale.",
+            cardDetailedText: "Automated bio lab to accelerate scale up",
         }
     ];
-
-    // Template for the Marker (The dot on the line)
-    const customizedMarker = (item: any) => {
-        return (
-            <div className="flex w-4 h-4 bg-purple-500 rounded-full ring-4 ring-purple-900/50 shadow-[0_0_15px_#a855f7] z-10"></div>
-        );
-    };
-
-    // Template for the Content (The card)
-    const customizedContent = (item: any) => {
-        return (
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.5 }}
-                className="flex flex-col mb-8 backdrop-blur-md bg-white/5 border border-purple-500/20 rounded-2xl p-6 shadow-xl hover:bg-white/10 transition-colors duration-300"
-            >
-                <span className="text-purple-400 text-xs font-bold tracking-widest uppercase mb-2 bg-purple-900/20 px-3 py-1 rounded-full w-fit border border-purple-500/30">
-                    {item.title}
-                </span>
-                <h3 className="text-white text-xl font-bold mb-1">{item.cardTitle}</h3>
-                <h4 className="text-purple-300 text-sm font-semibold mb-3">{item.cardSubtitle}</h4>
-                <p className="text-gray-300 text-sm leading-relaxed">{item.cardDetailedText}</p>
-            </motion.div>
-        );
-    };
 
     const team = [
         {
@@ -191,63 +159,54 @@ export default function About() {
 
             {/* Vision and Offer Section */}
             <section className="relative -mt-32 py-12 sm:py-16 px-4 sm:px-6 lg:px-8 text-white">
-                <div className="max-w-6xl mx-auto backdrop-blur-xl bg-white/80 rounded-3xl p-6 sm:p-8 md:p-12">
-                    <div className="grid md:grid-cols-2 gap-8 md:gap-12">
+                <div className="max-w-screen-xl mx-auto backdrop-blur-xl bg-white/80 rounded-3xl p-6 sm:p-8 md:p-12">
+                    <div className="grid md:grid-cols-2 gap-8 md:gap-12 text-gray-900">
                         {/* Our Vision */}
-                        <div className="space-y-3 sm:space-y-4">
-                            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">
+                        <div className="space-y-4">
+                            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold">
                                 Our Vision
                             </h2>
-                            <p className="text-xs sm:text-sm md:text-base text-gray-700 leading-relaxed">
-                                We envision a future where biotechnology seamlessly integrates with computational innovation,
-                                enabling groundbreaking solutions to the world&apos;s most pressing challenges. Our mission is to
-                                pioneer technologies that bridge the gap between biological systems and computational power,
-                                creating tools that empower researchers, healthcare professionals, and innovators worldwide.
+                            <p className="text-base leading-relaxed">
+                                Our vision is to build data infrastructure that scales at the speed of data.
                             </p>
-                            <p className="text-lg text-gray-700 leading-relaxed">
-                                At the core of our vision lies a commitment to democratizing access to cutting-edge biocomputing
-                                technologies, making them accessible, affordable, and impactful for communities across the globe.
+                            <p className="text-lg font-semibold leading-relaxed text-purple-700">
+                                By programming biology to break through the physical limits of traditional computing.
+                            </p>
+                            <p className="text-base leading-relaxed">
+                                We leverage the intrinsic space and energy efficiency of biomolecules like DNA to help data center providers lower their operational expenses, and thus scale their storage and compute infrastructure.
                             </p>
                         </div>
 
-                        {/* What We Offer */}
-                        <div className="space-y-3 sm:space-y-4">
-                            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">
-                                What We Offer
+                        {/* Full Stack System */}
+                        <div className="space-y-4">
+                            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold">
+                                Atoms, Bytes & Genes
                             </h2>
-                            <p className="text-xs sm:text-sm md:text-base text-gray-700 leading-relaxed">
-                                Our portfolio spans innovative biocomputing solutions designed to accelerate research and development.
-                                We provide state-of-the-art platforms that combine biological data processing with advanced
-                                computational algorithms, enabling real-time analysis and insights.
+                            <p className="text-base leading-relaxed">
+                                We are building a full-stack data storage system at the intersection of atoms, bytes and genes.
                             </p>
-                            <ul className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed space-y-2 sm:space-y-3">
-                                <li className="flex items-start">
-                                    <span className="text-purple font-bold mr-2">•</span>
-                                    <span>Advanced DNA computing platforms for complex problem-solving</span>
-                                </li>
-                                <li className="flex items-start">
-                                    <span className="text-purple font-bold mr-2">•</span>
-                                    <span>Integrated biotech and computational research tools</span>
-                                </li>
-                                <li className="flex items-start">
-                                    <span className="text-purple font-bold mr-2">•</span>
-                                    <span>Collaborative platforms for interdisciplinary innovation</span>
-                                </li>
-                                <li className="flex items-start">
-                                    <span className="text-purple font-bold mr-2">•</span>
-                                    <span>Educational resources and training programs</span>
-                                </li>
-                            </ul>
+
+                            {/* Lab Image/Video Placeholder */}
+                            <div className="w-full aspect-video rounded-xl overflow-hidden bg-gray-200 border-2 border-dashed border-gray-400 flex items-center justify-center relative group">
+                                <div className="absolute inset-0 bg-black/5 flex items-center justify-center">
+                                    <span className="text-gray-500 font-medium flex flex-col items-center gap-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                                        </svg>
+                                        Lab Footage Goes Here
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* Timeline Section (Replaces Orbit Carousel) */}
-            <section className="relative py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-screen-xl mx-auto backdrop-blur-xl bg-black/90 border border-purple-900/30 rounded-3xl p-6 sm:p-8 md:p-12">
-                    <div className="max-w-xl mx-auto text-center mb-12 sm:mb-16">
-                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">
+            {/* Timeline Section */}
+            <section className="relative m-24 p-8 overflow-visible bg-black/30 backdrop-blur-lg">
+                <div className="max-w-full mx-auto">
+                    <div className="max-w-xl mx-auto text-center -mb-10">
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold  text-white mb-3 sm:mb-4">
                             Our Journey So Far
                         </h2>
                         <p className="text-sm sm:text-base md:text-lg text-gray-300">
@@ -256,21 +215,33 @@ export default function About() {
                     </div>
 
                     <div className="w-full flex justify-center">
-                        <div className="w-full max-w-6xl">
-                            {/* Tailwind styling to override PrimeReact defaults for transparency */}
-                            <div className="
-                                [&_.p-timeline-event-connector]:bg-purple-500/30 
-                                [&_.p-timeline-event-connector]:w-[2px]
-                                [&_.p-timeline-event]:min-h-[120px]
-                            ">
-                                <Timeline
-                                    value={timelineData}
-                                    align="alternate"
-                                    marker={customizedMarker}
-                                    content={customizedContent}
-                                />
-                            </div>
-                        </div>
+                        <ScrollStack
+                            itemDistance={100}
+                            itemScale={0.03}
+                            baseScale={0.85}
+                            itemStackDistance={30}
+                            stackPosition="20%"
+                            scaleEndPosition="10%"
+                            useWindowScroll={false}
+                            className="h-[90vh] w-full max-w-3xl"
+                        >
+                            {timelineData.map((item, index) => (
+                                <ScrollStackItem key={index} itemClassName="bg-[#0f0518] shadow-[0_0_50px_rgba(139,92,246,0.1)] border-2 rounded-2xl border-purple-500/30 flex flex-col justify-center">
+                                    <div className="flex flex-col h-full justify-center">
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <span className="text-purple-400 text-xs font-bold tracking-widest uppercase bg-purple-900/40 px-3 py-1 rounded-full w-fit border border-purple-500/30">
+                                                {item.title}
+                                            </span>
+                                            <div className="h-px bg-purple-500/30 flex-grow"></div>
+                                        </div>
+
+                                        <h3 className="text-white text-xl md:text-2xl font-bold mb-2">{item.cardTitle}</h3>
+                                        <h4 className="text-purple-300 text-sm md:text-base font-semibold mb-3">{item.cardSubtitle}</h4>
+                                        <p className="text-gray-300 text-base md:text-lg leading-relaxed">{item.cardDetailedText}</p>
+                                    </div>
+                                </ScrollStackItem>
+                            ))}
+                        </ScrollStack>
                     </div>
                 </div>
             </section>
@@ -288,27 +259,41 @@ export default function About() {
                     </div>
                     <div className="flex justify-center">
                         <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl">
-                            {
-                                team.map((item, idx) => (
-                                    <li key={idx} className="flex flex-col items-center">
-                                        <div className="w-full h-60 sm:h-56">
-                                            <Image
-                                                src={item.avatar}
-                                                width={215}
-                                                height={240}
-                                                className="w-full h-full object-cover object-center shadow-md rounded-xl"
-                                                alt={item.name}
-                                            />
-                                        </div>
-                                        <div className="mt-4 text-center">
-                                            <h4 className="text-lg text-gray-800 font-semibold">{item.name}</h4>
-                                            <p className="text-gray-600">{item.title}</p>
-                                        </div>
-                                    </li>
-                                ))
-                            }
+                            {team.map((item, idx) => (
+                                <li key={idx} className="flex flex-col items-center">
+                                    <div className="w-full h-60 sm:h-56">
+                                        <Image
+                                            src={item.avatar}
+                                            width={215}
+                                            height={240}
+                                            className="w-full h-full object-cover object-center shadow-md rounded-xl"
+                                            alt={item.name}
+                                        />
+                                    </div>
+                                    <div className="mt-4 text-center">
+                                        <h4 className="text-lg text-gray-800 font-semibold">{item.name}</h4>
+                                        <p className="text-gray-600">{item.title}</p>
+                                    </div>
+                                </li>
+                            ))}
                         </ul>
                     </div>
+                </div>
+            </section>
+
+            {/* Join Us Section */}
+            <section className="relative py-24 px-4 text-center z-10">
+                <div className="max-w-4xl mx-auto backdrop-blur-md bg-purple-950/30 border border-purple-500/20 rounded-3xl p-10 md:p-16 shadow-[0_0_40px_rgba(88,28,135,0.2)]">
+                    <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Join Us</h2>
+                    <p className="text-lg md:text-xl text-purple-200 mb-10 max-w-2xl mx-auto leading-relaxed">
+                        We are building the storage of tomorrow, today. If you are excited about the intersection of biology and computing, we want to hear from you.
+                    </p>
+                    <Link
+                        href="/careers"
+                        className="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-purple-600 rounded-full hover:bg-purple-500 hover:scale-105 shadow-[0_0_20px_rgba(168,85,247,0.4)] hover:shadow-[0_0_30px_rgba(168,85,247,0.6)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 focus:ring-offset-black"
+                    >
+                        View Open Positions
+                    </Link>
                 </div>
             </section>
         </div>

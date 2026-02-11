@@ -48,9 +48,7 @@ export default function Careers() {
                 CAREERS
               </p>
               <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 leading-tight">
-                Join the company with a
-                <br />
-                bold new vision
+                Come build a world where <br />an exabyte of data costs $1
               </h1>
               <a
                 href="#open-roles"
@@ -135,7 +133,7 @@ export default function Careers() {
                             </Link>
                           </td>
                           <td className="py-4 px-4 text-gray-600">{job.location}</td>
-                          <td className="py-4 px-4 text-gray-600">{job.type}</td>
+                          <td className="py-4 px-4 text-gray-600">{job.type.replace(/\b\w/g, l => l.toUpperCase())}</td>
                           <td className="py-4 px-4 text-right">
                             <Link
                               href={`/careers/${job.id}`}
@@ -170,7 +168,7 @@ export default function Careers() {
                           <span className="font-semibold">Location:</span> {job.location}
                         </p>
                         <p className="text-sm text-gray-600">
-                          <span className="font-semibold">Type:</span> {job.type}
+                          <span className="font-semibold">Type:</span> {job.type.replace(/\b\w/g, l => l.toUpperCase())}
                         </p>
                       </div>
                       <Link

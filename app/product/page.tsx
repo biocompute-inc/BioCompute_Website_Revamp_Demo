@@ -11,8 +11,8 @@ import {
     Vault,
     ScanLine,
     MonitorPlay,
-    ChevronLeft,  // Added Icon
-    ChevronRight  // Added Icon
+    ChevronLeft,
+    ChevronRight
 } from 'lucide-react';
 
 // Register plugins
@@ -20,45 +20,139 @@ if (typeof window !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 }
 
+// Updated steps based on user request
 const steps = [
     {
         id: 0,
-        title: "Digital Encoding",
-        subtitle: "01. Encoding",
-        description: "Binary data (0s and 1s) is translated into the four nucleotide bases of DNA: A, C, G, T.",
+        title: "Encrypt & Encode",
+        subtitle: "01. Encode",
+        description: "Your data is encrypted at the source. Our proprietary algorithms take these encrypted binary files - video, text, or raw databases - and map them onto DNA-compatible sequences. We apply forward error correction and redundancy codes, ensuring that your data remains bit-perfect even centuries later.",
         icon: <Server className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 lg:w-32 lg:h-32 text-purple-400" />,
     },
     {
         id: 1,
-        title: "Synthesis",
-        subtitle: "02. Writing",
-        description: "Advanced enzymatic processes physically synthesize these sequences into synthetic DNA strands.",
+        title: "Write",
+        subtitle: "02. Write",
+        description: "Our proprietary enzymatic process \"edits\" data onto naturally abundant DNA templates. It operates at room temperature, allowing for massive parallelization without the energy costs of heat-cycling.",
         icon: <Dna className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 lg:w-32 lg:h-32 text-purple-400" />,
     },
     {
         id: 2,
-        title: "The Vault",
-        subtitle: "03. Storage",
-        description: "DNA is preserved in ultra-dense, cold storage vaults. A single gram can store terabytes for centuries.",
+        title: "Store",
+        subtitle: "03. Store",
+        description: "Once written, the DNA is secured in BioCompute Vaults. These hermetically-sealed, high-density vessels maintain data stability for 500+ years without requiring a single watt of electricity. The medium is physically air-gapped and locked, immune to electromagnetic interference or power failures.",
         icon: <Vault className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 lg:w-32 lg:h-32 text-purple-400" />,
     },
     {
         id: 3,
-        title: "Sequencing",
-        subtitle: "04. Reading",
-        description: "When files are retrieved, high-speed sequencers read the nucleotide order back into digital format.",
+        title: "Read",
+        subtitle: "04. Read",
+        description: "To retrieve your data, we utilize Solid-State Nanopores. As the DNA strand passes through a nanoscale hole in a silicon chip, it creates a unique electrical signature. We measure this current in real-time, converting signals back into your encrypted digital files instantly.",
         icon: <ScanLine className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 lg:w-32 lg:h-32 text-purple-400" />,
-    },
-    {
-        id: 4,
-        title: "Decoding",
-        subtitle: "05. Restoration",
-        description: "The sequence is decoded back into binary, perfectly restoring the original files.",
-        icon: <MonitorPlay className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 lg:w-32 lg:h-32 text-purple-400" />,
     },
 ];
 
-export default function HowItWorks() {
+const fitsStackItems = [
+    {
+        title: "Cold Storage Offloading",
+        description: "Stop paying for data you aren't using. Migrate your Tier-3 and Tier-4 archival data to our passive DNA Vaults and turn your active cost sinks into passive assets."
+    },
+    {
+        title: "High-Density Long-Term Retention",
+        description: "Shrink your physical footprint and reclaim valuable floor space in your data center. Replace aisles of magnetic tape libraries with a single BioCompute rack, freeing up power and space for high-performance compute tasks."
+    },
+    {
+        title: "Secure Data Transport",
+        description: "Move Exabytes in your wallet. Transferring massive datasets over the internet is slow. BioCompute allows you to physically transport Exabytes of encrypted data in a localized, durable medium that is immune to electromagnetic interference."
+    }
+];
+
+const useCasesItems = [
+    {
+        title: "Hyperscale Cloud & AI",
+        description: "Slash operational costs by offloading cold data to passive, room-temperature storage. Turn off water-cooling loops and drastically reduce your facility's carbon footprint."
+    },
+    {
+        title: "Space Exploration",
+        description: "Drastically reduce payload mass by replacing heavy server racks with sub-kilogram scale media. Preserve mission-critical data for centuries in deep space without draining onboard power."
+    },
+    {
+        title: "BFSI",
+        description: "Ensure absolute immutability for transaction logs and legal records. Protect critical assets from ransomware with a physically air-gapped, unhackable medium."
+    },
+    {
+        title: "Media & Entertainment",
+        description: "Future-proof your master archives against format obsolescence. Preserve high-fidelity cultural assets for centuries without the risk of degradation."
+    },
+    {
+        title: "Research & Development",
+        description: "Eliminate the \"store or delete\" dilemma. Retain every dataset forever for future analysis & discovery."
+    },
+    {
+        title: "Government & Public Sector",
+        description: "Secure national heritage on a medium with a 500-year half-life. End the expensive, risky cycle of migrating data to new magnetic tapes every decade."
+    }
+];
+
+function FitsInStackSection() {
+    return (
+        <section className="relative w-full py-24 px-4 bg-black border-b border-white/10">
+            <div className="max-w-7xl mx-auto">
+                <div className="mb-16">
+                    <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+                        Product
+                    </h2>
+                    <p className="text-xl md:text-2xl text-purple-400 font-light">
+                        Where BioCompute Fits in Your Stack
+                    </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+                    {fitsStackItems.map((item, idx) => (
+                        <div key={idx} className="group">
+                            <div className="w-12 h-1 mb-6 bg-purple-500/50 group-hover:bg-purple-500 transition-colors duration-300" />
+                            <h3 className="text-xl md:text-2xl font-bold text-white mb-4 group-hover:text-purple-300 transition-colors duration-300">
+                                {idx + 1}. {item.title}
+                            </h3>
+                            <p className="text-gray-400 leading-relaxed">
+                                {item.description}
+                            </p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+}
+
+function UseCasesSection() {
+    return (
+        <section className="relative w-full py-24 px-4 bg-zinc-950 border-b border-white/10">
+            <div className="max-w-7xl mx-auto">
+                <div className="mb-16">
+                    <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+                        Use Cases
+                    </h2>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                    {useCasesItems.map((item, idx) => (
+                        <div key={idx} className="p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-purple-500/30 hover:bg-white/10 transition-all duration-300">
+                            <h3 className="text-xl font-bold text-white mb-4">
+                                {item.title}
+                            </h3>
+                            <p className="text-sm text-gray-400 leading-relaxed">
+                                {item.description}
+                            </p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+}
+
+function HowItWorksSection() {
     const container = useRef<HTMLDivElement>(null);
     const slider = useRef<HTMLDivElement>(null);
     const triggerRef = useRef<ScrollTrigger | null>(null);
@@ -85,7 +179,9 @@ export default function HowItWorks() {
             }
         });
 
-        triggerRef.current = anim.scrollTrigger;
+        if (anim.scrollTrigger) {
+            triggerRef.current = anim.scrollTrigger;
+        }
 
     }, { scope: container });
 
@@ -114,11 +210,11 @@ export default function HowItWorks() {
 
             {/* Header */}
             <div className="absolute top-20 left-0 w-full z-20 text-center px-4 pointer-events-none">
-                {/* <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">How It Works</h1> */}
+                <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight uppercase text-purple-500/80">How It Works</h2>
             </div>
 
             {/* SLIDER TRACK */}
-            <div ref={slider} className="flex h-full w-[500%]">
+            <div ref={slider} className="flex h-full w-[400%]">
                 {steps.map((step) => (
                     <div
                         key={step.id}
@@ -221,5 +317,15 @@ export default function HowItWorks() {
             </div>
 
         </div>
+    );
+}
+
+export default function ProductPage() {
+    return (
+        <main className="bg-black min-h-screen">
+            <FitsInStackSection />
+            <UseCasesSection />
+            <HowItWorksSection />
+        </main>
     );
 }

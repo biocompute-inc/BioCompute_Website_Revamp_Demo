@@ -50,10 +50,10 @@ export default function BlogsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 sm:gap-6">
             <div>
-              <p className="text-lg sm:text-xl md:text-2xl mt-3 font-medium uppercase tracking-widest text-gray-600 mb-2">
+              <p className="text-xs sm:text-sm md:text-base font-bold uppercase tracking-widest text-gray-600 mb-2">
                 BLOGS
               </p>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-dark">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-0 text-black">
                 Insights & Updates
               </h1>
             </div>

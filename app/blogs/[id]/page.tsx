@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { ChevronLeft } from 'lucide-react';
 import { getSubstackBlogBySlug, getSubstackBlogs, getAllBlogSlugs } from '@/lib/blogs';
 import { notFound } from 'next/navigation';
+import BlogContent from '@/client/components/BlogContent';
 
 // ISR revalidation every 600 seconds (10 minutes)
 export const revalidate = 600;
@@ -36,7 +37,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
   return (
     <div className="min-h-screen pt-16 bg-[#E8E0F5]">
       {/* Hero Section with Featured Image */}
-      <div className="relative w-full h-[400px] md:h-[500px] bg-gray-900">
+      <div className="relative -top-16 w-full h-[400px] md:h-[500px] bg-gray-900">
         <Image
           src={blog.image || 'https://images.unsplash.com/photo-1576075796033-848c2a5f3696?w=1600&h=900&fit=crop'}
           alt={blog.title}
@@ -49,7 +50,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
         {/* Back Button */}
         <Link
           href="/blogs"
-          className="absolute top-8 left-4 md:left-8 flex items-center gap-2 text-white hover:text-gray-200 transition-colors bg-black/30 px-4 py-2 backdrop-blur-sm"
+          className="absolute top-24 left-4 md:left-8 flex items-center gap-2 text-white hover:text-gray-200 transition-colors bg-black/30 px-4 py-2 backdrop-blur-sm"
         >
           <ChevronLeft className="w-5 h-5" />
           <span>Back to Blogs</span>
@@ -86,21 +87,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
       {/* Blog Content with Prose Styling */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <article className="bg-white shadow-lg p-8 md:p-12">
-          <div
-            className="prose prose-lg prose-gray max-w-none
-              prose-headings:text-dark prose-headings:font-bold
-              prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl
-              prose-p:text-gray-700 prose-p:leading-relaxed
-              prose-a:text-purple prose-a:no-underline hover:prose-a:underline
-              prose-strong:text-dark prose-strong:font-semibold
-              prose-code:text-purple prose-code:bg-purple/10 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
-              prose-pre:bg-gray-900 prose-pre:text-gray-100
-              prose-blockquote:border-l-4 prose-blockquote:border-purple prose-blockquote:pl-4 prose-blockquote:italic
-              prose-img:rounded-lg prose-img:shadow-lg
-              prose-ul:list-disc prose-ol:list-decimal
-              prose-li:text-gray-700"
-            dangerouslySetInnerHTML={{ __html: blog.content }}
-          />
+          <BlogContent content={blog.content} />
 
           {/* Original Post Link */}
           <div className="mt-12 pt-8 border-t border-gray-200">

@@ -34,8 +34,8 @@ export default function Footer() {
             </h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/howitworks" className="text-white hover:text-purple transition-colors">
-                  How It Works
+                <Link href="/product" className="text-white hover:text-purple transition-colors">
+                  Product
                 </Link>
               </li>
               <li>
