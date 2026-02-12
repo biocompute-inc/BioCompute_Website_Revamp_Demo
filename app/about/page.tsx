@@ -203,9 +203,9 @@ export default function About() {
             </section>
 
             {/* Timeline Section */}
-            <section className="relative m-24 p-8 overflow-visible bg-black/30 backdrop-blur-lg">
+            <section className="relative rounded-2xl pt-10 mx-32 mb-0 pb-0 overflow-hidden bg-black/30 backdrop-blur-lg">
                 <div className="max-w-full mx-auto">
-                    <div className="max-w-xl mx-auto text-center -mb-10">
+                    <div className="max-w-xl mx-auto text-center -mb-20">
                         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold  text-white mb-3 sm:mb-4">
                             Our Journey So Far
                         </h2>
@@ -218,23 +218,19 @@ export default function About() {
                         <ScrollStack
                             itemDistance={100}
                             itemScale={0.03}
-                            baseScale={0.85}
-                            itemStackDistance={30}
+                            baseScale={0.8}
+                            itemStackDistance={45}
                             stackPosition="20%"
                             scaleEndPosition="10%"
                             useWindowScroll={false}
-                            className="h-[90vh] w-full max-w-3xl"
+                            className="h-screen max-w-4xl mx-auto"
                         >
                             {timelineData.map((item, index) => (
-                                <ScrollStackItem key={index} itemClassName="bg-[#0f0518] shadow-[0_0_50px_rgba(139,92,246,0.1)] border-2 rounded-2xl border-purple-500/30 flex flex-col justify-center">
+                                <ScrollStackItem key={index} itemClassName="bg-[#0f0518] shadow-[0_0_50px_rgba(139,92,246,0.1)] border-2 rounded-2xl border-purple-500/30 flex flex-col justify-center relative">
+                                    <span className="absolute top-4 right-4 text-purple-400 text-xs font-bold tracking-widest uppercase bg-purple-900/40 px-3 py-1 rounded-full w-fit border border-purple-500/30">
+                                        {item.title}
+                                    </span>
                                     <div className="flex flex-col h-full justify-center">
-                                        <div className="flex items-center gap-3 mb-4">
-                                            <span className="text-purple-400 text-xs font-bold tracking-widest uppercase bg-purple-900/40 px-3 py-1 rounded-full w-fit border border-purple-500/30">
-                                                {item.title}
-                                            </span>
-                                            <div className="h-px bg-purple-500/30 flex-grow"></div>
-                                        </div>
-
                                         <h3 className="text-white text-xl md:text-2xl font-bold mb-2">{item.cardTitle}</h3>
                                         <h4 className="text-purple-300 text-sm md:text-base font-semibold mb-3">{item.cardSubtitle}</h4>
                                         <p className="text-gray-300 text-base md:text-lg leading-relaxed">{item.cardDetailedText}</p>

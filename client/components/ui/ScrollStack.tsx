@@ -8,8 +8,7 @@ export interface ScrollStackItemProps {
 }
 
 export const ScrollStackItem: React.FC<ScrollStackItemProps> = ({ children, itemClassName = '' }) => (
-    <div
-        className={`scroll-stack-card relative w-full h-auto min-h-[300px] my-4 p-8 md:p-16 rounded-[40px] shadow-[0_10px_40px_rgba(0,0,0,0.5)] box-border origin-top will-change-transform ${itemClassName}`.trim()}
+    <div className={`scroll-stack-card relative w-full h-auto min-h-[300px] my-4 p-8 md:p-16 rounded-[40px] shadow-[0_10px_40px_rgba(0,0,0,0.5)] box-border origin-top will-change-transform ${itemClassName}`.trim()}
         style={{
             backfaceVisibility: 'hidden',
             transformStyle: 'preserve-3d'
@@ -33,6 +32,8 @@ interface ScrollStackProps {
     blurAmount?: number;
     useWindowScroll?: boolean;
     onStackComplete?: () => void;
+    // NEW PROP: Controls how much scroll space exists after the last card
+    scrollEndOffset?: string | number;
 }
 
 const ScrollStack: React.FC<ScrollStackProps> = ({
@@ -40,7 +41,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     className = '',
     itemDistance = 100,
     itemScale = 0.03,
-    itemStackDistance = 30,
+    itemStackDistance = 100,
     stackPosition = '20%',
     scaleEndPosition = '10%',
     baseScale = 0.85,
@@ -48,7 +49,9 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     rotationAmount = 0,
     blurAmount = 0,
     useWindowScroll = false,
-    onStackComplete
+    onStackComplete,
+    // Default to a large value (80vh) to accommodate many cards
+    scrollEndOffset = '80vh'
 }) => {
     const scrollerRef = useRef<HTMLDivElement>(null);
     const stackCompletedRef = useRef(false);
@@ -105,7 +108,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
 
         isUpdatingRef.current = true;
 
-        const { scrollTop, containerHeight, scrollContainer } = getScrollData();
+        const { scrollTop, containerHeight } = getScrollData(); // Removed unused scrollContainer
         const stackPositionPx = parsePercentage(stackPosition, containerHeight);
         const scaleEndPositionPx = parsePercentage(scaleEndPosition, containerHeight);
 
@@ -119,9 +122,16 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
             if (!card) return;
 
             const cardTop = getElementOffset(card);
+
+            // Logic: 
+            // triggerStart: When the card enters the "stack zone"
+            // pinEnd: The absolute bottom of the scrollable area minus half view height
+
             const triggerStart = cardTop - stackPositionPx - itemStackDistance * i;
             const triggerEnd = cardTop - scaleEndPositionPx;
             const pinStart = cardTop - stackPositionPx - itemStackDistance * i;
+
+            // Critical calculation for the last card
             const pinEnd = endElementTop - containerHeight / 2;
 
             const scaleProgress = calculateProgress(scrollTop, triggerStart, triggerEnd);
@@ -181,7 +191,9 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
             }
 
             if (i === cardsRef.current.length - 1) {
-                const isInView = scrollTop >= pinStart && scrollTop <= pinEnd;
+                // Modified check for completion to be a bit more lenient
+                const isInView = scrollTop >= pinStart; // && scrollTop <= pinEnd; (Removing pinEnd check allows callback to fire even if we overshoot slightly)
+
                 if (isInView && !stackCompletedRef.current) {
                     stackCompletedRef.current = true;
                     onStackComplete?.();
@@ -213,17 +225,21 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     }, [updateCardTransforms]);
 
     const setupLenis = useCallback(() => {
+        const commonOptions = {
+            duration: 1.2,
+            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smoothWheel: true,
+            touchMultiplier: 2,
+            infinite: false,
+            wheelMultiplier: 1,
+            lerp: 0.1,
+            syncTouch: true,
+            syncTouchLerp: 0.075
+        };
+
         if (useWindowScroll) {
             const lenis = new Lenis({
-                duration: 1.2,
-                easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                smoothWheel: true,
-                touchMultiplier: 2,
-                infinite: false,
-                wheelMultiplier: 1,
-                lerp: 0.1,
-                syncTouch: true,
-                syncTouchLerp: 0.075
+                ...commonOptions
             });
 
             lenis.on('scroll', handleScroll);
@@ -243,16 +259,8 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
             const lenis = new Lenis({
                 wrapper: scroller,
                 content: scroller.querySelector('.scroll-stack-inner') as HTMLElement,
-                duration: 1.2,
-                easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                smoothWheel: true,
-                touchMultiplier: 2,
-                infinite: false,
+                ...commonOptions,
                 gestureOrientation: 'vertical',
-                wheelMultiplier: 1,
-                lerp: 0.1,
-                syncTouch: true,
-                syncTouchLerp: 0.075
             });
 
             lenis.on('scroll', handleScroll);
@@ -310,16 +318,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
         };
     }, [
         itemDistance,
-        itemScale,
-        itemStackDistance,
-        stackPosition,
-        scaleEndPosition,
-        baseScale,
-        scaleDuration,
-        rotationAmount,
-        blurAmount,
-        useWindowScroll,
-        onStackComplete,
+        // (Other deps...)
         setupLenis,
         updateCardTransforms
     ]);
@@ -338,9 +337,17 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
                 overflowY: 'auto'
             }}
         >
-            <div className="scroll-stack-inner pt-24 px-4 md:px-8 pb-[30vh] min-h-[500px]">
+            <div
+                className="scroll-stack-inner pt-24 px-4 md:px-8 min-h-[500px]"
+                // Apply the dynamic padding here
+                style={{ paddingBottom: scrollEndOffset }}
+            >
                 {children}
-                {/* Spacer so the last pin can release cleanly */}
+
+                {/* The end marker dictates where the logic stops. 
+                  By pushing this down via paddingBottom on the container, 
+                  we ensure the last card has enough room to scroll up.
+                */}
                 <div className="scroll-stack-end w-full h-px" />
             </div>
         </div>

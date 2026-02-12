@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { X } from 'lucide-react';
-import { Dialog, DialogContent, DialogTitle } from '@/client/components/ui/dialog';
+import * as DialogPrimitive from '@radix-ui/react-dialog';
 
 interface BlogContentProps {
     content: string;
@@ -12,10 +12,7 @@ export default function BlogContent({ content }: BlogContentProps) {
     const contentRef = useRef<HTMLDivElement>(null);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-    const handleImageClick = useCallback((imageSrc: string) => {
-        setSelectedImage(imageSrc);
-    }, []);
-
+    // Run this on EVERY render to survive DOM resets
     useEffect(() => {
         const container = contentRef.current;
         if (!container) return;
@@ -23,120 +20,114 @@ export default function BlogContent({ content }: BlogContentProps) {
         const images = container.querySelectorAll('img');
 
         images.forEach((img) => {
-            // Check if already processed to avoid duplication
-            if (img.closest('.image-wrapper-with-enlarge')) {
-                return;
-            }
+            if (img.closest('[data-image-wrapper]')) return;
 
-            // Handle parent anchor tags - disable them
+            // --- MISSION: DESTROY THE "ICON BELOW" ---
             const parentAnchor = img.closest('a');
             if (parentAnchor) {
-                parentAnchor.style.cursor = 'default';
-                parentAnchor.onclick = (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    return false;
-                };
+                parentAnchor.replaceWith(img);
             }
 
-            // Create wrapper
-            const wrapper = document.createElement('div');
-            wrapper.className = 'image-wrapper-with-enlarge relative group w-full inline-block font-sans';
+            let sibling = img.nextElementSibling;
+            while (sibling && (['A', 'SVG', 'BUTTON', 'SPAN'].includes(sibling.tagName))) {
+                const toRemove = sibling;
+                sibling = sibling.nextElementSibling;
+                toRemove.remove();
+            }
 
-            // Insert wrapper
-            const parent = img.parentNode;
-            if (parent) {
-                parent.insertBefore(wrapper, img);
+            // --- CREATE CUSTOM WRAPPER ---
+            const wrapper = document.createElement('div');
+            wrapper.setAttribute('data-image-wrapper', 'true');
+            wrapper.className = 'relative inline-block group cursor-zoom-in';
+
+            if (img.parentNode) {
+                img.parentNode.insertBefore(wrapper, img);
                 wrapper.appendChild(img);
             }
 
-            // Style the image
-            img.style.cursor = 'zoom-in';
-            img.classList.add('transition-all', 'duration-300', 'group-hover:brightness-95');
+            // --- ADD HOVER ICON ---
+            const iconDiv = document.createElement('div');
+            iconDiv.className = 'absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-10';
 
-            // Image click handler
-            const imgSrc = img.src;
-            const openModal = (e: Event) => {
-                e.preventDefault();
-                e.stopPropagation();
-                handleImageClick(imgSrc);
-            };
-
-            img.onclick = openModal;
-
-            // Enlarge Button (Icon)
-            const button = document.createElement('button');
-            button.type = 'button';
-            button.className = 'absolute top-3 right-3 p-2.5 bg-purple hover:bg-purple/90 text-white rounded-full shadow-lg border-2 border-white opacity-0 group-hover:opacity-100 transition-all duration-300 z-20 hover:scale-110 backdrop-blur-sm pointer-events-auto flex items-center justify-center';
-            button.setAttribute('aria-label', 'View full size');
-
-            button.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
-                </svg>
+            iconDiv.innerHTML = `
+                <div class="bg-black/50 text-white p-2 rounded-lg backdrop-blur-sm shadow-sm border border-white/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                </div>
             `;
-
-            button.onclick = openModal;
-
-            wrapper.appendChild(button);
+            wrapper.appendChild(iconDiv);
         });
+    });
 
-    }, [content, handleImageClick]);
+    const handleContentClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        const target = e.target as HTMLElement;
+        const img = target.closest('img');
+
+        if (img && contentRef.current?.contains(img)) {
+            e.preventDefault();
+            e.stopPropagation();
+            const src = img.getAttribute('src');
+            if (src) setSelectedImage(src);
+        }
+    };
 
     return (
         <>
             <div
                 ref={contentRef}
-                className="prose prose-lg prose-gray max-w-none
-          prose-headings:text-dark prose-headings:font-bold
-          prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl
-          prose-p:text-gray-700 prose-p:leading-relaxed
-          prose-a:text-purple prose-a:no-underline hover:prose-a:underline
-          prose-strong:text-dark prose-strong:font-semibold
-          prose-code:text-purple prose-code:bg-purple/10 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
-          prose-pre:bg-gray-900 prose-pre:text-gray-100
-          prose-blockquote:border-l-4 prose-blockquote:border-purple prose-blockquote:pl-4 prose-blockquote:italic
-          prose-img:rounded-lg prose-img:shadow-lg
-          prose-ul:list-disc prose-ol:list-decimal
-          prose-li:text-gray-700"
+                onClick={handleContentClick}
+                className="prose prose-lg prose-gray max-w-none 
+                    [&_img]:transition-all [&_img]:duration-300 [&_img]:rounded-lg
+                    [&_img+a]:hidden [&_img~a]:hidden [&_img+svg]:hidden"
                 dangerouslySetInnerHTML={{ __html: content }}
             />
 
-            {/* Lightbox Modal */}
-            <Dialog open={!!selectedImage} onOpenChange={(open) => !open && setSelectedImage(null)}>
-                <DialogContent
-                    className="max-w-none w-screen h-screen p-0 bg-transparent border-none shadow-none flex items-center justify-center focus:outline-none translate-x-0 translate-y-0 left-0 top-0 data-[state=open]:slide-in-from-left-0 data-[state=open]:slide-in-from-top-0 [&>button]:hidden"
-                    onInteractOutside={() => setSelectedImage(null)}
-                >
-                    <DialogTitle className="sr-only">Enlarged Image View</DialogTitle>
+            <DialogPrimitive.Root open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
+                <DialogPrimitive.Portal>
+                    <DialogPrimitive.Overlay
+                        className="fixed inset-0 bg-black/95 z-[99998] backdrop-blur-sm animate-in fade-in duration-300"
+                    />
 
-                    {/* Close button - Fixed at top right of viewport */}
-                    <button
-                        onClick={() => setSelectedImage(null)}
-                        className="absolute top-6 right-6 p-3 bg-black/50 hover:bg-black/70 text-white rounded-full backdrop-blur-md transition-all z-[60] hover:scale-110 cursor-pointer border border-white/20"
-                        aria-label="Close modal"
+                    <DialogPrimitive.Content
+                        className="fixed inset-0 z-[99999] flex items-center justify-center p-4 outline-none"
                     >
-                        <X className="w-6 h-6" />
-                    </button>
+                        <DialogPrimitive.Title className="sr-only">
+                            Enlarged view
+                        </DialogPrimitive.Title>
 
-                    {/* Image Container */}
-                    <div
-                        className="relative w-full h-full flex items-center justify-center p-4 sm:p-8 md:p-12 cursor-zoom-out"
-                        onClick={() => setSelectedImage(null)}
-                    >
-                        {selectedImage && (
-                            <img
-                                src={selectedImage}
-                                alt="Enlarged view"
-                                className="max-w-full max-h-full object-contain rounded-sm shadow-2xl animate-in zoom-in-95 duration-300"
-                                onClick={(e) => {
-                                    e.stopPropagation(); // Don't close if clicking image itself
-                                }}
-                            />
-                        )}
-                    </div>
-                </DialogContent>
-            </Dialog>
+                        {/* 1. Added onClick here: This div covers the whole screen. 
+                              Clicking it (the empty space) will now close the modal.
+                        */}
+                        <div
+                            className="relative w-full h-full flex items-center justify-center"
+                            onClick={() => setSelectedImage(null)}
+                        >
+
+                            <button
+                                onClick={() => setSelectedImage(null)}
+                                className="absolute top-4 right-4 md:top-10 md:right-10 p-3 bg-white/10 hover:bg-white/20 text-white rounded-full shadow-2xl hover:scale-110 transition-transform z-[100001] border border-white/10"
+                                aria-label="Close"
+                            >
+                                <X className="w-6 h-6" />
+                            </button>
+
+                            {selectedImage && (
+                                /* 2. Reduced size: Changed from max-w-[70vw] to max-w-[50vw] 
+                                */
+                                <div className="relative max-w-[50vw] max-h-[50vh] flex items-center justify-center">
+                                    <img
+                                        src={selectedImage}
+                                        alt="Enlarged"
+                                        className="max-w-full max-h-full object-contain rounded-lg shadow-2xl animate-in zoom-in-95 duration-300"
+                                        style={{ filter: 'none', WebkitFilter: 'none' }}
+                                        // Prevents the "background click" from firing when you click the image itself
+                                        onClick={(e) => e.stopPropagation()}
+                                    />
+                                </div>
+                            )}
+                        </div>
+                    </DialogPrimitive.Content>
+                </DialogPrimitive.Portal>
+            </DialogPrimitive.Root>
         </>
     );
 }
