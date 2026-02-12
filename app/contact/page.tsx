@@ -87,9 +87,9 @@ export default function Contact() {
 
   return (
     <div className="pt-0">
-      <section className="bg-dark flex mt-48 sm:mt-64 mb-10 items-start py-4 pb-8">
+      <section className="bg-dark flex mt-48 sm:mt-64 mb-10 pb-48 sm:mb-64 items-start py-4 ">
         <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-start">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Left Side - Text */}
             <div>
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">

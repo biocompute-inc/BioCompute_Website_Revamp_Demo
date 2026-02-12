@@ -32,10 +32,16 @@ export default function Features() {
               Storage
             </h2>
           </div>
-          <div className="flex justify-center md:justify-end">
+          <div className="flex flex-col gap-4 justify-center md:justify-end">
+            <Link
+              href="/contact"
+              className="border-2 mx-6 border-dark px-6 sm:px-8 py-3 sm:py-4 rounded text-dark hover:bg-dark hover:text-white transition-colors font-bold text-sm sm:text-base text-center"
+            >
+              CONTACT US
+            </Link>
             <Link
               href="/product"
-              className="border-2 mx-6 border-dark px-6 sm:px-8 py-3 sm:py-4 rounded text-dark hover:bg-dark hover:text-white transition-colors font-bold text-sm sm:text-base"
+              className="border-2 mx-6 border-dark px-6 sm:px-8 py-3 sm:py-4 rounded text-dark hover:bg-dark hover:text-white transition-colors font-bold text-sm sm:text-base text-center"
             >
               KNOW MORE
             </Link>

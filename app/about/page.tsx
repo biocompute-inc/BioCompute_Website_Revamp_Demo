@@ -277,6 +277,112 @@ export default function About() {
                 </div>
             </section>
 
+            {/* Media Section */}
+            <section className="relative py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-screen-xl mx-auto backdrop-blur-xl bg-white/80 rounded-3xl p-6 sm:p-8 md:p-12">
+                    <div className="max-w-xl mx-auto text-center mb-8 sm:mb-12">
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+                            MEDIA
+                        </h2>
+                        <p className="text-sm sm:text-base md:text-lg text-gray-600">
+                            Featured videos and articles about our work
+                        </p>
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                        {/* Media Card 1 */}
+                        <div className="group bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-purple-300">
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                                    <svg className="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p className="font-bold text-gray-900">Media Outlet</p>
+                                    <p className="text-xs text-gray-500">Jan 2025</p>
+                                </div>
+                            </div>
+                            <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">
+                                Featured Article Title
+                            </h3>
+                            <p className="text-sm text-gray-600 mb-4">
+                                Brief description of the media coverage or article content goes here.
+                            </p>
+                            <a
+                                href="#"
+                                className="inline-flex items-center text-sm font-semibold text-purple-600 hover:text-purple-700 transition-colors"
+                            >
+                                Read Article
+                                <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </div>
+
+                        {/* Media Card 2 */}
+                        <div className="group bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-purple-300">
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                    <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clipRule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p className="font-bold text-gray-900">Tech News</p>
+                                    <p className="text-xs text-gray-500">Dec 2024</p>
+                                </div>
+                            </div>
+                            <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">
+                                Another Press Feature
+                            </h3>
+                            <p className="text-sm text-gray-600 mb-4">
+                                Brief description of the media coverage or article content goes here.
+                            </p>
+                            <a
+                                href="#"
+                                className="inline-flex items-center text-sm font-semibold text-purple-600 hover:text-purple-700 transition-colors"
+                            >
+                                Read Article
+                                <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </div>
+
+                        {/* Media Card 3 */}
+                        <div className="group bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-purple-300">
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                    <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p className="font-bold text-gray-900">Industry Blog</p>
+                                    <p className="text-xs text-gray-500">Nov 2024</p>
+                                </div>
+                            </div>
+                            <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">
+                                Industry Recognition
+                            </h3>
+                            <p className="text-sm text-gray-600 mb-4">
+                                Brief description of the media coverage or article content goes here.
+                            </p>
+                            <a
+                                href="#"
+                                className="inline-flex items-center text-sm font-semibold text-purple-600 hover:text-purple-700 transition-colors"
+                            >
+                                Read Article
+                                <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             {/* Join Us Section */}
             <section className="relative py-24 px-4 text-center z-10">
                 <div className="max-w-4xl mx-auto backdrop-blur-md bg-purple-950/30 border border-purple-500/20 rounded-3xl p-10 md:p-16 shadow-[0_0_40px_rgba(88,28,135,0.2)]">

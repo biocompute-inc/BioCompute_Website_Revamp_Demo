@@ -12,7 +12,9 @@ import {
     ScanLine,
     MonitorPlay,
     ChevronLeft,
-    ChevronRight
+    ChevronRight,
+    Database,
+    Shield
 } from 'lucide-react';
 
 // Register plugins
@@ -95,9 +97,16 @@ const useCasesItems = [
 ];
 
 function FitsInStackSection() {
+    const [expandedCard, setExpandedCard] = useState<number | null>(null);
+
+    const toggleCard = (index: number) => {
+        setExpandedCard(expandedCard === index ? null : index);
+    };
+
     return (
-        <section className="relative w-full py-24 px-4 bg-black border-b border-white/10">
+        <section className="relative w-full py-48 px-4 bg-black border-b border-white/10">
             <div className="max-w-7xl mx-auto">
+                {/* Section Title */}
                 <div className="mb-16">
                     <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">
                         Product
@@ -107,18 +116,129 @@ function FitsInStackSection() {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-                    {fitsStackItems.map((item, idx) => (
-                        <div key={idx} className="group">
-                            <div className="w-12 h-1 mb-6 bg-purple-500/50 group-hover:bg-purple-500 transition-colors duration-300" />
-                            <h3 className="text-xl md:text-2xl font-bold text-white mb-4 group-hover:text-purple-300 transition-colors duration-300">
-                                {idx + 1}. {item.title}
-                            </h3>
-                            <p className="text-gray-400 leading-relaxed">
-                                {item.description}
-                            </p>
+                {/* Cards Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {/* Card 1 - Cold Storage */}
+                    <div className="group relative bg-zinc-900/50 rounded-2xl overflow-hidden border border-white/10 hover:border-purple-500/30 transition-all duration-300">
+                        <div className="p-8 h-full flex flex-col">
+                            {/* Visual Area */}
+                            <div className="flex-1 mb-6 flex items-center justify-center min-h-[280px] bg-gradient-to-br from-purple-900/20 to-black rounded-xl">
+                                <div className="relative w-full h-full flex items-center justify-center">
+                                    <div className="absolute inset-0 opacity-20">
+                                        <div className="w-full h-full grid grid-cols-4 gap-2 p-4">
+                                            {[...Array(16)].map((_, i) => (
+                                                <div key={i} className="bg-purple-500/30 rounded animate-pulse" style={{ animationDelay: `${i * 0.1}s` }} />
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <Server className="w-24 h-24 text-purple-400 relative z-10" />
+                                </div>
+                            </div>
+
+                            {/* Title and Expand Button */}
+                            <div className="flex items-start justify-between mb-4">
+                                <h3 className="text-xl font-bold text-white pr-4">
+                                    Cold Storage Offloading
+                                </h3>
+                                <button
+                                    onClick={() => toggleCard(0)}
+                                    className="flex-shrink-0 w-10 h-10 rounded-full border border-white/20 bg-white/5 hover:bg-purple-500/20 hover:border-purple-500/50 flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                                >
+                                    <span className={`text-white text-2xl leading-none transition-transform duration-300 ${expandedCard === 0 ? 'rotate-45' : ''}`}>+</span>
+                                </button>
+                            </div>
+
+                            {/* Expandable Description */}
+                            <div className={`overflow-hidden transition-all duration-300 ${expandedCard === 0 ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                <p className="text-gray-400 text-sm leading-relaxed">
+                                    {fitsStackItems[0].description}
+                                </p>
+                            </div>
                         </div>
-                    ))}
+                    </div>
+
+                    {/* Card 2 - High-Density */}
+                    <div className="group relative bg-zinc-900/50 rounded-2xl overflow-hidden border border-white/10 hover:border-purple-500/30 transition-all duration-300">
+                        <div className="p-8 h-full flex flex-col">
+                            {/* Visual Area */}
+                            <div className="flex-1 mb-6 flex items-center justify-center min-h-[280px] bg-gradient-to-br from-fuchsia-900/20 to-black rounded-xl">
+                                <div className="relative w-full h-full flex flex-col items-center justify-center gap-3 p-6">
+                                    <div className="flex items-center gap-2 text-green-400 text-sm w-full">
+                                        <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
+                                        <span>Space Optimized</span>
+                                        <span className="text-gray-500 ml-auto">98%</span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-blue-400 text-sm w-full">
+                                        <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }} />
+                                        <span>Density Increase</span>
+                                        <span className="text-gray-500 ml-auto">10^6x</span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-purple-400 text-sm w-full">
+                                        <div className="w-3 h-3 bg-purple-400 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }} />
+                                        <span>Power Reduction</span>
+                                        <span className="text-gray-500 ml-auto">100%</span>
+                                    </div>
+                                    <Database className="w-20 h-20 text-fuchsia-400 mt-8 opacity-50" />
+                                </div>
+                            </div>
+
+                            {/* Title and Expand Button */}
+                            <div className="flex items-start justify-between mb-4">
+                                <h3 className="text-xl font-bold text-white pr-4">
+                                    High-Density Long-Term Retention
+                                </h3>
+                                <button
+                                    onClick={() => toggleCard(1)}
+                                    className="flex-shrink-0 w-10 h-10 rounded-full border border-white/20 bg-white/5 hover:bg-purple-500/20 hover:border-purple-500/50 flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                                >
+                                    <span className={`text-white text-2xl leading-none transition-transform duration-300 ${expandedCard === 1 ? 'rotate-45' : ''}`}>+</span>
+                                </button>
+                            </div>
+
+                            {/* Expandable Description */}
+                            <div className={`overflow-hidden transition-all duration-300 ${expandedCard === 1 ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                <p className="text-gray-400 text-sm leading-relaxed">
+                                    {fitsStackItems[1].description}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Card 3 - Secure Transport */}
+                    <div className="group relative bg-zinc-900/50 rounded-2xl overflow-hidden border border-white/10 hover:border-purple-500/30 transition-all duration-300">
+                        <div className="p-8 h-full flex flex-col">
+                            {/* Visual Area */}
+                            <div className="flex-1 mb-6 flex items-center justify-center min-h-[280px] bg-gradient-to-br from-emerald-900/20 to-black rounded-xl relative overflow-hidden">
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <div className="w-32 h-32 border-4 border-emerald-500/20 rounded-full" />
+                                    <div className="absolute w-40 h-40 border-2 border-emerald-500/10 rounded-full animate-ping" />
+                                </div>
+                                <div className="relative z-10 bg-emerald-900/40 backdrop-blur-sm rounded-2xl p-6 border border-emerald-500/20">
+                                    <Shield className="w-16 h-16 text-emerald-400" />
+                                </div>
+                            </div>
+
+                            {/* Title and Expand Button */}
+                            <div className="flex items-start justify-between mb-4">
+                                <h3 className="text-xl font-bold text-white pr-4">
+                                    Secure Data Transport
+                                </h3>
+                                <button
+                                    onClick={() => toggleCard(2)}
+                                    className="flex-shrink-0 w-10 h-10 rounded-full border border-white/20 bg-white/5 hover:bg-purple-500/20 hover:border-purple-500/50 flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                                >
+                                    <span className={`text-white text-2xl leading-none transition-transform duration-300 ${expandedCard === 2 ? 'rotate-45' : ''}`}>+</span>
+                                </button>
+                            </div>
+
+                            {/* Expandable Description */}
+                            <div className={`overflow-hidden transition-all duration-300 ${expandedCard === 2 ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                <p className="text-gray-400 text-sm leading-relaxed">
+                                    {fitsStackItems[2].description}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -127,7 +247,7 @@ function FitsInStackSection() {
 
 function UseCasesSection() {
     return (
-        <section className="relative w-full py-24 px-4 bg-zinc-950 border-b border-white/10">
+        <section className="relative w-full py-48 px-4 bg-zinc-950 border-b border-white/10">
             <div className="max-w-7xl mx-auto">
                 <div className="mb-16">
                     <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">
@@ -209,7 +329,7 @@ function HowItWorksSection() {
             </div>
 
             {/* Header */}
-            <div className="absolute top-20 left-0 w-full z-20 text-center px-4 pointer-events-none">
+            <div className="absolute top-20 left-0 mt-16 w-full z-20 text-center px-4 pointer-events-none">
                 <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight uppercase text-purple-500/80">How It Works</h2>
             </div>
 

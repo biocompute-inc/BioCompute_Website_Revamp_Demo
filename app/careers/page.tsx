@@ -82,9 +82,188 @@ export default function Careers() {
 
           {/* Benefit Cards */}
           <div className="grid md:grid-cols-3 gap-8 mb-20">
-            {[1, 2, 3].map((item) => (
-              <div key={item} className="bg-gray-200 rounded-lg h-48" />
-            ))}
+            {/* Card 1 - Compensation */}
+            <div className="bg-[#f5f0eb] rounded-2xl p-8 text-center flex flex-col items-center">
+              <div className="mb-6">
+                <svg className="w-16 h-16 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="9" strokeWidth="1.5" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 6v6l4 2" />
+                  <circle cx="12" cy="12" r="2" fill="currentColor" />
+                  <line x1="8" y1="8" x2="9" y2="9" strokeWidth="1.5" strokeLinecap="round" />
+                  <line x1="15" y1="9" x2="16" y2="8" strokeWidth="1.5" strokeLinecap="round" />
+                  <line x1="15" y1="15" x2="16" y2="16" strokeWidth="1.5" strokeLinecap="round" />
+                  <line x1="8" y1="16" x2="9" y2="15" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-3">
+                Generous Compensation & ESOPs
+              </h3>
+              <p className="text-sm text-gray-700 leading-relaxed">
+                We offer generous pay packages because we believe exceptional work should be rewarded accordingly.
+              </p>
+            </div>
+
+            {/* Card 2 - Autonomy */}
+            <div className="bg-[#fef3e8] rounded-2xl p-8 text-center flex flex-col items-center">
+              <div className="mb-6">
+                <svg className="w-16 h-16 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+                  <ellipse cx="12" cy="9" rx="3" ry="2" strokeWidth="1.5" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold text-orange-600 mb-3">
+                Real Autonomy
+              </h3>
+              <p className="text-sm text-gray-700 leading-relaxed">
+                You will have the intellectual and creative freedom to do your best work owning problems end to end, not just executing tasks.
+              </p>
+            </div>
+
+            {/* Card 3 - Build across disciplines */}
+            <div className="bg-[#eff0f7] rounded-2xl p-8 text-center flex flex-col items-center">
+              <div className="mb-6">
+                <svg className="w-16 h-16 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold text-purple-700 mb-3">
+                Build Across Disciplines
+              </h3>
+              <p className="text-sm text-gray-700 leading-relaxed">
+                You'll work closely with scientists, engineers, and operators from different backgrounds, and pick up skills outside your core domain.
+              </p>
+            </div>
+          </div>
+
+          {/* Our Values Section */}
+          <div className="bg-gradient-to-br from-fuchsia-50 via-white to-fuchsia-50 rounded-3xl p-8 sm:p-12 md:p-16 mb-20 shadow-lg border border-fuchsia-200">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-4 text-black">
+                Our Values
+              </h2>
+              <div className="w-20 h-1 bg-fuchsia-200 mx-auto mb-12 rounded-full"></div>
+
+              <div className="space-y-8">
+                {/* Value 1 */}
+                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
+                      1
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl sm:text-2xl font-bold text-black mb-2">
+                        Dream Crazy Big — Then Make It Real
+                      </h3>
+                      <p className="text-gray-800 leading-relaxed">
+                        We believe the biggest problems deserve the boldest thinking. Dream audaciously, commit deeply, and turn ambitious ideas into reality.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Value 2 */}
+                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
+                      2
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl sm:text-2xl font-bold text-black mb-2">
+                        Take Ownership. Figure Things Out.
+                      </h3>
+                      <p className="text-gray-800 leading-relaxed">
+                        This is everyone's company. We take responsibility from idea to outcome, proactively attack problems, and don't wait for perfect instructions. When the path isn't obvious, we figure it out.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Value 3 */}
+                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
+                      3
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl sm:text-2xl font-bold text-black mb-2">
+                        Stay Curious
+                      </h3>
+                      <p className="text-gray-800 leading-relaxed">
+                        Curiosity fuels breakthroughs. Ask questions, challenge assumptions, and encourage others to do the same. The best ideas often start with "Why?"
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Value 4 */}
+                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
+                      4
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl sm:text-2xl font-bold text-black mb-2">
+                        Practice Candor
+                      </h3>
+                      <p className="text-gray-800 leading-relaxed">
+                        We value honesty, clarity, and respect. Communicate openly about ideas, challenges, and solutions—and always speak directly to the people involved.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Value 5 */}
+                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
+                      5
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl sm:text-2xl font-bold text-black mb-2">
+                        Be Kind
+                      </h3>
+                      <p className="text-gray-800 leading-relaxed">
+                        Brilliance doesn't require ego. We treat each other with empathy, respect, and generosity especially when things get hard.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Value 6 */}
+                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
+                      6
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl sm:text-2xl font-bold text-black mb-2">
+                        Embrace the Intersection
+                      </h3>
+                      <p className="text-gray-800 leading-relaxed">
+                        We bring together disciplines, perspectives, and expertise that don't usually overlap. We collaborate by default and don't build silos.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Value 7 */}
+                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
+                      7
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl sm:text-2xl font-bold text-black mb-2">
+                        Have Fun
+                      </h3>
+                      <p className="text-gray-800 leading-relaxed">
+                        We're building something extraordinary, and we enjoy the ride. Celebrate wins, embrace the chaos, and don't forget to laugh along the way.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Job Listings */}
