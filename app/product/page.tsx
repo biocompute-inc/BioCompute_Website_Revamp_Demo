@@ -142,14 +142,7 @@ function FitsInStackSection() {
                                 </h3>
                                 <button
                                     onClick={() => toggleCard(0)}
-                                    className="flex-shrink-0 w-10 h-10 rounded-full border border-white/20 bg-white/5 hover:bg-purple-500/20 hover:border-purple-500/50 flex items-center justify-center transition-all duration-300 group-hover:scale-110"
-                                >
-                                    <span className={`text-white text-2xl leading-none transition-transform duration-300 ${expandedCard === 0 ? 'rotate-45' : ''}`}>+</span>
-                                </button>
-                            </div>
-
-                            {/* Expandable Description */}
-                            <div className={`overflow-hidden transition-all duration-300 ${expandedCard === 0 ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                    className="flex-shrink-0 w-10 h-10 rounded-full border border-white/20 bg-white/5 hover:bg-purple-500/20 hover:border-purple-500/50 flex items-center justify-center transition-all duration-300 group-hover:scale-110" > <span className={`text-white text-2xl leading-none text-center items-center flex transition-transform duration-300 ${expandedCard === 0 ? 'rotate-45' : ''}`}>+</span> </button> </div> {/* Expandable Description */} <div className={`overflow-hidden transition-all duration-300 ${expandedCard === 0 ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
                                 <p className="text-gray-400 text-sm leading-relaxed">
                                     {fitsStackItems[0].description}
                                 </p>

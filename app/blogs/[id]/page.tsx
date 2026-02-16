@@ -85,7 +85,7 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
       </div>
 
       {/* Blog Content with Prose Styling */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-4xl text-black mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <article className="bg-white shadow-lg p-8 md:p-12">
           <BlogContent content={blog.content} />
 
