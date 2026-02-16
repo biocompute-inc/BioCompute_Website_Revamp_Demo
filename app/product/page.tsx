@@ -220,7 +220,7 @@ function FitsInStackSection() {
                                     onClick={() => toggleCard(2)}
                                     className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-white/20 bg-white/5 hover:bg-purple-500/20 hover:border-purple-500/50 flex items-center justify-center transition-all duration-300 group-hover:scale-110"
                                 >
-                                    <span className={`text-white text-xl sm:text-2xl leading-none transition-transform duration-300 ${expandedCard === 2 ? 'rotate-45' : ''}`}>+</span>
+                                    <span className={`text-white text-xl sm:text-2xl text-center items-center leading-none transition-transform duration-300 ${expandedCard === 2 ? 'rotate-45' : ''}`}>+</span>
                                 </button>
                             </div>
 
