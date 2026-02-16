@@ -104,25 +104,25 @@ function FitsInStackSection() {
     };
 
     return (
-        <section className="relative w-full py-48 px-4 bg-black border-b border-white/10">
+        <section className="relative w-full pt-24 sm:pt-28 md:pt-32 lg:pt-36 pb-12 sm:pb-16 md:pb-24 lg:pb-32 xl:pb-48 px-4 bg-black border-b border-white/10">
             <div className="max-w-7xl mx-auto">
                 {/* Section Title */}
-                <div className="mb-16">
-                    <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+                <div className="mb-8 sm:mb-12 md:mb-16">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6 tracking-tight">
                         Product
                     </h2>
-                    <p className="text-xl md:text-2xl text-purple-400 font-light">
+                    <p className="text-lg sm:text-xl md:text-2xl text-purple-400 font-light">
                         Where BioCompute Fits in Your Stack
                     </p>
                 </div>
 
                 {/* Cards Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                     {/* Card 1 - Cold Storage */}
                     <div className="group relative bg-zinc-900/50 rounded-2xl overflow-hidden border border-white/10 hover:border-purple-500/30 transition-all duration-300">
-                        <div className="p-8 h-full flex flex-col">
+                        <div className="p-4 sm:p-6 md:p-8 h-full flex flex-col">
                             {/* Visual Area */}
-                            <div className="flex-1 mb-6 flex items-center justify-center min-h-[280px] bg-gradient-to-br from-purple-900/20 to-black rounded-xl">
+                            <div className="flex-1 mb-4 sm:mb-6 flex items-center justify-center min-h-[180px] sm:min-h-[220px] md:min-h-[280px] bg-gradient-to-br from-purple-900/20 to-black rounded-xl">
                                 <div className="relative w-full h-full flex items-center justify-center">
                                     <div className="absolute inset-0 opacity-20">
                                         <div className="w-full h-full grid grid-cols-4 gap-2 p-4">
@@ -131,18 +131,18 @@ function FitsInStackSection() {
                                             ))}
                                         </div>
                                     </div>
-                                    <Server className="w-24 h-24 text-purple-400 relative z-10" />
+                                    <Server className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 text-purple-400 relative z-10" />
                                 </div>
                             </div>
 
                             {/* Title and Expand Button */}
-                            <div className="flex items-start justify-between mb-4">
-                                <h3 className="text-xl font-bold text-white pr-4">
+                            <div className="flex items-start justify-between mb-3 sm:mb-4">
+                                <h3 className="text-lg sm:text-xl font-bold text-white pr-4">
                                     Cold Storage Offloading
                                 </h3>
                                 <button
                                     onClick={() => toggleCard(0)}
-                                    className="flex-shrink-0 w-10 h-10 rounded-full border border-white/20 bg-white/5 hover:bg-purple-500/20 hover:border-purple-500/50 flex items-center justify-center transition-all duration-300 group-hover:scale-110" > <span className={`text-white text-2xl leading-none text-center items-center flex transition-transform duration-300 ${expandedCard === 0 ? 'rotate-45' : ''}`}>+</span> </button> </div> {/* Expandable Description */} <div className={`overflow-hidden transition-all duration-300 ${expandedCard === 0 ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                    className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-white/20 bg-white/5 hover:bg-purple-500/20 hover:border-purple-500/50 flex items-center justify-center transition-all duration-300 group-hover:scale-110" > <span className={`text-white text-xl sm:text-2xl leading-none text-center items-center flex transition-transform duration-300 ${expandedCard === 0 ? 'rotate-45' : ''}`}>+</span> </button> </div> {/* Expandable Description */} <div className={`overflow-hidden transition-all duration-300 ${expandedCard === 0 ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
                                 <p className="text-gray-400 text-sm leading-relaxed">
                                     {fitsStackItems[0].description}
                                 </p>
@@ -152,39 +152,39 @@ function FitsInStackSection() {
 
                     {/* Card 2 - High-Density */}
                     <div className="group relative bg-zinc-900/50 rounded-2xl overflow-hidden border border-white/10 hover:border-purple-500/30 transition-all duration-300">
-                        <div className="p-8 h-full flex flex-col">
+                        <div className="p-4 sm:p-6 md:p-8 h-full flex flex-col">
                             {/* Visual Area */}
-                            <div className="flex-1 mb-6 flex items-center justify-center min-h-[280px] bg-gradient-to-br from-fuchsia-900/20 to-black rounded-xl">
-                                <div className="relative w-full h-full flex flex-col items-center justify-center gap-3 p-6">
-                                    <div className="flex items-center gap-2 text-green-400 text-sm w-full">
+                            <div className="flex-1 mb-4 sm:mb-6 flex items-center justify-center min-h-[180px] sm:min-h-[220px] md:min-h-[280px] bg-gradient-to-br from-fuchsia-900/20 to-black rounded-xl">
+                                <div className="relative w-full h-full flex flex-col items-center justify-center gap-2 sm:gap-3 p-3 sm:p-6">
+                                    <div className="flex items-center gap-2 text-green-400 text-xs sm:text-sm w-full">
                                         <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
                                         <span>Space Optimized</span>
                                         <span className="text-gray-500 ml-auto">98%</span>
                                     </div>
-                                    <div className="flex items-center gap-2 text-blue-400 text-sm w-full">
+                                    <div className="flex items-center gap-2 text-blue-400 text-xs sm:text-sm w-full">
                                         <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }} />
                                         <span>Density Increase</span>
                                         <span className="text-gray-500 ml-auto">10^6x</span>
                                     </div>
-                                    <div className="flex items-center gap-2 text-purple-400 text-sm w-full">
+                                    <div className="flex items-center gap-2 text-purple-400 text-xs sm:text-sm w-full">
                                         <div className="w-3 h-3 bg-purple-400 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }} />
                                         <span>Power Reduction</span>
                                         <span className="text-gray-500 ml-auto">100%</span>
                                     </div>
-                                    <Database className="w-20 h-20 text-fuchsia-400 mt-8 opacity-50" />
+                                    <Database className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 text-fuchsia-400 mt-4 sm:mt-8 opacity-50" />
                                 </div>
                             </div>
 
                             {/* Title and Expand Button */}
-                            <div className="flex items-start justify-between mb-4">
-                                <h3 className="text-xl font-bold text-white pr-4">
+                            <div className="flex items-start justify-between mb-3 sm:mb-4">
+                                <h3 className="text-lg sm:text-xl font-bold text-white pr-4">
                                     High-Density Long-Term Retention
                                 </h3>
                                 <button
                                     onClick={() => toggleCard(1)}
-                                    className="flex-shrink-0 w-10 h-10 rounded-full border border-white/20 bg-white/5 hover:bg-purple-500/20 hover:border-purple-500/50 flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                                    className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-white/20 bg-white/5 hover:bg-purple-500/20 hover:border-purple-500/50 flex items-center justify-center transition-all duration-300 group-hover:scale-110"
                                 >
-                                    <span className={`text-white text-2xl leading-none transition-transform duration-300 ${expandedCard === 1 ? 'rotate-45' : ''}`}>+</span>
+                                    <span className={`text-white text-xl sm:text-2xl leading-none transition-transform duration-300 ${expandedCard === 1 ? 'rotate-45' : ''}`}>+</span>
                                 </button>
                             </div>
 
@@ -199,28 +199,28 @@ function FitsInStackSection() {
 
                     {/* Card 3 - Secure Transport */}
                     <div className="group relative bg-zinc-900/50 rounded-2xl overflow-hidden border border-white/10 hover:border-purple-500/30 transition-all duration-300">
-                        <div className="p-8 h-full flex flex-col">
+                        <div className="p-4 sm:p-6 md:p-8 h-full flex flex-col">
                             {/* Visual Area */}
-                            <div className="flex-1 mb-6 flex items-center justify-center min-h-[280px] bg-gradient-to-br from-emerald-900/20 to-black rounded-xl relative overflow-hidden">
+                            <div className="flex-1 mb-4 sm:mb-6 flex items-center justify-center min-h-[180px] sm:min-h-[220px] md:min-h-[280px] bg-gradient-to-br from-emerald-900/20 to-black rounded-xl relative overflow-hidden">
                                 <div className="absolute inset-0 flex items-center justify-center">
-                                    <div className="w-32 h-32 border-4 border-emerald-500/20 rounded-full" />
-                                    <div className="absolute w-40 h-40 border-2 border-emerald-500/10 rounded-full animate-ping" />
+                                    <div className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 border-2 sm:border-4 border-emerald-500/20 rounded-full" />
+                                    <div className="absolute w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 border-2 border-emerald-500/10 rounded-full animate-ping" />
                                 </div>
-                                <div className="relative z-10 bg-emerald-900/40 backdrop-blur-sm rounded-2xl p-6 border border-emerald-500/20">
-                                    <Shield className="w-16 h-16 text-emerald-400" />
+                                <div className="relative z-10 bg-emerald-900/40 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-6 border border-emerald-500/20">
+                                    <Shield className="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 text-emerald-400" />
                                 </div>
                             </div>
 
                             {/* Title and Expand Button */}
-                            <div className="flex items-start justify-between mb-4">
-                                <h3 className="text-xl font-bold text-white pr-4">
+                            <div className="flex items-start justify-between mb-3 sm:mb-4">
+                                <h3 className="text-lg sm:text-xl font-bold text-white pr-4">
                                     Secure Data Transport
                                 </h3>
                                 <button
                                     onClick={() => toggleCard(2)}
-                                    className="flex-shrink-0 w-10 h-10 rounded-full border border-white/20 bg-white/5 hover:bg-purple-500/20 hover:border-purple-500/50 flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                                    className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-white/20 bg-white/5 hover:bg-purple-500/20 hover:border-purple-500/50 flex items-center justify-center transition-all duration-300 group-hover:scale-110"
                                 >
-                                    <span className={`text-white text-2xl leading-none transition-transform duration-300 ${expandedCard === 2 ? 'rotate-45' : ''}`}>+</span>
+                                    <span className={`text-white text-xl sm:text-2xl leading-none transition-transform duration-300 ${expandedCard === 2 ? 'rotate-45' : ''}`}>+</span>
                                 </button>
                             </div>
 
@@ -240,21 +240,21 @@ function FitsInStackSection() {
 
 function UseCasesSection() {
     return (
-        <section className="relative w-full py-48 px-4 bg-zinc-950 border-b border-white/10">
+        <section className="relative w-full pt-24 sm:pt-28 md:pt-32 lg:pt-36 pb-12 sm:pb-16 md:pb-24 lg:pb-32 xl:pb-48 px-4 bg-white border-b border-gray-200">
             <div className="max-w-7xl mx-auto">
-                <div className="mb-16">
-                    <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+                <div className="mb-8 sm:mb-12 md:mb-16">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black mb-4 sm:mb-6 tracking-tight">
                         Use Cases
                     </h2>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
                     {useCasesItems.map((item, idx) => (
-                        <div key={idx} className="p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-purple-500/30 hover:bg-white/10 transition-all duration-300">
-                            <h3 className="text-xl font-bold text-white mb-4">
+                        <div key={idx} className="p-4 sm:p-6 md:p-8 rounded-2xl bg-fuchsia-50 border border-fuchsia-200 hover:border-purple-500 hover:shadow-lg transition-all duration-300">
+                            <h3 className="text-lg sm:text-xl font-bold text-black mb-3 sm:mb-4">
                                 {item.title}
                             </h3>
-                            <p className="text-sm text-gray-400 leading-relaxed">
+                            <p className="text-sm text-gray-700 leading-relaxed">
                                 {item.description}
                             </p>
                         </div>
@@ -322,12 +322,12 @@ function HowItWorksSection() {
             </div>
 
             {/* Header */}
-            <div className="absolute top-20 left-0 mt-16 w-full z-20 text-center px-4 pointer-events-none">
-                <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight uppercase text-purple-500/80">How It Works</h2>
+            <div className="absolute top-28 left-0 w-full z-20 text-center px-4 pointer-events-none">
+                <h2 className="text-3xl text-center md:text-3xl font-bold text-white tracking-tight uppercase text-purple-500/80">How It Works</h2>
             </div>
 
             {/* SLIDER TRACK */}
-            <div ref={slider} className="flex h-full w-[400%]">
+            <div ref={slider} className="mt-16 flex h-full w-[400%]">
                 {steps.map((step) => (
                     <div
                         key={step.id}
