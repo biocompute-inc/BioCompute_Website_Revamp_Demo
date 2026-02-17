@@ -271,8 +271,12 @@ export default function Careers() {
             <h3 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8">Open Roles</h3>
 
             {loading ? (
-              <div className="text-center py-12">
-                <p className="text-gray-600">Loading job openings...</p>
+              <div className="text-center py-12 flex flex-col items-center gap-4">
+                <div className="relative w-16 h-16">
+                  <div className="absolute inset-0 border-4 border-gray-200 rounded-full"></div>
+                  <div className="absolute inset-0 border-4 border-fuchsia-600 rounded-full border-t-transparent animate-spin"></div>
+                </div>
+                <p className="text-gray-600 font-medium">Loading job openings...</p>
               </div>
             ) : jobs.length === 0 ? (
               <div className="text-center py-12">

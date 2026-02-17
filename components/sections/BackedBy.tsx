@@ -29,29 +29,249 @@ export default function OurPartners() {
             repeatType: "loop",
           }}
         >
-          <Image src="/wtfweb.png" width={144} height={40} className="w-[144px] h-[40px]" alt="WTF" />
-          <Image src="/Bits.png" width={144} height={56} className="w-[144px] h-[56px]" alt="BITS Pilani" />
-          <Image src="/meity.png" width={120} height={56} className="w-[120px] h-[56px]" alt="Meity" />
-          <Image src="/Gradcap.png" width={160} height={40} className="w-[160px] h-[40px]" alt="Grad capital" />
-          <Image src="/Nucleate.png" width={192} height={32} className="w-[192px] h-[32px]" alt="Nucleate" />
-          <Image src="/ccamp.png" width={144} height={48} className="w-[144px] h-[48px]" alt="CCAMP" />
-          <Image src="/nidhi.jpg" width={144} height={48} className="w-[144px] h-[48px]" alt="DST NIDHI" />
-          <Image src="/Savant.svg" width={144} height={48} className="w-[144px] h-[48px]" alt="Savant" />
-          <Image src="/susmafia.png" width={160} height={48} className="w-[160px] h-[48px]" alt="Susmafia" />
-          <Image src="/Meractus.png" width={144} height={48} className="w-[144px] h-[48px]" alt="Meractus" />
+          <motion.a
+            href="https://www.wtfund.vc/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Image src="/wtfweb.png" width={144} height={40} className="w-[144px] h-[40px]" alt="WTF" />
+          </motion.a>
+          <motion.a
+            href="https://www.bits-pilani.ac.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Image src="/Bits.png" width={144} height={56} className="w-[144px] h-[56px]" alt="BITS Pilani" />
+          </motion.a>
+          <motion.a
+            href="https://www.meity.gov.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Image src="/meity.png" width={120} height={56} className="w-[120px] h-[56px]" alt="Meity" />
+          </motion.a>
+          <motion.a
+            href="https://grad.capital/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Image src="/Gradcap.png" width={160} height={40} className="w-[160px] h-[40px]" alt="Grad capital" />
+          </motion.a>
+          <motion.a
+            href="https://nucleate.xyz/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Image src="/Nucleate.png" width={192} height={32} className="w-[192px] h-[32px]" alt="Nucleate" />
+          </motion.a>
+          <motion.a
+            href="https://ccamp.res.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Image src="/ccamp.png" width={144} height={48} className="w-[144px] h-[48px]" alt="CCAMP" />
+          </motion.a>
+          <motion.a
+            href="https://www.nidhiprayas.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Image src="/nidhi.jpg" width={144} height={48} className="w-[144px] h-[48px]" alt="DST NIDHI" />
+          </motion.a>
+          <motion.a
+            href="https://www.savantcapital.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Image src="/Savant.svg" width={144} height={48} className="w-[144px] h-[48px]" alt="Savant" />
+          </motion.a>
+          <motion.a
+            href="https://www.susmafia.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Image src="/susmafia.png" width={160} height={48} className="w-[160px] h-[48px]" alt="Susmafia" />
+          </motion.a>
+          <motion.a
+            href="https://meractus.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Image src="/Meractus.png" width={144} height={48} className="w-[144px] h-[48px]" alt="Meractus" />
+          </motion.a>
+          <motion.a
+            href="https://www.1517fund.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Image src="/1517.jpeg" width={160} height={48} className="w-[100px] h-[48px]" alt="1517 Fund" />
+          </motion.a>
+          <motion.a
+            href="https://www.linkedin.com/in/akothari/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Image src="/akshaykothari.png" width={400} height={100} className="w-[150px] h-[60px]" alt="Akshay Kothari" />
+          </motion.a>
 
           {/*Second set*/}
 
-          <Image src="/wtfweb.png" width={144} height={40} className="w-[144px] h-[40px]" alt="WTF" />
-          <Image src="/Bits.png" width={144} height={56} className="w-[144px] h-[56px]" alt="BITS Pilani" />
-          <Image src="/meity.png" width={120} height={56} className="w-[120px] h-[56px]" alt="Meity" />
-          <Image src="/Gradcap.png" width={160} height={40} className="w-[160px] h-[40px]" alt="Grad capital" />
-          <Image src="/Nucleate.png" width={192} height={32} className="w-[192px] h-[32px]" alt="Nucleate" />
-          <Image src="/ccamp.png" width={144} height={48} className="w-[144px] h-[48px]" alt="CCAMP" />
-          <Image src="/nidhi.jpg" width={144} height={48} className="w-[144px] h-[48px]" alt="DST NIDHI" />
-          <Image src="/Savant.svg" width={144} height={48} className="w-[144px] h-[48px]" alt="Savant" />
-          <Image src="/susmafia.png" width={160} height={48} className="w-[160px] h-[48px]" alt="Susmafia" />
-          <Image src="/Meractus.png" width={144} height={48} className="w-[144px] h-[48px]" alt="Meractus" />
+          <motion.a
+            href="https://www.wtfund.vc/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Image src="/wtfweb.png" width={144} height={40} className="w-[144px] h-[40px]" alt="WTF" />
+          </motion.a>
+          <motion.a
+            href="https://www.bits-pilani.ac.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Image src="/Bits.png" width={144} height={56} className="w-[144px] h-[56px]" alt="BITS Pilani" />
+          </motion.a>
+          <motion.a
+            href="https://www.meity.gov.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Image src="/meity.png" width={120} height={56} className="w-[120px] h-[56px]" alt="Meity" />
+          </motion.a>
+          <motion.a
+            href="https://grad.capital/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Image src="/Gradcap.png" width={160} height={40} className="w-[160px] h-[40px]" alt="Grad capital" />
+          </motion.a>
+          <motion.a
+            href="https://nucleate.xyz/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Image src="/Nucleate.png" width={192} height={32} className="w-[192px] h-[32px]" alt="Nucleate" />
+          </motion.a>
+          <motion.a
+            href="https://ccamp.res.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Image src="/ccamp.png" width={144} height={48} className="w-[144px] h-[48px]" alt="CCAMP" />
+          </motion.a>
+          <motion.a
+            href="https://www.nidhiprayas.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Image src="/nidhi.jpg" width={144} height={48} className="w-[144px] h-[48px]" alt="DST NIDHI" />
+          </motion.a>
+          <motion.a
+            href="https://www.savantcapital.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Image src="/Savant.svg" width={144} height={48} className="w-[144px] h-[48px]" alt="Savant" />
+          </motion.a>
+          <motion.a
+            href="https://www.susmafia.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Image src="/susmafia.png" width={160} height={48} className="w-[160px] h-[48px]" alt="Susmafia" />
+          </motion.a>
+          <motion.a
+            href="https://meractus.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Image src="/Meractus.png" width={144} height={48} className="w-[144px] h-[48px]" alt="Meractus" />
+          </motion.a>
+          <motion.a
+            href="https://www.1517fund.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Image src="/1517.png" width={160} height={48} className="w-[160px] h-[48px]" alt="1517 Fund" />
+          </motion.a>
+          <motion.a
+            href="https://www.linkedin.com/in/akothari/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.15 }}
+            transition={{ duration: 0.3 }}
+            className="flex items-center"
+          >
+            <Image src="/akshaykothari.png" width={144} height={48} className="w-[144px] h-[48px]" alt="Akshay Kothari" />
+          </motion.a>
         </motion.div>
       </div>
     </>

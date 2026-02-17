@@ -1,10 +1,11 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { useGSAP } from '@gsap/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
     Server,
     Dna,
@@ -14,7 +15,8 @@ import {
     ChevronLeft,
     ChevronRight,
     Database,
-    Shield
+    Shield,
+    X
 } from 'lucide-react';
 
 // Register plugins
@@ -57,215 +59,394 @@ const steps = [
 const fitsStackItems = [
     {
         title: "Cold Storage Offloading",
-        description: "Stop paying for data you aren't using. Migrate your Tier-3 and Tier-4 archival data to our passive DNA Vaults and turn your active cost sinks into passive assets."
+        description: "Stop paying for data you aren't using. Migrate your Tier-3 and Tier-4 archival data to our passive DNA Vaults and turn your active cost sinks into passive assets.",
+        image: "https://placehold.co/1200x800/0a0a0a/7c3aed?text=Cold+Storage"
     },
     {
         title: "High-Density Long-Term Retention",
-        description: "Shrink your physical footprint and reclaim valuable floor space in your data center. Replace aisles of magnetic tape libraries with a single BioCompute rack, freeing up power and space for high-performance compute tasks."
+        description: "Shrink your physical footprint and reclaim valuable floor space in your data center. Replace aisles of magnetic tape libraries with a single BioCompute rack, freeing up power and space for high-performance compute tasks.",
+        image: "https://placehold.co/1200x800/0a0a0a/a855f7?text=High+Density",
+        stats: [
+            { label: "Space Optimized", value: "98%", color: "text-green-400" },
+            { label: "Density Increase", value: "10^6x", color: "text-blue-400" },
+            { label: "Power Reduction", value: "100%", color: "text-purple-400" }
+        ]
     },
     {
         title: "Secure Data Transport",
-        description: "Move Exabytes in your wallet. Transferring massive datasets over the internet is slow. BioCompute allows you to physically transport Exabytes of encrypted data in a localized, durable medium that is immune to electromagnetic interference."
+        description: "Move Exabytes in your wallet. Transferring massive datasets over the internet is slow. BioCompute allows you to physically transport Exabytes of encrypted data in a localized, durable medium that is immune to electromagnetic interference.",
+        image: "https://placehold.co/1200x800/0a0a0a/10b981?text=Secure+Transport"
     }
 ];
 
 const useCasesItems = [
     {
         title: "Hyperscale Cloud & AI",
-        description: "Slash operational costs by offloading cold data to passive, room-temperature storage. Turn off water-cooling loops and drastically reduce your facility's carbon footprint."
+        description: "Slash operational costs by offloading cold data to passive, room-temperature storage. Turn off water-cooling loops and drastically reduce your facility's carbon footprint.",
+        image: "https://placehold.co/800x600/1a1a1a/7c3aed?text=Cloud+%26+AI"
     },
     {
         title: "Space Exploration",
-        description: "Drastically reduce payload mass by replacing heavy server racks with sub-kilogram scale media. Preserve mission-critical data for centuries in deep space without draining onboard power."
+        description: "Drastically reduce payload mass by replacing heavy server racks with sub-kilogram scale media. Preserve mission-critical data for centuries in deep space without draining onboard power.",
+        image: "https://placehold.co/800x600/1a1a1a/7c3aed?text=Space+Exploration"
     },
     {
         title: "BFSI",
-        description: "Ensure absolute immutability for transaction logs and legal records. Protect critical assets from ransomware with a physically air-gapped, unhackable medium."
+        description: "Ensure absolute immutability for transaction logs and legal records. Protect critical assets from ransomware with a physically air-gapped, unhackable medium.",
+        image: "https://placehold.co/800x600/1a1a1a/7c3aed?text=BFSI"
     },
     {
         title: "Media & Entertainment",
-        description: "Future-proof your master archives against format obsolescence. Preserve high-fidelity cultural assets for centuries without the risk of degradation."
+        description: "Future-proof your master archives against format obsolescence. Preserve high-fidelity cultural assets for centuries without the risk of degradation.",
+        image: "https://placehold.co/800x600/1a1a1a/7c3aed?text=Media+%26+Entertainment"
     },
     {
         title: "Research & Development",
-        description: "Eliminate the \"store or delete\" dilemma. Retain every dataset forever for future analysis & discovery."
+        description: "Eliminate the \"store or delete\" dilemma. Retain every dataset forever for future analysis & discovery.",
+        image: "https://placehold.co/800x600/1a1a1a/7c3aed?text=Research+%26+Development"
     },
     {
         title: "Government & Public Sector",
-        description: "Secure national heritage on a medium with a 500-year half-life. End the expensive, risky cycle of migrating data to new magnetic tapes every decade."
+        description: "Secure national heritage on a medium with a 500-year half-life. End the expensive, risky cycle of migrating data to new magnetic tapes every decade.",
+        image: "https://placehold.co/800x600/1a1a1a/7c3aed?text=Government+%26+Public"
     }
 ];
 
-function FitsInStackSection() {
+function FitsInStackSection(): JSX.Element {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const textRef = useRef<HTMLDivElement>(null);
+    const cardsRef = useRef<HTMLDivElement>(null);
+
+    // Card configurations (kept from your original code)
+    const cardConfigs = [
+        {
+            icon: <Server className="w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-24 lg:h-24 text-purple-400" />,
+            gradient: "from-purple-900/20 to-black",
+            bgPattern: (
+                <div className="absolute inset-0 opacity-20">
+                    <div className="w-full h-full grid grid-cols-4 gap-1 sm:gap-2 p-2 sm:p-3 md:p-4">
+                        {[...Array(16)].map((_, i) => (
+                            <div key={i} className="bg-purple-500/30 rounded animate-pulse" style={{ animationDelay: `${i * 0.1}s` }} />
+                        ))}
+                    </div>
+                </div>
+            )
+        },
+        {
+            icon: <Database className="w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-24 lg:h-24 text-fuchsia-400 opacity-50" />,
+            gradient: "from-fuchsia-900/20 to-black",
+            stats: fitsStackItems[1].stats
+        },
+        {
+            icon: <Shield className="w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-24 lg:h-24 text-emerald-400" />,
+            gradient: "from-emerald-900/20 to-black",
+            pulseRings: true
+        }
+    ];
+
+    useGSAP(() => {
+        if (!containerRef.current || !textRef.current || !cardsRef.current) return;
+
+        // Responsive values based on screen size
+        const isMobile = window.innerWidth < 768;
+        const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
+
+        const textYPosition = isMobile ? "-20vh" : isTablet ? "-20vh" : "-30vh";
+        const textScale = isMobile ? 0.8 : isTablet ? 0.7 : 0.8;
+        const cardsYPosition = isMobile ? "18vh" : isTablet ? "16vh" : "10vh";
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top top",
+                end: "+=150%", // Determines how long the scroll animation lasts
+                pin: true,     // Locks the container in place while animating
+                scrub: 1,      // Smooths the animation to the scrollbar
+            }
+        });
+
+        // 1. Shrink and move the text to the top
+        tl.to(textRef.current, {
+            scale: textScale,     // Responsive shrink
+            y: textYPosition,     // Responsive vertical position
+            x: 0,                 // Keep centered
+            duration: 1,
+            ease: "power2.inOut"
+        }, "start");
+
+        // 2. Keep subtitle visible (removed fade-out animation)
+
+        // 3. Bring in the cards from the bottom
+        tl.fromTo(cardsRef.current,
+            {
+                y: "100vh",
+                opacity: 0
+            },
+            {
+                y: cardsYPosition, // Responsive landing position
+                opacity: 1,
+                duration: 1,
+                ease: "power2.out",
+                stagger: 0.1
+            },
+            "start+=0.3" // Starts slightly after text begins moving
+        );
+
+    }, { scope: containerRef });
+
+    // Expansion logic (kept largely the same but simplified)
     const [expandedCard, setExpandedCard] = useState<number | null>(null);
 
-    const toggleCard = (index: number) => {
-        setExpandedCard(expandedCard === index ? null : index);
-    };
-
     return (
-        <section className="relative w-full pt-24 sm:pt-28 md:pt-32 lg:pt-36 pb-12 sm:pb-16 md:pb-24 lg:pb-32 xl:pb-48 px-4 bg-black border-b border-white/10">
-            <div className="max-w-7xl mx-auto">
-                {/* Section Title */}
-                <div className="mb-8 sm:mb-12 md:mb-16">
-                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6 tracking-tight">
-                        Product
-                    </h2>
-                    <p className="text-lg sm:text-xl md:text-2xl text-purple-400 font-light">
-                        Where BioCompute Fits in Your Stack
-                    </p>
-                </div>
+        // The container is TALL (h-[250vh]) to allow scroll room, but content is sticky
+        <div ref={containerRef} className="relative h-screen bg-black overflow-hidden flex flex-col items-center justify-center">
 
-                {/* Cards Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                    {/* Card 1 - Cold Storage */}
-                    <div className="group relative bg-zinc-900/50 rounded-2xl overflow-hidden border border-white/10 hover:border-purple-500/30 transition-all duration-300">
-                        <div className="p-4 sm:p-6 md:p-8 h-full flex flex-col">
-                            {/* Visual Area */}
-                            <div className="flex-1 mb-4 sm:mb-6 flex items-center justify-center min-h-[180px] sm:min-h-[220px] md:min-h-[280px] bg-gradient-to-br from-purple-900/20 to-black rounded-xl">
-                                <div className="relative w-full h-full flex items-center justify-center">
-                                    <div className="absolute inset-0 opacity-20">
-                                        <div className="w-full h-full grid grid-cols-4 gap-2 p-4">
-                                            {[...Array(16)].map((_, i) => (
-                                                <div key={i} className="bg-purple-500/30 rounded animate-pulse" style={{ animationDelay: `${i * 0.1}s` }} />
+            {/* The Text Container - centers by default */}
+            <div ref={textRef} className="absolute z-20 flex flex-col items-center justify-center pointer-events-none origin-center px-2">
+                <h2 className="text-xl sm:text-4xl md:text-6xl lg:text-8xl xl:text-9xl font-bold text-white mb-0.5 sm:mb-2 md:mb-4 tracking-tight text-center leading-tight">
+                    PRODUCT
+                </h2>
+                <p className="hero-subtitle text-[10px] sm:text-base md:text-lg lg:text-2xl xl:text-3xl font-bold text-white text-center px-1 leading-tight">
+                    Where BioCompute Fits in Your Stack
+                </p>
+            </div>
+
+            {/* Cards Container */}
+            <div ref={cardsRef} className="absolute sm:-mt-12 z-10 w-full max-w-7xl px-2 sm:px-4 lg:px-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4 md:gap-6">
+                    {fitsStackItems.map((item, index) => (
+                        <div
+                            key={index}
+                            onClick={() => setExpandedCard(index)}
+                            className={`
+                                group relative bg-zinc-900/80 backdrop-blur-md rounded-lg sm:rounded-xl lg:rounded-2xl overflow-hidden 
+                                border border-white/10 hover:border-purple-500/50 
+                                transition-all duration-300 cursor-pointer h-[120px] sm:h-[160px] md:h-[200px] lg:h-[400px] flex flex-col
+                            `}
+                        >
+                            {/* Card Content Construction */}
+                            <div className="p-1.5 sm:p-2 md:p-3 lg:p-6 h-full flex flex-col relative z-10">
+                                {/* Visual Top */}
+                                <div className={`flex-1 mb-1 sm:mb-1.5 md:mb-2 lg:mb-6 flex items-center justify-center bg-gradient-to-br ${cardConfigs[index].gradient} rounded-md sm:rounded-lg lg:rounded-xl relative overflow-hidden`}>
+                                    {cardConfigs[index].bgPattern}
+
+                                    {/* Stats Render */}
+                                    {cardConfigs[index].stats && (
+                                        <div className="w-full h-full flex flex-col justify-center p-1 sm:p-1.5 md:p-2 lg:p-4 gap-0.5 sm:gap-1 md:gap-1.5 lg:gap-3">
+                                            {cardConfigs[index].stats?.map((stat, i) => (
+                                                <div key={i} className="flex justify-between items-center w-full">
+                                                    <span className="text-[7px] sm:text-[8px] md:text-[9px] lg:text-sm text-gray-400">{stat.label}</span>
+                                                    <span className={`text-[8px] sm:text-[9px] md:text-[10px] lg:text-base font-bold ${stat.color}`}>{stat.value}</span>
+                                                </div>
                                             ))}
                                         </div>
+                                    )}
+
+                                    {/* Pulse Rings */}
+                                    {cardConfigs[index].pulseRings && (
+                                        <div className="absolute inset-0 flex items-center justify-center">
+                                            <div className="absolute w-full h-full border border-emerald-500/20 rounded-full animate-ping opacity-20" />
+                                        </div>
+                                    )}
+
+                                    {/* Icon */}
+                                    {!cardConfigs[index].stats && (
+                                        <div className="relative z-10">
+                                            {cardConfigs[index].icon}
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Title & Action */}
+                                <div className="flex justify-between items-center gap-1">
+                                    <h3 className="text-[9px] sm:text-[10px] md:text-xs lg:text-xl font-bold text-white line-clamp-2 leading-tight">{item.title}</h3>
+                                    <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-8 lg:h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-purple-600 transition-colors flex-shrink-0 text-[9px] sm:text-[10px]">
+                                        +
                                     </div>
-                                    <Server className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 text-purple-400 relative z-10" />
                                 </div>
                             </div>
-
-                            {/* Title and Expand Button */}
-                            <div className="flex items-start justify-between mb-3 sm:mb-4">
-                                <h3 className="text-lg sm:text-xl font-bold text-white pr-4">
-                                    Cold Storage Offloading
-                                </h3>
-                                <button
-                                    onClick={() => toggleCard(0)}
-                                    className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-white/20 bg-white/5 hover:bg-purple-500/20 hover:border-purple-500/50 flex items-center justify-center transition-all duration-300 group-hover:scale-110" > <span className={`text-white text-xl sm:text-2xl leading-none text-center items-center flex transition-transform duration-300 ${expandedCard === 0 ? 'rotate-45' : ''}`}>+</span> </button> </div> {/* Expandable Description */} <div className={`overflow-hidden transition-all duration-300 ${expandedCard === 0 ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-                                <p className="text-gray-400 text-sm leading-relaxed">
-                                    {fitsStackItems[0].description}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Card 2 - High-Density */}
-                    <div className="group relative bg-zinc-900/50 rounded-2xl overflow-hidden border border-white/10 hover:border-purple-500/30 transition-all duration-300">
-                        <div className="p-4 sm:p-6 md:p-8 h-full flex flex-col">
-                            {/* Visual Area */}
-                            <div className="flex-1 mb-4 sm:mb-6 flex items-center justify-center min-h-[180px] sm:min-h-[220px] md:min-h-[280px] bg-gradient-to-br from-fuchsia-900/20 to-black rounded-xl">
-                                <div className="relative w-full h-full flex flex-col items-center justify-center gap-2 sm:gap-3 p-3 sm:p-6">
-                                    <div className="flex items-center gap-2 text-green-400 text-xs sm:text-sm w-full">
-                                        <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
-                                        <span>Space Optimized</span>
-                                        <span className="text-gray-500 ml-auto">98%</span>
-                                    </div>
-                                    <div className="flex items-center gap-2 text-blue-400 text-xs sm:text-sm w-full">
-                                        <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }} />
-                                        <span>Density Increase</span>
-                                        <span className="text-gray-500 ml-auto">10^6x</span>
-                                    </div>
-                                    <div className="flex items-center gap-2 text-purple-400 text-xs sm:text-sm w-full">
-                                        <div className="w-3 h-3 bg-purple-400 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }} />
-                                        <span>Power Reduction</span>
-                                        <span className="text-gray-500 ml-auto">100%</span>
-                                    </div>
-                                    <Database className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 text-fuchsia-400 mt-4 sm:mt-8 opacity-50" />
-                                </div>
-                            </div>
-
-                            {/* Title and Expand Button */}
-                            <div className="flex items-start justify-between mb-3 sm:mb-4">
-                                <h3 className="text-lg sm:text-xl font-bold text-white pr-4">
-                                    High-Density Long-Term Retention
-                                </h3>
-                                <button
-                                    onClick={() => toggleCard(1)}
-                                    className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-white/20 bg-white/5 hover:bg-purple-500/20 hover:border-purple-500/50 flex items-center justify-center transition-all duration-300 group-hover:scale-110"
-                                >
-                                    <span className={`text-white text-xl sm:text-2xl leading-none transition-transform duration-300 ${expandedCard === 1 ? 'rotate-45' : ''}`}>+</span>
-                                </button>
-                            </div>
-
-                            {/* Expandable Description */}
-                            <div className={`overflow-hidden transition-all duration-300 ${expandedCard === 1 ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-                                <p className="text-gray-400 text-sm leading-relaxed">
-                                    {fitsStackItems[1].description}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Card 3 - Secure Transport */}
-                    <div className="group relative bg-zinc-900/50 rounded-2xl overflow-hidden border border-white/10 hover:border-purple-500/30 transition-all duration-300">
-                        <div className="p-4 sm:p-6 md:p-8 h-full flex flex-col">
-                            {/* Visual Area */}
-                            <div className="flex-1 mb-4 sm:mb-6 flex items-center justify-center min-h-[180px] sm:min-h-[220px] md:min-h-[280px] bg-gradient-to-br from-emerald-900/20 to-black rounded-xl relative overflow-hidden">
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                    <div className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 border-2 sm:border-4 border-emerald-500/20 rounded-full" />
-                                    <div className="absolute w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 border-2 border-emerald-500/10 rounded-full animate-ping" />
-                                </div>
-                                <div className="relative z-10 bg-emerald-900/40 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-6 border border-emerald-500/20">
-                                    <Shield className="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 text-emerald-400" />
-                                </div>
-                            </div>
-
-                            {/* Title and Expand Button */}
-                            <div className="flex items-start justify-between mb-3 sm:mb-4">
-                                <h3 className="text-lg sm:text-xl font-bold text-white pr-4">
-                                    Secure Data Transport
-                                </h3>
-                                <button
-                                    onClick={() => toggleCard(2)}
-                                    className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-white/20 bg-white/5 hover:bg-purple-500/20 hover:border-purple-500/50 flex items-center justify-center transition-all duration-300 group-hover:scale-110"
-                                >
-                                    <span className={`text-white text-xl sm:text-2xl text-center items-center leading-none transition-transform duration-300 ${expandedCard === 2 ? 'rotate-45' : ''}`}>+</span>
-                                </button>
-                            </div>
-
-                            {/* Expandable Description */}
-                            <div className={`overflow-hidden transition-all duration-300 ${expandedCard === 2 ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-                                <p className="text-gray-400 text-sm leading-relaxed">
-                                    {fitsStackItems[2].description}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
-}
-
-function UseCasesSection() {
-    return (
-        <section className="relative w-full pt-24 sm:pt-28 md:pt-32 lg:pt-36 pb-12 sm:pb-16 md:pb-24 lg:pb-32 xl:pb-48 px-4 bg-white border-b border-gray-200">
-            <div className="max-w-7xl mx-auto">
-                <div className="mb-8 sm:mb-12 md:mb-16">
-                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black mb-4 sm:mb-6 tracking-tight">
-                        Use Cases
-                    </h2>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
-                    {useCasesItems.map((item, idx) => (
-                        <div key={idx} className="p-4 sm:p-6 md:p-8 rounded-2xl bg-fuchsia-50 border border-fuchsia-200 hover:border-purple-500 hover:shadow-lg transition-all duration-300">
-                            <h3 className="text-lg sm:text-xl font-bold text-black mb-3 sm:mb-4">
-                                {item.title}
-                            </h3>
-                            <p className="text-sm text-gray-700 leading-relaxed">
-                                {item.description}
-                            </p>
                         </div>
                     ))}
                 </div>
             </div>
+
+            {/* Expanded Modal (Copied logic) */}
+            <AnimatePresence>
+                {expandedCard !== null && (
+                    <motion.div
+                        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-xl p-4 sm:p-8"
+                        onClick={() => setExpandedCard(null)}
+                    >
+                        <motion.div
+                            className="bg-zinc-900 w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl border border-white/10 p-4 sm:p-6 md:p-8 relative"
+                            onClick={(e) => e.stopPropagation()}
+                            layoutId={`card-${expandedCard}`}
+                        >
+                            <button onClick={() => setExpandedCard(null)} className="absolute top-4 right-4 p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors z-10">
+                                <X className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                            </button>
+                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 pr-10">{fitsStackItems[expandedCard].title}</h2>
+                            <p className="text-gray-300 text-base sm:text-lg mb-6 sm:mb-8">{fitsStackItems[expandedCard].description}</p>
+                            <img src={fitsStackItems[expandedCard].image} alt="Detail" className="w-full rounded-xl" />
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+        </div>
+    );
+}
+
+function UseCasesSection(): JSX.Element {
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const totalSlides = useCasesItems.length;
+
+    // Keyboard navigation
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'ArrowLeft') {
+                handlePrevious();
+            } else if (e.key === 'ArrowRight') {
+                handleNext();
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [currentSlide]);
+
+    const handlePrevious = () => {
+        setCurrentSlide((prev) => (prev === 0 ? totalSlides - 1 : prev - 1));
+    };
+
+    const handleNext = () => {
+        setCurrentSlide((prev) => (prev === totalSlides - 1 ? 0 : prev + 1));
+    };
+
+    const currentItem = useCasesItems[currentSlide];
+
+    return (
+        <section className="relative w-full min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-black border-b border-white/5">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24">
+                {/* Section Title */}
+                <div className="mb-12 lg:mb-16">
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+                        Use Cases
+                    </h2>
+                </div>
+
+                {/* Carousel Container */}
+                <div className="relative flex flex-col lg:flex-row gap-8 lg:gap-12 min-h-[600px]">
+                    {/* Left Side - Text Content (40%) */}
+                    <div className="lg:w-2/5 flex flex-col justify-center space-y-6">
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={currentSlide}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -20 }}
+                                transition={{ duration: 0.5, ease: 'easeInOut' }}
+                                className="space-y-6"
+                            >
+                                {/* Slide Counter */}
+                                <div className="flex items-center gap-3">
+                                    <div className="h-px w-12 bg-gradient-to-r from-purple-500 to-blue-500" />
+                                    <span className="text-purple-400 font-mono text-sm">
+                                        {String(currentSlide + 1).padStart(2, '0')} / {String(totalSlides).padStart(2, '0')}
+                                    </span>
+                                </div>
+
+                                {/* Title */}
+                                <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
+                                    {currentItem.title}
+                                </h3>
+
+                                {/* Description */}
+                                <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
+                                    {currentItem.description}
+                                </p>
+                            </motion.div>
+                        </AnimatePresence>
+
+                        {/* Navigation Controls */}
+                        <div className="flex items-center gap-4 pt-4">
+                            {/* Previous Button */}
+                            <button
+                                onClick={handlePrevious}
+                                className="group relative w-12 h-12 rounded-full border border-white/20 bg-white/5 hover:bg-purple-500/20 hover:border-purple-500/50 transition-all duration-300 flex items-center justify-center"
+                                aria-label="Previous slide"
+                            >
+                                <ChevronLeft className="w-5 h-5 text-white transition-transform duration-300 group-hover:-translate-x-0.5" />
+                            </button>
+
+                            {/* Next Button */}
+                            <button
+                                onClick={handleNext}
+                                className="group relative w-12 h-12 rounded-full border border-white/20 bg-white/5 hover:bg-purple-500/20 hover:border-purple-500/50 transition-all duration-300 flex items-center justify-center"
+                                aria-label="Next slide"
+                            >
+                                <ChevronRight className="w-5 h-5 text-white transition-transform duration-300 group-hover:translate-x-0.5" />
+                            </button>
+
+                            {/* Slide Indicators */}
+                            <div className="flex items-center gap-2 ml-4">
+                                {useCasesItems.map((_, idx) => (
+                                    <button
+                                        key={idx}
+                                        onClick={() => setCurrentSlide(idx)}
+                                        className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentSlide
+                                            ? 'w-8 bg-gradient-to-r from-purple-500 to-blue-500'
+                                            : 'w-1.5 bg-white/20 hover:bg-white/40'
+                                            }`}
+                                        aria-label={`Go to slide ${idx + 1}`}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Right Side - Image (60%) */}
+                    <div className="lg:w-3/5 relative">
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={currentSlide}
+                                initial={{ opacity: 0, scale: 1.05 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                transition={{ duration: 0.6, ease: 'easeInOut' }}
+                                className="relative h-full min-h-[400px] lg:min-h-[600px] rounded-2xl overflow-hidden border border-white/10"
+                            >
+                                {/* Image with gradient overlay */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
+                                <img
+                                    src={currentItem.image}
+                                    alt={currentItem.title}
+                                    className="w-full h-full object-cover"
+                                />
+
+                                {/* Decorative elements */}
+                                <div className="absolute inset-0 z-20 pointer-events-none">
+                                    <div className="absolute top-4 right-4 w-20 h-20 border border-purple-500/30 rounded-full" />
+                                    <div className="absolute bottom-4 left-4 w-32 h-32 border border-blue-500/20 rounded-full" />
+                                </div>
+                            </motion.div>
+                        </AnimatePresence>
+                    </div>
+                </div>
+
+                {/* Keyboard hint */}
+                <div className="mt-8 text-center">
+                    <p className="text-sm text-gray-500 font-mono">
+                        Use <span className="text-purple-400">←</span> <span className="text-purple-400">→</span> keys to navigate
+                    </p>
+                </div>
+            </div>
         </section>
     );
 }
 
-function HowItWorksSection() {
+function HowItWorksSection(): JSX.Element {
     const container = useRef<HTMLDivElement>(null);
     const slider = useRef<HTMLDivElement>(null);
     const triggerRef = useRef<ScrollTrigger | null>(null);
@@ -323,7 +504,7 @@ function HowItWorksSection() {
 
             {/* Header */}
             <div className="absolute top-28 left-0 w-full z-20 text-center px-4 pointer-events-none">
-                <h2 className="text-3xl text-center md:text-3xl font-bold text-white tracking-tight uppercase text-purple-500/80">How It Works</h2>
+                <h2 className="text-3xl text-center md:text-3xl font-bold text-white tracking-tight text-purple-500/80">How It Works</h2>
             </div>
 
             {/* SLIDER TRACK */}
@@ -435,10 +616,12 @@ function HowItWorksSection() {
 
 export default function ProductPage() {
     return (
-        <main className="bg-black min-h-screen">
+        <>
             <FitsInStackSection />
-            <UseCasesSection />
-            <HowItWorksSection />
-        </main>
+            <main className="bg-black">
+                <UseCasesSection />
+                <HowItWorksSection />
+            </main>
+        </>
     );
 }
