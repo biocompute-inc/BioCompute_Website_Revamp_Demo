@@ -43,6 +43,12 @@ export default function Home() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const canScrollRef = useRef(true);
 
+  useEffect(() => {
+    fetch('https://biocompute-cms.onrender.com/api/health')
+      .then(() => console.log("Server is healthy"))
+      .catch(() => console.log("Server is down"));
+  }, [])
+
   // Screen Size Logic
   useEffect(() => {
     const updateScreenSize = () => {
