@@ -6,6 +6,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { useGSAP } from '@gsap/react';
 import { motion, AnimatePresence } from 'framer-motion';
+import SplitText from '@/client/components/ui/splittext';
+
 import {
     Server,
     Dna,
@@ -18,12 +20,16 @@ import {
     Shield,
     X
 } from 'lucide-react';
+import DecryptedText from '@/client/components/ui/decryptedText';
 
 // Register plugins
 if (typeof window !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 }
 
+const handleAnimationComplete = () => {
+    console.log('All letters have animated!');
+};
 // Updated steps based on user request
 const steps = [
     {
@@ -151,8 +157,9 @@ function FitsInStackSection(): JSX.Element {
         const isMobile = window.innerWidth < 768;
         const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
 
-        const textYPosition = isMobile ? "-20vh" : isTablet ? "-20vh" : "-30vh";
-        const textScale = isMobile ? 0.8 : isTablet ? 0.7 : 0.8;
+        const textYPosition = isMobile ? "-22vh" : isTablet ? "-25vh" : "-28vh";
+        const textXPosition = isMobile ? "-35vw" : isTablet ? "-38vw" : "-32vw";
+        const textScale = isMobile ? 0.5 : isTablet ? 0.45 : 0.4;
         const cardsYPosition = isMobile ? "18vh" : isTablet ? "16vh" : "10vh";
 
         const tl = gsap.timeline({
@@ -162,14 +169,18 @@ function FitsInStackSection(): JSX.Element {
                 end: "+=150%", // Determines how long the scroll animation lasts
                 pin: true,     // Locks the container in place while animating
                 scrub: 1,      // Smooths the animation to the scrollbar
+                onUpdate: (self) => {
+                    // Update state when scroll progress > 80%
+                    setIsScrollComplete(self.progress > 0.8);
+                }
             }
         });
 
-        // 1. Shrink and move the text to the top
+        // 1. Shrink and move the text to the top-left
         tl.to(textRef.current, {
             scale: textScale,     // Responsive shrink
             y: textYPosition,     // Responsive vertical position
-            x: 0,                 // Keep centered
+            x: textXPosition,     // Move to left side
             duration: 1,
             ease: "power2.inOut"
         }, "start");
@@ -196,19 +207,43 @@ function FitsInStackSection(): JSX.Element {
 
     // Expansion logic (kept largely the same but simplified)
     const [expandedCard, setExpandedCard] = useState<number | null>(null);
+    const [isScrollComplete, setIsScrollComplete] = useState(false);
 
     return (
         // The container is TALL (h-[250vh]) to allow scroll room, but content is sticky
         <div ref={containerRef} className="relative h-screen bg-black overflow-hidden flex flex-col items-center justify-center">
 
             {/* The Text Container - centers by default */}
-            <div ref={textRef} className="absolute z-20 flex flex-col items-center justify-center pointer-events-none origin-center px-2">
-                <h2 className="text-xl sm:text-4xl md:text-6xl lg:text-8xl xl:text-9xl font-bold text-white mb-0.5 sm:mb-2 md:mb-4 tracking-tight text-center leading-tight">
-                    PRODUCT
-                </h2>
-                <p className="hero-subtitle text-[10px] sm:text-base md:text-lg lg:text-2xl xl:text-3xl font-bold text-white text-center px-1 leading-tight">
-                    Where BioCompute Fits in Your Stack
-                </p>
+            <div ref={textRef} className={`fixed z-[110] flex flex-col pointer-events-none px-2 transition-all duration-300 ${isScrollComplete
+                ? 'items-start justify-center '
+                : 'items-center justify-center origin-center'
+                }`}>
+                <SplitText
+                    text="Product"
+                    className="text-8xl font-semibold text-center"
+                    delay={50}
+                    duration={2}
+                    ease="power3.out"
+                    splitType="chars"
+                    from={{ opacity: 0, y: 40 }}
+                    to={{ opacity: 1, y: 0 }}
+                    threshold={0.1}
+                    rootMargin="-100px"
+                    textAlign="center"
+                    onLetterAnimationComplete={handleAnimationComplete}
+                />
+                <DecryptedText
+                    sequential
+                    useOriginalCharsOnly
+                    animateOn='view'
+                    text="Where BioCompute Fits in Your Stack"
+                    speed={50}
+                    maxIterations={10}
+                    characters="ABCD1234!?"
+                    className="revealed "
+                    parentClassName="all-letters"
+                    encryptedClassName="encrypted"
+                />
             </div>
 
             {/* Cards Container */}
@@ -275,18 +310,18 @@ function FitsInStackSection(): JSX.Element {
                 {expandedCard !== null && (
                     <motion.div
                         initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-xl p-4 sm:p-8"
+                        className="fixed inset-0 z-[95] flex items-center justify-center bg-black/90 backdrop-blur-xl p-4 sm:p-8 pt-20 sm:pt-24 md:pt-28"
                         onClick={() => setExpandedCard(null)}
                     >
                         <motion.div
-                            className="bg-zinc-900 w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl border border-white/10 p-4 sm:p-6 md:p-8 relative"
+                            className="bg-zinc-900 w-full max-w-2xl max-h-[calc(100vh-8rem)] sm:max-h-[calc(100vh-10rem)] md:max-h-[calc(100vh-12rem)] overflow-y-auto rounded-2xl border border-white/10 p-4 sm:p-6 md:p-8 relative"
                             onClick={(e) => e.stopPropagation()}
                             layoutId={`card-${expandedCard}`}
                         >
-                            <button onClick={() => setExpandedCard(null)} className="absolute top-4 right-4 p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors z-10">
+                            <button onClick={() => setExpandedCard(null)} className="sticky top-2 float-right p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors z-10">
                                 <X className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                             </button>
-                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 pr-10">{fitsStackItems[expandedCard].title}</h2>
+                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 pr-10 clear-both">{fitsStackItems[expandedCard].title}</h2>
                             <p className="text-gray-300 text-base sm:text-lg mb-6 sm:mb-8">{fitsStackItems[expandedCard].description}</p>
                             <img src={fitsStackItems[expandedCard].image} alt="Detail" className="w-full rounded-xl" />
                         </motion.div>

@@ -30,7 +30,7 @@ export default function OurPartners() {
           }}
         >
           <motion.a
-            href="https://www.wtfund.vc/"
+            href="https://www.allthingswtf.com/wtfund"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.15 }}
@@ -60,7 +60,7 @@ export default function OurPartners() {
             <Image src="/meity.png" width={120} height={56} className="w-[120px] h-[56px]" alt="Meity" />
           </motion.a>
           <motion.a
-            href="https://grad.capital/"
+            href="https://www.gradcapital.in/"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.15 }}
@@ -70,7 +70,7 @@ export default function OurPartners() {
             <Image src="/Gradcap.png" width={160} height={40} className="w-[160px] h-[40px]" alt="Grad capital" />
           </motion.a>
           <motion.a
-            href="https://nucleate.xyz/"
+            href="https://nucleate.org/"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.15 }}
@@ -90,7 +90,7 @@ export default function OurPartners() {
             <Image src="/ccamp.png" width={144} height={48} className="w-[144px] h-[48px]" alt="CCAMP" />
           </motion.a>
           <motion.a
-            href="https://www.nidhiprayas.in/"
+            href="https://nidhi-prayas.org/#parentVerticalTab11"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.15 }}
@@ -100,7 +100,7 @@ export default function OurPartners() {
             <Image src="/nidhi.jpg" width={144} height={48} className="w-[144px] h-[48px]" alt="DST NIDHI" />
           </motion.a>
           <motion.a
-            href="https://www.savantcapital.in/"
+            href="https://www.savant.co.za/"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.15 }}
@@ -110,7 +110,7 @@ export default function OurPartners() {
             <Image src="/Savant.svg" width={144} height={48} className="w-[144px] h-[48px]" alt="Savant" />
           </motion.a>
           <motion.a
-            href="https://www.susmafia.com/"
+            href="https://www.susmafia.org/"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.15 }}
@@ -120,7 +120,7 @@ export default function OurPartners() {
             <Image src="/susmafia.png" width={160} height={48} className="w-[160px] h-[48px]" alt="Susmafia" />
           </motion.a>
           <motion.a
-            href="https://meractus.com/"
+            href="https://www.mercatus.org/"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.15 }}
@@ -153,7 +153,7 @@ export default function OurPartners() {
           {/*Second set*/}
 
           <motion.a
-            href="https://www.wtfund.vc/"
+            href="https://www.allthingswtf.com/wtfund"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.15 }}
@@ -183,7 +183,7 @@ export default function OurPartners() {
             <Image src="/meity.png" width={120} height={56} className="w-[120px] h-[56px]" alt="Meity" />
           </motion.a>
           <motion.a
-            href="https://grad.capital/"
+            href="https://www.gradcapital.in/"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.15 }}
@@ -193,7 +193,7 @@ export default function OurPartners() {
             <Image src="/Gradcap.png" width={160} height={40} className="w-[160px] h-[40px]" alt="Grad capital" />
           </motion.a>
           <motion.a
-            href="https://nucleate.xyz/"
+            href="https://nucleate.org/"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.15 }}
@@ -213,7 +213,7 @@ export default function OurPartners() {
             <Image src="/ccamp.png" width={144} height={48} className="w-[144px] h-[48px]" alt="CCAMP" />
           </motion.a>
           <motion.a
-            href="https://www.nidhiprayas.in/"
+            href="https://nidhi-prayas.org/#parentVerticalTab11"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.15 }}
@@ -223,7 +223,7 @@ export default function OurPartners() {
             <Image src="/nidhi.jpg" width={144} height={48} className="w-[144px] h-[48px]" alt="DST NIDHI" />
           </motion.a>
           <motion.a
-            href="https://www.savantcapital.in/"
+            href="https://www.savant.co.za/"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.15 }}
@@ -233,7 +233,7 @@ export default function OurPartners() {
             <Image src="/Savant.svg" width={144} height={48} className="w-[144px] h-[48px]" alt="Savant" />
           </motion.a>
           <motion.a
-            href="https://www.susmafia.com/"
+            href="https://www.susmafia.org/"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.15 }}

@@ -24,9 +24,9 @@ export default function DecryptedText({
     revealDirection = 'start',
     useOriginalCharsOnly = false,
     characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+',
-    className = '',
+    className = 'text-lg sm:text-xl md:text-2xl mt-4 text-gray-400',
     parentClassName = '',
-    encryptedClassName = '',
+    encryptedClassName = 'text-lg sm:text-xl md:text-2xl mt-4 text-gray-400',
     animateOn = 'hover',
     ...props
 }: DecryptedTextProps) {
@@ -185,13 +185,11 @@ export default function DecryptedText({
     return (
         <motion.span
             ref={containerRef}
-            className={`inline-block whitespace-pre-wrap ${parentClassName}`}
+            className={`inline-block whitespace-pre-wrap text-3xl pt-4  ${parentClassName}`}
             {...hoverProps}
             {...props}
         >
-            <span className="sr-only">{displayText}</span>
-
-            <span aria-hidden="true">
+            <span >
                 {displayText.split('').map((char, index) => {
                     const isRevealedOrDone = revealedIndices.has(index) || !isScrambling || !isHovering;
 
