@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import ShinyText from "@/client/components/ui/shinytext";
-import DNABackground from "@/components/DNABackground";
+// import DNABackground from "@/components/DNABackground";
 
 interface TimelineItem {
     title: string;
@@ -418,7 +418,7 @@ export default function About() {
 
     return (
         <div className="relative min-h-screen">
-            <DNABackground />
+            {/* <DNABackground /> */}
 
             {/* Hero Section with GTA VI Style Scroll Animation */}
             <section

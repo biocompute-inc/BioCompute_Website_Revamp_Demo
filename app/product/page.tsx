@@ -119,108 +119,23 @@ const useCasesItems = [
 ];
 
 function FitsInStackSection(): JSX.Element {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const textRef = useRef<HTMLDivElement>(null);
-    const cardsRef = useRef<HTMLDivElement>(null);
-
-    // Card configurations (kept from your original code)
-    const cardConfigs = [
-        {
-            icon: <Server className="w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-24 lg:h-24 text-purple-400" />,
-            gradient: "from-purple-900/20 to-black",
-            bgPattern: (
-                <div className="absolute inset-0 opacity-20">
-                    <div className="w-full h-full grid grid-cols-4 gap-1 sm:gap-2 p-2 sm:p-3 md:p-4">
-                        {[...Array(16)].map((_, i) => (
-                            <div key={i} className="bg-purple-500/30 rounded animate-pulse" style={{ animationDelay: `${i * 0.1}s` }} />
-                        ))}
-                    </div>
-                </div>
-            )
-        },
-        {
-            icon: <Database className="w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-24 lg:h-24 text-fuchsia-400 opacity-50" />,
-            gradient: "from-fuchsia-900/20 to-black",
-            stats: fitsStackItems[1].stats
-        },
-        {
-            icon: <Shield className="w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-24 lg:h-24 text-emerald-400" />,
-            gradient: "from-emerald-900/20 to-black",
-            pulseRings: true
-        }
-    ];
-
-    useGSAP(() => {
-        if (!containerRef.current || !textRef.current || !cardsRef.current) return;
-
-        // Responsive values based on screen size
-        const isMobile = window.innerWidth < 768;
-        const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
-
-        const textYPosition = isMobile ? "-22vh" : isTablet ? "-25vh" : "-28vh";
-        const textXPosition = isMobile ? "-35vw" : isTablet ? "-38vw" : "-32vw";
-        const textScale = isMobile ? 0.5 : isTablet ? 0.45 : 0.4;
-        const cardsYPosition = isMobile ? "18vh" : isTablet ? "16vh" : "10vh";
-
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: containerRef.current,
-                start: "top top",
-                end: "+=150%", // Determines how long the scroll animation lasts
-                pin: true,     // Locks the container in place while animating
-                scrub: 1,      // Smooths the animation to the scrollbar
-                onUpdate: (self) => {
-                    // Update state when scroll progress > 80%
-                    setIsScrollComplete(self.progress > 0.8);
-                }
-            }
-        });
-
-        // 1. Shrink and move the text to the top-left
-        tl.to(textRef.current, {
-            scale: textScale,     // Responsive shrink
-            y: textYPosition,     // Responsive vertical position
-            x: textXPosition,     // Move to left side
-            duration: 1,
-            ease: "power2.inOut"
-        }, "start");
-
-        // 2. Keep subtitle visible (removed fade-out animation)
-
-        // 3. Bring in the cards from the bottom
-        tl.fromTo(cardsRef.current,
-            {
-                y: "100vh",
-                opacity: 0
-            },
-            {
-                y: cardsYPosition, // Responsive landing position
-                opacity: 1,
-                duration: 1,
-                ease: "power2.out",
-                stagger: 0.1
-            },
-            "start+=0.3" // Starts slightly after text begins moving
-        );
-
-    }, { scope: containerRef });
-
-    // Expansion logic (kept largely the same but simplified)
     const [expandedCard, setExpandedCard] = useState<number | null>(null);
-    const [isScrollComplete, setIsScrollComplete] = useState(false);
+
+    const scrollToSection = (sectionId: string) => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    };
 
     return (
-        // The container is TALL (h-[250vh]) to allow scroll room, but content is sticky
-        <div ref={containerRef} className="relative h-screen bg-black overflow-hidden flex flex-col items-center justify-center">
-
-            {/* The Text Container - centers by default */}
-            <div ref={textRef} className={`fixed z-[110] flex flex-col pointer-events-none px-2 transition-all duration-300 ${isScrollComplete
-                ? 'items-start justify-center '
-                : 'items-center justify-center origin-center'
-                }`}>
+        <section className="relative min-h-screen bg-black py-12 md:py-20">
+            {/* Hero Section */}
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 md:mb-24 text-center pt-8 md:pt-16" style={{ opacity: expandedCard !== null ? 0 : 1, transition: 'opacity 0.3s ease' }}>
+                {/* Main Title */}
                 <SplitText
-                    text="Product"
-                    className="text-8xl font-semibold text-center"
+                    text="Digitize your destiny."
+                    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white pb-6 mb-6 md:mb-8 leading-tight tracking-tight mx-48"
                     delay={50}
                     duration={2}
                     ease="power3.out"
@@ -232,76 +147,195 @@ function FitsInStackSection(): JSX.Element {
                     textAlign="center"
                     onLetterAnimationComplete={handleAnimationComplete}
                 />
-                <DecryptedText
-                    sequential
-                    useOriginalCharsOnly
-                    animateOn='view'
-                    text="Where BioCompute Fits in Your Stack"
-                    speed={50}
-                    maxIterations={10}
-                    characters="ABCD1234!?"
-                    className="revealed "
-                    parentClassName="all-letters"
-                    encryptedClassName="encrypted"
-                />
+
+                {/* Description */}
+                <div className="mb-8 md:mb-12 max-w-3xl mx-auto">
+                    <DecryptedText
+                        sequential
+                        useOriginalCharsOnly
+                        animateOn='view'
+                        text="Where BioCompute fits in your stack"
+                        speed={50}
+                        maxIterations={10}
+                        characters="ABCD1234!?"
+                        className="text-base sm:text-lg md:text-xl lg:text-2xl text-fuchsia-200 leading-relaxed"
+                        parentClassName="all-letters"
+                        encryptedClassName="text-base sm:text-lg md:text-xl lg:text-2xl text-fuchsia-200 leading-relaxed"
+                    />
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-12 md:mb-16">
+                    <button
+                        onClick={() => scrollToSection('use-cases-section')}
+                        className="group relative px-8 py-4 bg-white text-black rounded-full font-semibold text-base sm:text-lg transition-all duration-300 hover:bg-gray-200 hover:scale-105 shadow-lg hover:shadow-xl w-full sm:w-auto"
+                    >
+                        Use Cases
+                    </button>
+                    <button
+                        onClick={() => scrollToSection('how-it-works-section')}
+                        className="group relative px-8 py-4 bg-purple-600 text-white rounded-full font-semibold text-base sm:text-lg transition-all duration-300 hover:bg-purple-700 hover:scale-105 shadow-lg shadow-purple-500/50 hover:shadow-xl hover:shadow-purple-500/70 w-full sm:w-auto"
+                    >
+                        How It Works
+                    </button>
+                </div>
+
+                {/* Phone Mockup Image */}
+                <div className="relative max-w-md mx-auto">
+                    <div className="relative rounded-[3rem] overflow-hidden border-8 border-gray-800 shadow-2xl">
+                        <img
+                            src="https://placehold.co/400x800/f5f5f5/374151?text=App+Preview"
+                            alt="App Preview"
+                            className="w-full h-auto"
+                        />
+                    </div>
+                </div>
             </div>
 
-            {/* Cards Container */}
-            <div ref={cardsRef} className="absolute sm:-mt-12 z-10 w-full max-w-7xl px-2 sm:px-4 lg:px-8">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4 md:gap-6">
-                    {fitsStackItems.map((item, index) => (
-                        <div
-                            key={index}
-                            onClick={() => setExpandedCard(index)}
-                            className={`
-                                group relative bg-zinc-900/80 backdrop-blur-md rounded-lg sm:rounded-xl lg:rounded-2xl overflow-hidden 
-                                border border-white/10 hover:border-purple-500/50 
-                                transition-all duration-300 cursor-pointer h-[120px] sm:h-[160px] md:h-[200px] lg:h-[400px] flex flex-col
-                            `}
-                        >
-                            {/* Card Content Construction */}
-                            <div className="p-1.5 sm:p-2 md:p-3 lg:p-6 h-full flex flex-col relative z-10">
-                                {/* Visual Top */}
-                                <div className={`flex-1 mb-1 sm:mb-1.5 md:mb-2 lg:mb-6 flex items-center justify-center bg-gradient-to-br ${cardConfigs[index].gradient} rounded-md sm:rounded-lg lg:rounded-xl relative overflow-hidden`}>
-                                    {cardConfigs[index].bgPattern}
+            {/* Bento Grid Section */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="text-center text-4xl sm:text-5xl md:text-6xl font-bold px-4 sm:px-8 mb-8 md:mb-12 text-white">
+                    Where We Fit
+                </div>
 
-                                    {/* Stats Render */}
-                                    {cardConfigs[index].stats && (
-                                        <div className="w-full h-full flex flex-col justify-center p-1 sm:p-1.5 md:p-2 lg:p-4 gap-0.5 sm:gap-1 md:gap-1.5 lg:gap-3">
-                                            {cardConfigs[index].stats?.map((stat, i) => (
-                                                <div key={i} className="flex justify-between items-center w-full">
-                                                    <span className="text-[7px] sm:text-[8px] md:text-[9px] lg:text-sm text-gray-400">{stat.label}</span>
-                                                    <span className={`text-[8px] sm:text-[9px] md:text-[10px] lg:text-base font-bold ${stat.color}`}>{stat.value}</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )}
+                {/* Bento Grid Layout */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
+                    {/* Row 1: High-Density Card (Large - 2 columns) */}
+                    <div
+                        onClick={() => setExpandedCard(1)}
+                        className="group relative lg:col-span-2 bg-gradient-to-br from-fuchsia-950/40 via-purple-950/30 to-black backdrop-blur-md rounded-2xl md:rounded-3xl overflow-hidden border border-fuchsia-500/20 hover:border-fuchsia-500/50 transition-all duration-500 cursor-pointer h-[400px] md:h-[500px] hover:scale-[1.02] hover:shadow-[0_0_60px_rgba(217,70,239,0.3)]"
+                    >
+                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-fuchsia-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                                    {/* Pulse Rings */}
-                                    {cardConfigs[index].pulseRings && (
-                                        <div className="absolute inset-0 flex items-center justify-center">
-                                            <div className="absolute w-full h-full border border-emerald-500/20 rounded-full animate-ping opacity-20" />
-                                        </div>
-                                    )}
-
+                        <div className="relative h-full p-6 md:p-8 flex flex-col justify-between z-10">
+                            {/* Icon & Stats Area */}
+                            <div className="flex-1 flex items-center justify-center mb-6">
+                                <div className="w-full max-w-md space-y-6">
                                     {/* Icon */}
-                                    {!cardConfigs[index].stats && (
-                                        <div className="relative z-10">
-                                            {cardConfigs[index].icon}
+                                    <div className="flex justify-center mb-8">
+                                        <div className="relative">
+                                            <Database className="w-16 h-16 md:w-24 md:h-24 text-fuchsia-400 relative z-10" />
+                                            <div className="absolute inset-0 bg-fuchsia-500/20 blur-2xl rounded-full scale-150" />
                                         </div>
-                                    )}
-                                </div>
+                                    </div>
 
-                                {/* Title & Action */}
-                                <div className="flex justify-between items-center gap-1">
-                                    <h3 className="text-[9px] sm:text-[10px] md:text-xs lg:text-xl font-bold text-white line-clamp-2 leading-tight">{item.title}</h3>
-                                    <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-8 lg:h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-purple-600 transition-colors flex-shrink-0 text-[9px] sm:text-[10px]">
-                                        +
+                                    {/* Stats Display */}
+                                    <div className="space-y-4 bg-black/30 backdrop-blur-sm rounded-xl p-6 border border-white/5">
+                                        {fitsStackItems[1].stats?.map((stat, i) => (
+                                            <div key={i} className="flex justify-between items-center group/stat">
+                                                <span className="text-sm md:text-base text-gray-400 group-hover/stat:text-gray-300 transition-colors">{stat.label}</span>
+                                                <span className={`text-2xl md:text-3xl font-bold ${stat.color} group-hover/stat:scale-110 transition-transform`}>
+                                                    {stat.value}
+                                                </span>
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
+
+                            {/* Title & Description */}
+                            <div>
+                                <div className="flex justify-between items-start mb-3">
+                                    <h3 className="text-2xl md:text-3xl font-bold text-white leading-tight">
+                                        {fitsStackItems[1].title}
+                                    </h3>
+                                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-fuchsia-500/10 border border-fuchsia-500/30 flex items-center justify-center group-hover:bg-fuchsia-600 group-hover:border-fuchsia-500 transition-all flex-shrink-0 ml-3">
+                                        <span className="text-white text-xl">+</span>
+                                    </div>
+                                </div>
+                                <p className="text-sm md:text-base text-gray-400 leading-relaxed">
+                                    {fitsStackItems[1].description}
+                                </p>
+                            </div>
                         </div>
-                    ))}
+                    </div>
+
+                    {/* Row 1: Cold Storage Card (Small - 1 column) */}
+                    <div
+                        onClick={() => setExpandedCard(0)}
+                        className="group relative bg-gradient-to-br from-purple-950/40 via-violet-950/30 to-black backdrop-blur-md rounded-2xl md:rounded-3xl overflow-hidden border border-purple-500/20 hover:border-purple-500/50 transition-all duration-500 cursor-pointer h-[400px] md:h-[500px] hover:scale-[1.02] hover:shadow-[0_0_60px_rgba(168,85,247,0.3)]"
+                    >
+                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-purple-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                        {/* Animated Grid Pattern */}
+                        <div className="absolute inset-0 opacity-10">
+                            <div className="w-full h-full grid grid-cols-4 gap-2 p-4">
+                                {[...Array(16)].map((_, i) => (
+                                    <div
+                                        key={i}
+                                        className="bg-purple-500/40 rounded animate-pulse"
+                                        style={{ animationDelay: `${i * 0.15}s`, animationDuration: '2s' }}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="relative h-full p-6 md:p-8 flex flex-col justify-between z-10">
+                            {/* Icon Area */}
+                            <div className="flex-1 flex items-center justify-center">
+                                <div className="relative">
+                                    <Server className="w-20 h-20 md:w-32 md:h-32 text-purple-400 relative z-10 group-hover:scale-110 transition-transform duration-500" />
+                                    <div className="absolute inset-0 bg-purple-500/20 blur-3xl rounded-full scale-150 group-hover:scale-[2] transition-transform duration-500" />
+                                </div>
+                            </div>
+
+                            {/* Title & Description */}
+                            <div>
+                                <div className="flex justify-between items-start mb-3">
+                                    <h3 className="text-xl md:text-2xl font-bold text-white leading-tight">
+                                        {fitsStackItems[0].title}
+                                    </h3>
+                                    <div className="w-10 h-10 rounded-full bg-purple-500/10 border border-purple-500/30 flex items-center justify-center group-hover:bg-purple-600 group-hover:border-purple-500 transition-all flex-shrink-0 ml-2">
+                                        <span className="text-white text-xl">+</span>
+                                    </div>
+                                </div>
+                                <p className="text-sm text-gray-400 leading-relaxed line-clamp-3">
+                                    {fitsStackItems[0].description}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Row 2: Secure Transport Card (Full Width - 3 columns) */}
+                    <div
+                        onClick={() => setExpandedCard(2)}
+                        className="group relative lg:col-span-3 bg-gradient-to-br from-fuchsia-950/40 via-fuchsia-900/20 to-black backdrop-blur-md rounded-2xl md:rounded-3xl overflow-hidden border border-fuchsia-200/20 hover:border-fuchsia-200/50 transition-all duration-500 cursor-pointer h-[300px] md:h-[350px] hover:scale-[1.01] hover:shadow-[0_0_60px_rgba(245,208,254,0.3)]"
+                    >
+                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-fuchsia-200/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                        {/* Pulse Rings */}
+                        <div className="absolute inset-0 flex items-center justify-center opacity-20">
+                            <div className="absolute w-32 h-32 md:w-48 md:h-48 border border-fuchsia-200/40 rounded-full animate-ping" style={{ animationDuration: '3s' }} />
+                            <div className="absolute w-48 h-48 md:w-64 md:h-64 border border-fuchsia-200/30 rounded-full animate-ping" style={{ animationDuration: '4s', animationDelay: '0.5s' }} />
+                        </div>
+
+                        <div className="relative h-full p-6 md:p-8 flex items-center z-10">
+                            <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12 w-full">
+                                {/* Icon */}
+                                <div className="flex-shrink-0">
+                                    <div className="relative">
+                                        <Shield className="w-24 h-24 md:w-40 md:h-40 text-fuchsia-200 relative z-10 group-hover:scale-110 transition-transform duration-500" />
+                                        <div className="absolute inset-0 bg-fuchsia-200/20 blur-3xl rounded-full scale-150 group-hover:scale-[2] transition-transform duration-500" />
+                                    </div>
+                                </div>
+
+                                {/* Content */}
+                                <div className="flex-1 text-center md:text-left">
+                                    <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4 gap-3">
+                                        <h3 className="text-2xl md:text-4xl font-bold text-white leading-tight">
+                                            {fitsStackItems[2].title}
+                                        </h3>
+                                        <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-fuchsia-200/10 border border-fuchsia-200/30 flex items-center justify-center group-hover:bg-fuchsia-600 group-hover:border-fuchsia-200 transition-all mx-auto md:mx-0 flex-shrink-0">
+                                            <span className="text-white text-2xl">+</span>
+                                        </div>
+                                    </div>
+                                    <p className="text-base md:text-lg text-gray-400 leading-relaxed max-w-3xl">
+                                        {fitsStackItems[2].description}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -328,41 +362,17 @@ function FitsInStackSection(): JSX.Element {
                     </motion.div>
                 )}
             </AnimatePresence>
-
-        </div>
+        </section>
     );
 }
 
 function UseCasesSection(): JSX.Element {
     const [currentSlide, setCurrentSlide] = useState(0);
-    const totalSlides = useCasesItems.length;
-
-    // Keyboard navigation
-    useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'ArrowLeft') {
-                handlePrevious();
-            } else if (e.key === 'ArrowRight') {
-                handleNext();
-            }
-        };
-
-        window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [currentSlide]);
-
-    const handlePrevious = () => {
-        setCurrentSlide((prev) => (prev === 0 ? totalSlides - 1 : prev - 1));
-    };
-
-    const handleNext = () => {
-        setCurrentSlide((prev) => (prev === totalSlides - 1 ? 0 : prev + 1));
-    };
 
     const currentItem = useCasesItems[currentSlide];
 
     return (
-        <section className="relative w-full min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-black border-b border-white/5">
+        <section id="use-cases-section" className="relative w-full min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-black border-b border-white/5">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24">
                 {/* Section Title */}
                 <div className="mb-12 lg:mb-16">
@@ -371,110 +381,78 @@ function UseCasesSection(): JSX.Element {
                     </h2>
                 </div>
 
-                {/* Carousel Container */}
-                <div className="relative flex flex-col lg:flex-row gap-8 lg:gap-12 min-h-[600px]">
-                    {/* Left Side - Text Content (40%) */}
-                    <div className="lg:w-2/5 flex flex-col justify-center space-y-6">
-                        <AnimatePresence mode="wait">
-                            <motion.div
-                                key={currentSlide}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -20 }}
-                                transition={{ duration: 0.5, ease: 'easeInOut' }}
-                                className="space-y-6"
+                {/* Main Container */}
+                <div className="relative flex flex-col lg:flex-row gap-8 lg:gap-12">
+                    {/* Left Side - Clickable List (40%) */}
+                    <div className="lg:w-2/5 space-y-4">
+                        {useCasesItems.map((item, idx) => (
+                            <button
+                                key={idx}
+                                onClick={() => setCurrentSlide(idx)}
+                                className={`w-full text-left p-4 sm:p-6 rounded-xl border transition-all duration-300 ${idx === currentSlide
+                                        ? 'bg-gradient-to-r from-purple-500/20 to-blue-500/20 border-purple-500/50 shadow-lg shadow-purple-500/20'
+                                        : 'bg-zinc-900/50 border-white/10 hover:border-purple-500/30 hover:bg-zinc-900/70'
+                                    }`}
                             >
-                                {/* Slide Counter */}
-                                <div className="flex items-center gap-3">
-                                    <div className="h-px w-12 bg-gradient-to-r from-purple-500 to-blue-500" />
-                                    <span className="text-purple-400 font-mono text-sm">
-                                        {String(currentSlide + 1).padStart(2, '0')} / {String(totalSlides).padStart(2, '0')}
-                                    </span>
+                                <div className="flex items-center justify-between gap-3">
+                                    <div className="flex-1">
+                                        <div className="flex items-center gap-3 mb-2">
+                                            <span className="text-xs font-mono text-purple-400">
+                                                {String(idx + 1).padStart(2, '0')}
+                                            </span>
+                                            <div className="h-px flex-1 bg-gradient-to-r from-purple-500/50 to-transparent" />
+                                        </div>
+                                        <h3 className={`text-lg sm:text-xl md:text-2xl font-bold transition-colors ${idx === currentSlide ? 'text-white' : 'text-gray-400 group-hover:text-gray-300'
+                                            }`}>
+                                            {item.title}
+                                        </h3>
+                                    </div>
+                                    <ChevronRight className={`w-5 h-5 transition-all ${idx === currentSlide ? 'text-purple-400 translate-x-0' : 'text-gray-600 -translate-x-1'
+                                        }`} />
                                 </div>
-
-                                {/* Title */}
-                                <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
-                                    {currentItem.title}
-                                </h3>
-
-                                {/* Description */}
-                                <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
-                                    {currentItem.description}
-                                </p>
-                            </motion.div>
-                        </AnimatePresence>
-
-                        {/* Navigation Controls */}
-                        <div className="flex items-center gap-4 pt-4">
-                            {/* Previous Button */}
-                            <button
-                                onClick={handlePrevious}
-                                className="group relative w-12 h-12 rounded-full border border-white/20 bg-white/5 hover:bg-purple-500/20 hover:border-purple-500/50 transition-all duration-300 flex items-center justify-center"
-                                aria-label="Previous slide"
-                            >
-                                <ChevronLeft className="w-5 h-5 text-white transition-transform duration-300 group-hover:-translate-x-0.5" />
                             </button>
-
-                            {/* Next Button */}
-                            <button
-                                onClick={handleNext}
-                                className="group relative w-12 h-12 rounded-full border border-white/20 bg-white/5 hover:bg-purple-500/20 hover:border-purple-500/50 transition-all duration-300 flex items-center justify-center"
-                                aria-label="Next slide"
-                            >
-                                <ChevronRight className="w-5 h-5 text-white transition-transform duration-300 group-hover:translate-x-0.5" />
-                            </button>
-
-                            {/* Slide Indicators */}
-                            <div className="flex items-center gap-2 ml-4">
-                                {useCasesItems.map((_, idx) => (
-                                    <button
-                                        key={idx}
-                                        onClick={() => setCurrentSlide(idx)}
-                                        className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentSlide
-                                            ? 'w-8 bg-gradient-to-r from-purple-500 to-blue-500'
-                                            : 'w-1.5 bg-white/20 hover:bg-white/40'
-                                            }`}
-                                        aria-label={`Go to slide ${idx + 1}`}
-                                    />
-                                ))}
-                            </div>
-                        </div>
+                        ))}
                     </div>
 
-                    {/* Right Side - Image (60%) */}
+                    {/* Right Side - Content Display (60%) */}
                     <div className="lg:w-3/5 relative">
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={currentSlide}
-                                initial={{ opacity: 0, scale: 1.05 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.95 }}
-                                transition={{ duration: 0.6, ease: 'easeInOut' }}
-                                className="relative h-full min-h-[400px] lg:min-h-[600px] rounded-2xl overflow-hidden border border-white/10"
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -20 }}
+                                transition={{ duration: 0.5, ease: 'easeInOut' }}
+                                className="space-y-6"
                             >
-                                {/* Image with gradient overlay */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
-                                <img
-                                    src={currentItem.image}
-                                    alt={currentItem.title}
-                                    className="w-full h-full object-cover"
-                                />
+                                {/* Image */}
+                                <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] rounded-2xl overflow-hidden border border-white/10">
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
+                                    <img
+                                        src={currentItem.image}
+                                        alt={currentItem.title}
+                                        className="w-full h-full object-cover"
+                                    />
 
-                                {/* Decorative elements */}
-                                <div className="absolute inset-0 z-20 pointer-events-none">
-                                    <div className="absolute top-4 right-4 w-20 h-20 border border-purple-500/30 rounded-full" />
-                                    <div className="absolute bottom-4 left-4 w-32 h-32 border border-blue-500/20 rounded-full" />
+                                    {/* Decorative elements */}
+                                    <div className="absolute inset-0 z-20 pointer-events-none">
+                                        <div className="absolute top-4 right-4 w-20 h-20 border border-purple-500/30 rounded-full" />
+                                        <div className="absolute bottom-4 left-4 w-32 h-32 border border-blue-500/20 rounded-full" />
+                                    </div>
+                                </div>
+
+                                {/* Description Card */}
+                                <div className="bg-zinc-900/50 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-white/10">
+                                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
+                                        {currentItem.title}
+                                    </h3>
+                                    <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
+                                        {currentItem.description}
+                                    </p>
                                 </div>
                             </motion.div>
                         </AnimatePresence>
                     </div>
-                </div>
-
-                {/* Keyboard hint */}
-                <div className="mt-8 text-center">
-                    <p className="text-sm text-gray-500 font-mono">
-                        Use <span className="text-purple-400">←</span> <span className="text-purple-400">→</span> keys to navigate
-                    </p>
                 </div>
             </div>
         </section>
@@ -530,7 +508,7 @@ function HowItWorksSection(): JSX.Element {
     };
 
     return (
-        <div ref={container} className="relative w-full h-screen overflow-hidden bg-black flex flex-col">
+        <div id="how-it-works-section" ref={container} className="relative w-full h-screen overflow-hidden bg-black flex flex-col">
 
             {/* Background */}
             <div className="absolute inset-0 z-0">
