@@ -8,6 +8,7 @@ import { useGSAP } from '@gsap/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SplitText from '@/client/components/ui/splittext';
 import { useIsMobile } from '@/client/hooks/use-mobile';
+import DNABackground from '@/components/DNABackground';
 
 import {
     Server,
@@ -134,7 +135,7 @@ function FitsInStackSection(): JSX.Element {
     };
 
     return (
-        <section className="relative min-h-screen bg-black py-12 md:py-20">
+        <section className="relative min-h-screen bg-black/30 py-12 md:py-20">
             {/* Hero Section */}
             <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 md:mb-24 text-center pt-8 md:pt-16" style={{ opacity: expandedCard !== null ? 0 : 1, transition: 'opacity 0.3s ease' }}>
                 {/* Main Title */}
@@ -575,7 +576,7 @@ function HowItWorksSection(): JSX.Element {
     };
 
     return (
-        <div id="how-it-works-section" ref={container} className="relative w-full h-screen overflow-hidden bg-black flex flex-col">
+        <div id="how-it-works-section" ref={container} className="relative w-full h-screen overflow-hidden flex flex-col">
 
             {/* Background */}
             <div className="absolute inset-0 z-0">
@@ -697,8 +698,9 @@ function HowItWorksSection(): JSX.Element {
 export default function ProductPage() {
     return (
         <>
+            <DNABackground />
             <FitsInStackSection />
-            <main className="bg-black">
+            <main>
                 <UseCasesSection />
                 <HowItWorksSection />
             </main>
