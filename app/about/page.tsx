@@ -1,10 +1,10 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import ShinyText from "@/client/components/ui/shinytext";
-// import DNABackground from "@/components/DNABackground";
+import { useRef, useState, useEffect, useLayoutEffect } from "react";
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import DNABackground from "@/components/DNABackground";
 
 interface TimelineItem {
     title: string;
@@ -326,15 +326,88 @@ const TimelineCarouselContainer: React.FC<{ timelineData: TimelineItem[] }> = ({
 };
 
 export default function About() {
-    const heroRef = useRef<HTMLElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const heroContainerRef = useRef<HTMLDivElement>(null);
+    const heroTextRef = useRef<HTMLDivElement>(null);
+    const overlayRef = useRef<HTMLDivElement>(null);
+    const scrollIndicatorRef = useRef<HTMLDivElement>(null);
 
-    const { scrollYProgress } = useScroll({
-        target: heroRef,
-        offset: ["start start", "end start"]
-    });
+    useLayoutEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
 
-    const scale = useTransform(scrollYProgress, [0, 0.6, 1], [1, 8, 20]);
-    const opacity = useTransform(scrollYProgress, [0, 0.5, 0.8, 1], [1, 0.6, 0.2, 0]);
+        // Initial animations on page load
+        gsap.to(overlayRef.current, {
+            opacity: 0,
+            duration: 2.8,
+            ease: "power3.out",
+            onComplete: () => {
+                if (typeof document !== 'undefined') {
+                    document.body.style.overflow = "visible";
+                    document.body.style.overflowX = "hidden";
+                }
+            },
+        });
+
+        // Scroll Indicator bounce animation
+        const bounceTimeline = gsap.timeline({
+            repeat: -1,
+            yoyo: true,
+        });
+
+        bounceTimeline.to(scrollIndicatorRef.current, {
+            y: 20,
+            opacity: 0.6,
+            duration: 0.8,
+            ease: "power1.inOut",
+        });
+
+        // Create main timeline for scroll animations
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: containerRef.current,
+                scrub: 2,
+                pin: true,
+                start: "top top",
+                end: "+=3000",
+            },
+        });
+
+        // Set initial small scale
+        tl.set(heroContainerRef.current, {
+            scale: 0.5,
+        });
+
+        // Scale up to normal
+        tl.to(heroContainerRef.current, {
+            scale: 1,
+            duration: 1,
+        });
+
+        // Continue scaling up bigger
+        tl.to(heroContainerRef.current, {
+            scale: 2.5,
+            duration: 2,
+        });
+
+        // Scale even bigger
+        tl.to(heroContainerRef.current, {
+            scale: 8,
+            duration: 2,
+        });
+
+        // Fade out the entire hero section while continuing to scale
+        tl.to(heroTextRef.current, {
+            opacity: 0,
+            duration: 1.5,
+        }, "<+=0.5");
+
+        // Cleanup
+        return () => {
+            bounceTimeline.kill();
+            tl.kill();
+            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        };
+    }, []);
 
     // Timeline Data
     const timelineData = [
@@ -417,67 +490,62 @@ export default function About() {
     ]
 
     return (
-        <div className="relative min-h-screen">
-            {/* <DNABackground /> */}
-
-            {/* Hero Section with GTA VI Style Scroll Animation */}
-            <section
-                ref={heroRef}
-                className="relative h-[150vh]"
-            >
-                <div className="sticky top-0 h-screen w-full flex items-center justify-center bg-opacity-10 overflow-hidden">
-                    <motion.div
-                        style={{
-                            scale,
-                            opacity
-                        }}
-                        className=" px-4 origin-center text-center"
-                    >
-                        <div className="flex flex-col z-40 items-center gap-1">
-                            <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif" }}>
-                                <ShinyText
-                                    text="WELCOME"
-                                    speed={3}
-                                    color="#ffffff"
-                                    shineColor="#9b6fb5"
-                                    spread={80}
-                                    direction="right"
-                                    yoyo={true}
-                                    className="text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-medium tracking-[0.3em] pb-4"
-                                />
-                            </div>
-                            <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif" }}>
-                                <ShinyText
-                                    text="TO THE"
-                                    speed={3}
-                                    color="#ffffff"
-                                    shineColor="#9b6fb5"
-                                    spread={80}
-                                    direction="right"
-                                    yoyo={true}
-                                    className="text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-extralight tracking-[0.4em] opacity-80"
-                                />
-                            </div>
-                            <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif" }}>
-                                <ShinyText
-                                    text="STRAND AGE"
-                                    speed={3}
-                                    color="#ffffff"
-                                    shineColor="#9b6fb5"
-                                    spread={80}
-                                    direction="right"
-                                    yoyo={true}
-                                    className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight pb-8"
-                                />
-                            </div>
-                        </div>
-                    </motion.div>
+        <>
+            <style jsx>{`
+                body {
+                    overflow: hidden;
+                    overflow-x: hidden;
+                }
+            `}</style>
+            <div ref={containerRef} className="min-h-screen relative bg-gradient-to-br from-[#1c1829] via-[#1b1828] to-[#111117] overflow-hidden">
+                <div className="absolute inset-0 z-0">
+                    <DNABackground />
                 </div>
-            </section>
+                <div ref={overlayRef} className="fixed inset-0 bg-black z-[1] pointer-events-none"></div>
+
+                <div ref={heroContainerRef} className="relative z-10">                    <div className="w-full h-screen relative flex items-center justify-center">
+                    <div ref={heroTextRef} className="flex flex-col z-40 items-center gap-1 px-4" style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif" }}>
+                        <h1 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-medium tracking-[0.3em] pb-4 text-white">
+                            WELCOME
+                        </h1>
+                        <h2 className="text-base sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-extralight tracking-[0.4em] opacity-80 text-white">
+                            TO THE
+                        </h2>
+                        <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight pb-8 text-white">
+                            STRAND AGE
+                        </h2>
+                    </div>
+                </div>
+                </div>
+
+                {/* Scroll Indicator */}
+                <div
+                    ref={scrollIndicatorRef}
+                    className="absolute bottom-[10%] lg:bottom-[30px] left-1/2 -translate-x-1/2 w-[34px] h-[14px] z-10"
+                >
+                    <svg
+                        width="34"
+                        height="14"
+                        viewBox="0 0 34 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                        focusable="false"
+                        className="text-purple-400 w-full h-full"
+                    >
+                        <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M33.5609 1.54346C34.0381 2.5875 33.6881 3.87821 32.7791 4.42633L17.0387 13.9181L1.48663 4.42115C0.580153 3.86761 0.235986 2.57483 0.717909 1.53365C1.19983 0.492464 2.32535 0.097152 3.23182 0.650692L17.0497 9.08858L31.051 0.64551C31.96 0.0973872 33.0837 0.499411 33.5609 1.54346Z"
+                            fill="currentColor"
+                        ></path>
+                    </svg>
+                </div>
+            </div>
 
             {/* Vision and Offer Section */}
-            <section className="relative -mt-32 py-12 sm:py-16 px-4 sm:px-6 lg:px-8 text-white">
-                <div className="max-w-screen-xl mx-auto backdrop-blur-xl bg-white/80 rounded-3xl p-6 sm:p-8 md:p-12">
+            <section className="relative py-16 px-4">
+                <div className="max-w-6xl mx-auto backdrop-blur-xl bg-white/90 rounded-2xl p-8 md:p-12 shadow-lg">
                     <div className="grid md:grid-cols-2 gap-8 md:gap-12 text-gray-900">
                         {/* Our Vision */}
                         <div className="space-y-4">
@@ -521,26 +589,26 @@ export default function About() {
             </section>
 
             {/* Timeline Section */}
-            <section className="relative rounded-2xl pt-10 px-4 mb-0 pb-32 bg-black/30 backdrop-blur-lg">
+            <section className="relative py-16 px-4 bg-black/30 backdrop-blur-lg">
                 <div className="max-w-full mx-auto">
-                    <div className="max-w-xl mx-auto text-center mb-16">
+                    <div className="max-w-xl mx-auto text-center mb-12">
                         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">
-                            Our Journey So Far
+                            OUR JOURNEY SO FAR
                         </h2>
                         <p className="text-sm sm:text-base md:text-lg text-gray-300">
                             From concept to reality
                         </p>
                     </div>
 
-                    <div className="w-full flex justify-center min-h-[600px] items-center pb-20">
+                    <div className="w-full flex justify-center min-h-[600px] items-center">
                         <TimelineCarouselContainer timelineData={timelineData} />
                     </div>
                 </div>
             </section>
 
             {/* Our Team Section */}
-            <section className="relative py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-screen-xl mx-auto backdrop-blur-xl bg-gray-50/80 rounded-3xl p-6 sm:p-8 md:p-12">
+            <section className="relative py-16 px-4">
+                <div className="max-w-6xl mx-auto backdrop-blur-xl bg-white/90 rounded-2xl p-8 md:p-12 shadow-lg">
                     <div className="max-w-xl mx-auto text-center mb-8 sm:mb-12">
                         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
                             OUR TEAM
@@ -550,32 +618,31 @@ export default function About() {
                         </p>
                     </div>
                     <div className="flex justify-center">
-                        <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl">
-                            {team.map((item, idx) => (
-                                <li key={idx} className="flex flex-col items-center">
-                                    <div className="w-full h-60 sm:h-56">
-                                        <Image
-                                            src={item.avatar}
-                                            width={215}
-                                            height={240}
-                                            className="w-full h-full object-cover object-center shadow-md rounded-xl"
-                                            alt={item.name}
-                                        />
-                                    </div>
-                                    <div className="mt-4 text-center">
-                                        <h4 className="text-lg text-gray-800 font-semibold">{item.name}</h4>
-                                        <p className="text-gray-600">{item.title}</p>
-                                    </div>
-                                </li>
-                            ))}
+                        <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl">                        {team.map((item, idx) => (
+                            <li key={idx} className="flex flex-col items-center">
+                                <div className="w-full h-60 sm:h-56">
+                                    <Image
+                                        src={item.avatar}
+                                        width={215}
+                                        height={240}
+                                        className="w-full h-full object-cover object-center shadow-md rounded-xl"
+                                        alt={item.name}
+                                    />
+                                </div>
+                                <div className="mt-4 text-center">
+                                    <h4 className="text-lg text-gray-800 font-semibold">{item.name}</h4>
+                                    <p className="text-gray-600">{item.title}</p>
+                                </div>
+                            </li>
+                        ))}
                         </ul>
                     </div>
                 </div>
             </section>
 
             {/* Media Section */}
-            <section className="relative py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-screen-xl mx-auto backdrop-blur-xl bg-white/80 rounded-3xl p-6 sm:p-8 md:p-12">
+            <section className="relative py-16 px-4">
+                <div className="max-w-6xl mx-auto backdrop-blur-xl bg-white/90 rounded-2xl p-8 md:p-12 shadow-lg">
                     <div className="max-w-xl mx-auto text-center mb-8 sm:mb-12">
                         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
                             MEDIA
@@ -585,8 +652,7 @@ export default function About() {
                         </p>
                     </div>
 
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                        {/* Media Card 1 */}
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">                       {/* Media Card 1 */}
                         <div className="group bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-purple-300">
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
@@ -680,9 +746,9 @@ export default function About() {
             </section>
 
             {/* Join Us Section */}
-            <section className="relative py-24 px-4 text-center z-10">
-                <div className="max-w-4xl mx-auto backdrop-blur-md bg-purple-950/30 border border-purple-500/20 rounded-3xl p-10 md:p-16 shadow-[0_0_40px_rgba(88,28,135,0.2)]">
-                    <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Join Us</h2>
+            <section className="relative py-16 px-4">
+                <div className="max-w-6xl mx-auto backdrop-blur-xl bg-purple-950/40 border border-purple-500/20 rounded-2xl p-8 md:p-12 shadow-lg text-center">
+                    <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">JOIN US</h2>
                     <p className="text-lg md:text-xl text-purple-200 mb-10 max-w-2xl mx-auto leading-relaxed">
                         We are building the storage of tomorrow, today. If you are excited about the intersection of biology and computing, we want to hear from you.
                     </p>
@@ -694,6 +760,6 @@ export default function About() {
                     </Link>
                 </div>
             </section>
-        </div>
+        </>
     );
 }
