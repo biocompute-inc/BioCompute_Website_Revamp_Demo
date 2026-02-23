@@ -287,7 +287,7 @@ const TimelineCarousel: React.FC<TimelineCarouselProps> = ({
             {nowIndex > 0 && (
                 <div
                     onClick={() => changeImagePosition(-1)}
-                    className="w-12 h-12 flex justify-center items-center border-2 border-fuchsia-200 rounded-full text-fuchsia-200 text-3xl cursor-pointer absolute top-1/2 -translate-y-1/2 left-4 transition-all duration-500 hover:text-white hover:bg-fuchsia-200/20 hover:border-white z-10 bg-black/60"
+                    className="w-12 h-12 flex justify-center items-center border-2 border-fuchsia-200 rounded-full text-fuchsia-200 text-3xl cursor-pointer absolute bottom-8 left-4 transition-all duration-500 hover:text-white hover:bg-fuchsia-200/20 hover:border-white z-10 bg-black/60"
                 >
                     <span>‹</span>
                 </div>
@@ -295,7 +295,7 @@ const TimelineCarousel: React.FC<TimelineCarouselProps> = ({
             {nowIndex < dataArray.length - 1 && (
                 <div
                     onClick={() => changeImagePosition(1)}
-                    className="w-12 h-12 flex justify-center items-center border-2 border-fuchsia-200 rounded-full text-fuchsia-200 text-3xl cursor-pointer absolute top-1/2 -translate-y-1/2 right-4 transition-all duration-500 hover:text-white hover:bg-fuchsia-200/20 hover:border-white z-10 bg-black/60"
+                    className="w-12 h-12 flex justify-center items-center border-2 border-fuchsia-200 rounded-full text-fuchsia-200 text-3xl cursor-pointer absolute bottom-8 right-4 transition-all duration-500 hover:text-white hover:bg-fuchsia-200/20 hover:border-white z-10 bg-black/60"
                 >
                     <span>›</span>
                 </div>
@@ -534,7 +534,7 @@ export default function About() {
                     <div className="grid gap-6 sm:gap-8 grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                         {team.map((item, idx) => (
                             <div key={idx} className="group h-full flex flex-col items-center">
-                                <div className="aspect-[3/4] w-full mb-3 sm:mb-4 overflow-hidden rounded-xl flex-shrink-0">
+                                <div className="aspect-[3/4] w-full max-w-[200px] sm:max-w-none mb-3 sm:mb-4 overflow-hidden rounded-xl flex-shrink-0">
                                     <Image
                                         src={item.avatar}
                                         width={300}
