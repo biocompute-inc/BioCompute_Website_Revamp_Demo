@@ -210,26 +210,26 @@ function FitsInStackSection(): JSX.Element {
                         onClick={() => setExpandedCard(1)}
                         className="group relative lg:col-span-2 bg-gradient-to-br from-fuchsia-950/40 via-purple-950/30 to-black backdrop-blur-md rounded-2xl md:rounded-3xl overflow-hidden border border-fuchsia-500/20 hover:border-fuchsia-500/50 transition-all duration-500 cursor-pointer h-[400px] md:h-[500px] lg:h-[380px] xl:h-[420px] hover:scale-[1.02] hover:shadow-[0_0_60px_rgba(217,70,239,0.3)]"
                     >
-                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-fuchsia-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-fuchsia-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-                        <div className="relative h-full p-4 sm:p-6 md:p-8 flex flex-col justify-between z-10">
+                        <div className="relative h-full p-4 sm:p-6 md:p-8 flex flex-col justify-between pointer-events-none">
                             {/* Icon & Stats Area */}
-                            <div className="flex-1 flex items-center justify-center mb-4 sm:mb-6">
-                                <div className="w-full max-w-md space-y-3 sm:space-y-6">
+                            <div className="flex-1 flex items-center justify-center mb-3 sm:mb-4">
+                                <div className="w-full max-w-md space-y-2 sm:space-y-3 lg:space-y-4">
                                     {/* Icon */}
-                                    <div className="flex justify-center mb-4 sm:mb-8">
+                                    <div className="flex justify-center mb-3 sm:mb-4 lg:mb-6">
                                         <div className="relative">
-                                            <Database className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 text-fuchsia-400 relative z-10" />
+                                            <Database className="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 text-fuchsia-400 relative z-10" />
                                             <div className="absolute inset-0 bg-fuchsia-500/20 blur-2xl rounded-full scale-150" />
                                         </div>
                                     </div>
 
                                     {/* Stats Display */}
-                                    <div className="space-y-3 sm:space-y-4 bg-black/30 backdrop-blur-sm rounded-xl p-3 sm:p-4 md:p-6 border border-white/5">
+                                    <div className="space-y-2 sm:space-y-3 bg-black/30 backdrop-blur-sm rounded-xl p-2 sm:p-3 md:p-4 border border-white/5">
                                         {fitsStackItems[1].stats?.map((stat, i) => (
                                             <div key={i} className="flex justify-between items-center group/stat">
                                                 <span className="text-xs sm:text-sm md:text-base text-gray-400 group-hover/stat:text-gray-300 transition-colors">{stat.label}</span>
-                                                <span className={`text-lg sm:text-2xl md:text-3xl font-bold ${stat.color} group-hover/stat:scale-110 transition-transform`}>
+                                                <span className={`text-base sm:text-xl md:text-2xl font-bold ${stat.color} group-hover/stat:scale-110 transition-transform`}>
                                                     {stat.value}
                                                 </span>
                                             </div>
@@ -241,7 +241,7 @@ function FitsInStackSection(): JSX.Element {
                             {/* Title & Description */}
                             <div>
                                 <div className="flex justify-between items-start gap-2 mb-2 sm:mb-3">
-                                    <h3 className="text-base sm:text-xl md:text-2xl lg:text-3xl font-bold text-white leading-tight flex-1">
+                                    <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white leading-tight flex-1">
                                         {fitsStackItems[1].title}
                                     </h3>
                                     <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-fuchsia-500/10 border border-fuchsia-500/30 flex items-center justify-center group-hover:bg-fuchsia-600 group-hover:border-fuchsia-500 transition-all flex-shrink-0">
@@ -249,7 +249,7 @@ function FitsInStackSection(): JSX.Element {
                                     </div>
                                 </div>
                                 <p className="text-xs sm:text-sm md:text-base text-gray-400 leading-relaxed">
-                                    {isMobile ? fitsStackItems[1].mobileDescription : fitsStackItems[1].description}
+                                    {fitsStackItems[1].mobileDescription}
                                 </p>
                             </div>
                         </div>
@@ -260,10 +260,10 @@ function FitsInStackSection(): JSX.Element {
                         onClick={() => setExpandedCard(0)}
                         className="group relative bg-gradient-to-br from-purple-950/40 via-violet-950/30 to-black backdrop-blur-md rounded-2xl md:rounded-3xl overflow-hidden border border-purple-500/20 hover:border-purple-500/50 transition-all duration-500 cursor-pointer h-[400px] md:h-[500px] lg:h-[380px] xl:h-[420px] hover:scale-[1.02] hover:shadow-[0_0_60px_rgba(168,85,247,0.3)]"
                     >
-                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-purple-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-purple-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
                         {/* Animated Grid Pattern */}
-                        <div className="absolute inset-0 opacity-10">
+                        <div className="absolute inset-0 opacity-10 pointer-events-none">
                             <div className="w-full h-full grid grid-cols-4 gap-2 p-4">
                                 {[...Array(16)].map((_, i) => (
                                     <div
@@ -275,7 +275,7 @@ function FitsInStackSection(): JSX.Element {
                             </div>
                         </div>
 
-                        <div className="relative h-full p-4 sm:p-6 md:p-8 flex flex-col justify-between z-10">
+                        <div className="relative h-full p-4 sm:p-6 md:p-8 flex flex-col justify-between pointer-events-none">
                             {/* Icon Area */}
                             <div className="flex-1 flex items-center justify-center">
                                 <div className="relative">
@@ -295,7 +295,7 @@ function FitsInStackSection(): JSX.Element {
                                     </div>
                                 </div>
                                 <p className="text-xs sm:text-sm text-gray-400 leading-relaxed line-clamp-3">
-                                    {isMobile ? fitsStackItems[0].mobileDescription : fitsStackItems[0].description}
+                                    {fitsStackItems[0].mobileDescription}
                                 </p>
                             </div>
                         </div>
@@ -306,15 +306,15 @@ function FitsInStackSection(): JSX.Element {
                         onClick={() => setExpandedCard(2)}
                         className="group relative lg:col-span-3 bg-gradient-to-br from-fuchsia-950/40 via-fuchsia-900/20 to-black backdrop-blur-md rounded-2xl md:rounded-3xl overflow-hidden border border-fuchsia-200/20 hover:border-fuchsia-200/50 transition-all duration-500 cursor-pointer h-[300px] md:h-[350px] lg:h-[280px] xl:h-[300px] hover:scale-[1.01] hover:shadow-[0_0_60px_rgba(245,208,254,0.3)]"
                     >
-                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-fuchsia-200/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-fuchsia-200/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
                         {/* Pulse Rings */}
-                        <div className="absolute inset-0 flex items-center justify-center opacity-20">
+                        <div className="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">
                             <div className="absolute w-32 h-32 md:w-48 md:h-48 border border-fuchsia-200/40 rounded-full animate-ping" style={{ animationDuration: '3s' }} />
                             <div className="absolute w-48 h-48 md:w-64 md:h-64 border border-fuchsia-200/30 rounded-full animate-ping" style={{ animationDuration: '4s', animationDelay: '0.5s' }} />
                         </div>
 
-                        <div className="relative h-full p-4 sm:p-6 md:p-8 flex items-center z-10">
+                        <div className="relative h-full p-4 sm:p-6 md:p-8 flex items-center pointer-events-none">
                             <div className="flex flex-col md:flex-row items-center md:items-start gap-6 sm:gap-8 md:gap-12 w-full">
                                 {/* Icon */}
                                 <div className="flex-shrink-0">
@@ -335,7 +335,7 @@ function FitsInStackSection(): JSX.Element {
                                         </div>
                                     </div>
                                     <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-400 leading-relaxed max-w-3xl mx-auto md:mx-0">
-                                        {isMobile ? fitsStackItems[2].mobileDescription : fitsStackItems[2].description}
+                                        {fitsStackItems[2].mobileDescription}
                                     </p>
                                 </div>
                             </div>
@@ -413,7 +413,7 @@ function UseCasesSection(): JSX.Element {
                                     onClick={() => handleItemClick(idx)}
                                     className={`w-full text-left p-4 sm:p-6 rounded-xl border transition-all duration-300 ${idx === currentSlide
                                         ? 'bg-gradient-to-r from-purple-500/20 to-blue-500/20 border-purple-500/50 shadow-lg shadow-purple-500/20'
-                                        : 'bg-zinc-100/50 border-black/10 hover:border-purple-500/30 hover:bg-zinc-100/70'
+                                        : 'bg-zinc-100/50 border-black/10 hover:border-purple-500/30 hover:bg-gray-200'
                                         }`}
                                 >
                                     <div className="flex items-center justify-between gap-3">
@@ -448,7 +448,6 @@ function UseCasesSection(): JSX.Element {
                                             >
                                                 {/* Image */}
                                                 <div className="relative h-[250px] sm:h-[300px] rounded-2xl overflow-hidden border border-black/10">
-                                                    <div className="absolute inset-0 bg-gradient-to-t from-white/60 via-transparent to-transparent z-10" />
                                                     <img
                                                         src={currentItem.image}
                                                         alt={currentItem.title}
@@ -492,7 +491,6 @@ function UseCasesSection(): JSX.Element {
                             >
                                 {/* Image */}
                                 <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] rounded-2xl overflow-hidden border border-black/10">
-                                    <div className="absolute inset-0 bg-gradient-to-t from-white/60 via-transparent to-transparent z-10" />
                                     <img
                                         src={currentItem.image}
                                         alt={currentItem.title}
