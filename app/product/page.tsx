@@ -7,6 +7,7 @@ import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { useGSAP } from '@gsap/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SplitText from '@/client/components/ui/splittext';
+import { useIsMobile } from '@/client/hooks/use-mobile';
 
 import {
     Server,
@@ -66,11 +67,13 @@ const fitsStackItems = [
     {
         title: "Cold Storage Offloading",
         description: "Stop paying for data you aren't using. Migrate your Tier-3 and Tier-4 archival data to our passive DNA Vaults and turn your active cost sinks into passive assets.",
+        mobileDescription: "Migrate archival data to passive DNA Vaults. Turn cost sinks into assets.",
         image: "https://placehold.co/1200x800/0a0a0a/7c3aed?text=Cold+Storage"
     },
     {
         title: "High-Density Long-Term Retention",
         description: "Shrink your physical footprint and reclaim valuable floor space in your data center. Replace aisles of magnetic tape libraries with a single BioCompute rack, freeing up power and space for high-performance compute tasks.",
+        mobileDescription: "Replace tape libraries with a single rack. Reclaim space and power.",
         image: "https://placehold.co/1200x800/0a0a0a/a855f7?text=High+Density",
         stats: [
             { label: "Space Optimized", value: "98%", color: "text-green-400" },
@@ -81,6 +84,7 @@ const fitsStackItems = [
     {
         title: "Secure Data Transport",
         description: "Move Exabytes in your wallet. Transferring massive datasets over the internet is slow. BioCompute allows you to physically transport Exabytes of encrypted data in a localized, durable medium that is immune to electromagnetic interference.",
+        mobileDescription: "Transport Exabytes in your wallet. Durable, immune to interference.",
         image: "https://placehold.co/1200x800/0a0a0a/10b981?text=Secure+Transport"
     }
 ];
@@ -120,6 +124,7 @@ const useCasesItems = [
 
 function FitsInStackSection(): JSX.Element {
     const [expandedCard, setExpandedCard] = useState<number | null>(null);
+    const isMobile = useIsMobile();
 
     const scrollToSection = (sectionId: string) => {
         const element = document.getElementById(sectionId);
@@ -135,7 +140,7 @@ function FitsInStackSection(): JSX.Element {
                 {/* Main Title */}
                 <SplitText
                     text="Digitize your destiny."
-                    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white pb-6 mb-6 md:mb-8 leading-tight tracking-tight mx-48"
+                    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white pb-6 mb-6 md:mb-8 leading-tight tracking-tight mx-4 sm:mx-8 md:mx-16 lg:mx-24 xl:mx-48"
                     delay={50}
                     duration={2}
                     ease="power3.out"
@@ -174,15 +179,15 @@ function FitsInStackSection(): JSX.Element {
                     </button>
                     <button
                         onClick={() => scrollToSection('how-it-works-section')}
-                        className="group relative px-8 py-4 bg-purple-600 text-white rounded-full font-semibold text-base sm:text-lg transition-all duration-300 hover:bg-purple-700 hover:scale-105 shadow-lg shadow-purple-500/50 hover:shadow-xl hover:shadow-purple-500/70 w-full sm:w-auto"
+                        className="group relative px-8 py-4 bg-purple-600 text-white rounded-full font-semibold text-base sm:text-lg transition-all duration-300 hover:bg-purple-700 hover:scale-105 shadow-lg shadow-purple-500/50 hover:shadow-xl hover:shadow-purple-500/70 w-full sm:w-auto border-fuchsia-200/30 border-2"
                     >
                         How It Works
                     </button>
                 </div>
 
                 {/* Phone Mockup Image */}
-                <div className="relative max-w-md mx-auto">
-                    <div className="relative rounded-[3rem] overflow-hidden border-8 border-gray-800 shadow-2xl">
+                <div className="relative max-w-xs sm:max-w-sm md:max-w-md mx-auto">
+                    <div className="relative rounded-2xl sm:rounded-[2.5rem] md:rounded-[3rem] overflow-hidden border-4 sm:border-[6px] md:border-8 border-gray-800 shadow-2xl">
                         <img
                             src="https://placehold.co/400x800/f5f5f5/374151?text=App+Preview"
                             alt="App Preview"
@@ -194,37 +199,37 @@ function FitsInStackSection(): JSX.Element {
 
             {/* Bento Grid Section */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center text-4xl sm:text-5xl md:text-6xl font-bold px-4 sm:px-8 mb-8 md:mb-12 text-white">
+                <div className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold px-2 sm:px-4 md:px-8 mb-6 sm:mb-8 md:mb-12 text-white">
                     Where We Fit
                 </div>
 
                 {/* Bento Grid Layout */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
                     {/* Row 1: High-Density Card (Large - 2 columns) */}
                     <div
                         onClick={() => setExpandedCard(1)}
-                        className="group relative lg:col-span-2 bg-gradient-to-br from-fuchsia-950/40 via-purple-950/30 to-black backdrop-blur-md rounded-2xl md:rounded-3xl overflow-hidden border border-fuchsia-500/20 hover:border-fuchsia-500/50 transition-all duration-500 cursor-pointer h-[400px] md:h-[500px] hover:scale-[1.02] hover:shadow-[0_0_60px_rgba(217,70,239,0.3)]"
+                        className="group relative lg:col-span-2 bg-gradient-to-br from-fuchsia-950/40 via-purple-950/30 to-black backdrop-blur-md rounded-2xl md:rounded-3xl overflow-hidden border border-fuchsia-500/20 hover:border-fuchsia-500/50 transition-all duration-500 cursor-pointer h-[400px] md:h-[500px] lg:h-[380px] xl:h-[420px] hover:scale-[1.02] hover:shadow-[0_0_60px_rgba(217,70,239,0.3)]"
                     >
                         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-fuchsia-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                        <div className="relative h-full p-6 md:p-8 flex flex-col justify-between z-10">
+                        <div className="relative h-full p-4 sm:p-6 md:p-8 flex flex-col justify-between z-10">
                             {/* Icon & Stats Area */}
-                            <div className="flex-1 flex items-center justify-center mb-6">
-                                <div className="w-full max-w-md space-y-6">
+                            <div className="flex-1 flex items-center justify-center mb-4 sm:mb-6">
+                                <div className="w-full max-w-md space-y-3 sm:space-y-6">
                                     {/* Icon */}
-                                    <div className="flex justify-center mb-8">
+                                    <div className="flex justify-center mb-4 sm:mb-8">
                                         <div className="relative">
-                                            <Database className="w-16 h-16 md:w-24 md:h-24 text-fuchsia-400 relative z-10" />
+                                            <Database className="w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 text-fuchsia-400 relative z-10" />
                                             <div className="absolute inset-0 bg-fuchsia-500/20 blur-2xl rounded-full scale-150" />
                                         </div>
                                     </div>
 
                                     {/* Stats Display */}
-                                    <div className="space-y-4 bg-black/30 backdrop-blur-sm rounded-xl p-6 border border-white/5">
+                                    <div className="space-y-3 sm:space-y-4 bg-black/30 backdrop-blur-sm rounded-xl p-3 sm:p-4 md:p-6 border border-white/5">
                                         {fitsStackItems[1].stats?.map((stat, i) => (
                                             <div key={i} className="flex justify-between items-center group/stat">
-                                                <span className="text-sm md:text-base text-gray-400 group-hover/stat:text-gray-300 transition-colors">{stat.label}</span>
-                                                <span className={`text-2xl md:text-3xl font-bold ${stat.color} group-hover/stat:scale-110 transition-transform`}>
+                                                <span className="text-xs sm:text-sm md:text-base text-gray-400 group-hover/stat:text-gray-300 transition-colors">{stat.label}</span>
+                                                <span className={`text-lg sm:text-2xl md:text-3xl font-bold ${stat.color} group-hover/stat:scale-110 transition-transform`}>
                                                     {stat.value}
                                                 </span>
                                             </div>
@@ -235,16 +240,16 @@ function FitsInStackSection(): JSX.Element {
 
                             {/* Title & Description */}
                             <div>
-                                <div className="flex justify-between items-start mb-3">
-                                    <h3 className="text-2xl md:text-3xl font-bold text-white leading-tight">
+                                <div className="flex justify-between items-start gap-2 mb-2 sm:mb-3">
+                                    <h3 className="text-base sm:text-xl md:text-2xl lg:text-3xl font-bold text-white leading-tight flex-1">
                                         {fitsStackItems[1].title}
                                     </h3>
-                                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-fuchsia-500/10 border border-fuchsia-500/30 flex items-center justify-center group-hover:bg-fuchsia-600 group-hover:border-fuchsia-500 transition-all flex-shrink-0 ml-3">
-                                        <span className="text-white text-xl">+</span>
+                                    <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-fuchsia-500/10 border border-fuchsia-500/30 flex items-center justify-center group-hover:bg-fuchsia-600 group-hover:border-fuchsia-500 transition-all flex-shrink-0">
+                                        <span className="text-white text-base sm:text-xl">+</span>
                                     </div>
                                 </div>
-                                <p className="text-sm md:text-base text-gray-400 leading-relaxed">
-                                    {fitsStackItems[1].description}
+                                <p className="text-xs sm:text-sm md:text-base text-gray-400 leading-relaxed">
+                                    {isMobile ? fitsStackItems[1].mobileDescription : fitsStackItems[1].description}
                                 </p>
                             </div>
                         </div>
@@ -253,7 +258,7 @@ function FitsInStackSection(): JSX.Element {
                     {/* Row 1: Cold Storage Card (Small - 1 column) */}
                     <div
                         onClick={() => setExpandedCard(0)}
-                        className="group relative bg-gradient-to-br from-purple-950/40 via-violet-950/30 to-black backdrop-blur-md rounded-2xl md:rounded-3xl overflow-hidden border border-purple-500/20 hover:border-purple-500/50 transition-all duration-500 cursor-pointer h-[400px] md:h-[500px] hover:scale-[1.02] hover:shadow-[0_0_60px_rgba(168,85,247,0.3)]"
+                        className="group relative bg-gradient-to-br from-purple-950/40 via-violet-950/30 to-black backdrop-blur-md rounded-2xl md:rounded-3xl overflow-hidden border border-purple-500/20 hover:border-purple-500/50 transition-all duration-500 cursor-pointer h-[400px] md:h-[500px] lg:h-[380px] xl:h-[420px] hover:scale-[1.02] hover:shadow-[0_0_60px_rgba(168,85,247,0.3)]"
                     >
                         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-purple-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -270,27 +275,27 @@ function FitsInStackSection(): JSX.Element {
                             </div>
                         </div>
 
-                        <div className="relative h-full p-6 md:p-8 flex flex-col justify-between z-10">
+                        <div className="relative h-full p-4 sm:p-6 md:p-8 flex flex-col justify-between z-10">
                             {/* Icon Area */}
                             <div className="flex-1 flex items-center justify-center">
                                 <div className="relative">
-                                    <Server className="w-20 h-20 md:w-32 md:h-32 text-purple-400 relative z-10 group-hover:scale-110 transition-transform duration-500" />
+                                    <Server className="w-16 h-16 sm:w-20 sm:h-20 md:w-32 md:h-32 text-purple-400 relative z-10 group-hover:scale-110 transition-transform duration-500" />
                                     <div className="absolute inset-0 bg-purple-500/20 blur-3xl rounded-full scale-150 group-hover:scale-[2] transition-transform duration-500" />
                                 </div>
                             </div>
 
                             {/* Title & Description */}
                             <div>
-                                <div className="flex justify-between items-start mb-3">
-                                    <h3 className="text-xl md:text-2xl font-bold text-white leading-tight">
+                                <div className="flex justify-between items-start gap-2 mb-2 sm:mb-3">
+                                    <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white leading-tight flex-1">
                                         {fitsStackItems[0].title}
                                     </h3>
-                                    <div className="w-10 h-10 rounded-full bg-purple-500/10 border border-purple-500/30 flex items-center justify-center group-hover:bg-purple-600 group-hover:border-purple-500 transition-all flex-shrink-0 ml-2">
-                                        <span className="text-white text-xl">+</span>
+                                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-purple-500/10 border border-purple-500/30 flex items-center justify-center group-hover:bg-purple-600 group-hover:border-purple-500 transition-all flex-shrink-0">
+                                        <span className="text-white text-base sm:text-xl">+</span>
                                     </div>
                                 </div>
-                                <p className="text-sm text-gray-400 leading-relaxed line-clamp-3">
-                                    {fitsStackItems[0].description}
+                                <p className="text-xs sm:text-sm text-gray-400 leading-relaxed line-clamp-3">
+                                    {isMobile ? fitsStackItems[0].mobileDescription : fitsStackItems[0].description}
                                 </p>
                             </div>
                         </div>
@@ -299,7 +304,7 @@ function FitsInStackSection(): JSX.Element {
                     {/* Row 2: Secure Transport Card (Full Width - 3 columns) */}
                     <div
                         onClick={() => setExpandedCard(2)}
-                        className="group relative lg:col-span-3 bg-gradient-to-br from-fuchsia-950/40 via-fuchsia-900/20 to-black backdrop-blur-md rounded-2xl md:rounded-3xl overflow-hidden border border-fuchsia-200/20 hover:border-fuchsia-200/50 transition-all duration-500 cursor-pointer h-[300px] md:h-[350px] hover:scale-[1.01] hover:shadow-[0_0_60px_rgba(245,208,254,0.3)]"
+                        className="group relative lg:col-span-3 bg-gradient-to-br from-fuchsia-950/40 via-fuchsia-900/20 to-black backdrop-blur-md rounded-2xl md:rounded-3xl overflow-hidden border border-fuchsia-200/20 hover:border-fuchsia-200/50 transition-all duration-500 cursor-pointer h-[300px] md:h-[350px] lg:h-[280px] xl:h-[300px] hover:scale-[1.01] hover:shadow-[0_0_60px_rgba(245,208,254,0.3)]"
                     >
                         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-fuchsia-200/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -309,28 +314,28 @@ function FitsInStackSection(): JSX.Element {
                             <div className="absolute w-48 h-48 md:w-64 md:h-64 border border-fuchsia-200/30 rounded-full animate-ping" style={{ animationDuration: '4s', animationDelay: '0.5s' }} />
                         </div>
 
-                        <div className="relative h-full p-6 md:p-8 flex items-center z-10">
-                            <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12 w-full">
+                        <div className="relative h-full p-4 sm:p-6 md:p-8 flex items-center z-10">
+                            <div className="flex flex-col md:flex-row items-center md:items-start gap-6 sm:gap-8 md:gap-12 w-full">
                                 {/* Icon */}
                                 <div className="flex-shrink-0">
                                     <div className="relative">
-                                        <Shield className="w-24 h-24 md:w-40 md:h-40 text-fuchsia-200 relative z-10 group-hover:scale-110 transition-transform duration-500" />
+                                        <Shield className="w-16 h-16 sm:w-20 sm:h-20 md:w-40 md:h-40 text-fuchsia-200 relative z-10 group-hover:scale-110 transition-transform duration-500" />
                                         <div className="absolute inset-0 bg-fuchsia-200/20 blur-3xl rounded-full scale-150 group-hover:scale-[2] transition-transform duration-500" />
                                     </div>
                                 </div>
 
                                 {/* Content */}
                                 <div className="flex-1 text-center md:text-left">
-                                    <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4 gap-3">
-                                        <h3 className="text-2xl md:text-4xl font-bold text-white leading-tight">
+                                    <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-3 sm:mb-4 gap-2 sm:gap-3">
+                                        <h3 className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold text-white leading-tight flex-1">
                                             {fitsStackItems[2].title}
                                         </h3>
-                                        <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-fuchsia-200/10 border border-fuchsia-200/30 flex items-center justify-center group-hover:bg-fuchsia-600 group-hover:border-fuchsia-200 transition-all mx-auto md:mx-0 flex-shrink-0">
-                                            <span className="text-white text-2xl">+</span>
+                                        <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-fuchsia-200/10 border border-fuchsia-200/30 flex items-center justify-center group-hover:bg-fuchsia-600 group-hover:border-fuchsia-200 transition-all mx-auto md:mx-0 flex-shrink-0">
+                                            <span className="text-white text-lg sm:text-xl md:text-2xl">+</span>
                                         </div>
                                     </div>
-                                    <p className="text-base md:text-lg text-gray-400 leading-relaxed max-w-3xl">
-                                        {fitsStackItems[2].description}
+                                    <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-400 leading-relaxed max-w-3xl mx-auto md:mx-0">
+                                        {isMobile ? fitsStackItems[2].mobileDescription : fitsStackItems[2].description}
                                     </p>
                                 </div>
                             </div>
@@ -368,15 +373,31 @@ function FitsInStackSection(): JSX.Element {
 
 function UseCasesSection(): JSX.Element {
     const [currentSlide, setCurrentSlide] = useState(0);
+    const isMobile = useIsMobile();
+    const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
     const currentItem = useCasesItems[currentSlide];
 
+    const handleItemClick = (idx: number) => {
+        setCurrentSlide(idx);
+
+        // On mobile, scroll to show the content below the selected item
+        if (isMobile && buttonRefs.current[idx]) {
+            setTimeout(() => {
+                buttonRefs.current[idx]?.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }, 100);
+        }
+    };
+
     return (
-        <section id="use-cases-section" className="relative w-full min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-black border-b border-white/5">
+        <section id="use-cases-section" className="relative w-full min-h-screen bg-gradient-to-br from-zinc-50 via-zinc-100 to-white border-b border-black/5">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24">
                 {/* Section Title */}
                 <div className="mb-12 lg:mb-16">
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black tracking-tight">
                         Use Cases
                     </h2>
                 </div>
@@ -386,36 +407,80 @@ function UseCasesSection(): JSX.Element {
                     {/* Left Side - Clickable List (40%) */}
                     <div className="lg:w-2/5 space-y-4">
                         {useCasesItems.map((item, idx) => (
-                            <button
-                                key={idx}
-                                onClick={() => setCurrentSlide(idx)}
-                                className={`w-full text-left p-4 sm:p-6 rounded-xl border transition-all duration-300 ${idx === currentSlide
+                            <div key={idx}>
+                                <button
+                                    ref={(el) => { buttonRefs.current[idx] = el; }}
+                                    onClick={() => handleItemClick(idx)}
+                                    className={`w-full text-left p-4 sm:p-6 rounded-xl border transition-all duration-300 ${idx === currentSlide
                                         ? 'bg-gradient-to-r from-purple-500/20 to-blue-500/20 border-purple-500/50 shadow-lg shadow-purple-500/20'
-                                        : 'bg-zinc-900/50 border-white/10 hover:border-purple-500/30 hover:bg-zinc-900/70'
-                                    }`}
-                            >
-                                <div className="flex items-center justify-between gap-3">
-                                    <div className="flex-1">
-                                        <div className="flex items-center gap-3 mb-2">
-                                            <span className="text-xs font-mono text-purple-400">
-                                                {String(idx + 1).padStart(2, '0')}
-                                            </span>
-                                            <div className="h-px flex-1 bg-gradient-to-r from-purple-500/50 to-transparent" />
+                                        : 'bg-zinc-100/50 border-black/10 hover:border-purple-500/30 hover:bg-zinc-100/70'
+                                        }`}
+                                >
+                                    <div className="flex items-center justify-between gap-3">
+                                        <div className="flex-1">
+                                            <div className="flex items-center gap-3 mb-2">
+                                                <span className="text-xs font-mono text-black">
+                                                    {String(idx + 1).padStart(2, '0')}
+                                                </span>
+                                                <div className="h-px flex-1 bg-gradient-to-r from-purple-500/50 to-transparent" />
+                                            </div>
+                                            <h3 className={`text-lg sm:text-xl md:text-2xl font-bold transition-colors ${idx === currentSlide ? 'text-black' : 'text-gray-600 group-hover:text-gray-700'
+                                                }`}>
+                                                {item.title}
+                                            </h3>
                                         </div>
-                                        <h3 className={`text-lg sm:text-xl md:text-2xl font-bold transition-colors ${idx === currentSlide ? 'text-white' : 'text-gray-400 group-hover:text-gray-300'
-                                            }`}>
-                                            {item.title}
-                                        </h3>
+                                        <ChevronRight className={`w-5 h-5 transition-all ${idx === currentSlide ? 'text-purple-400 translate-x-0' : 'text-gray-400 -translate-x-1'
+                                            }`} />
                                     </div>
-                                    <ChevronRight className={`w-5 h-5 transition-all ${idx === currentSlide ? 'text-purple-400 translate-x-0' : 'text-gray-600 -translate-x-1'
-                                        }`} />
-                                </div>
-                            </button>
+                                </button>
+
+                                {/* Mobile Content Card - appears below selected item */}
+                                {idx === currentSlide && (
+                                    <div className="lg:hidden mt-4">
+                                        <AnimatePresence mode="wait">
+                                            <motion.div
+                                                key={currentSlide}
+                                                initial={{ opacity: 0, y: -10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: -10 }}
+                                                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                                                className="space-y-4"
+                                            >
+                                                {/* Image */}
+                                                <div className="relative h-[250px] sm:h-[300px] rounded-2xl overflow-hidden border border-black/10">
+                                                    <div className="absolute inset-0 bg-gradient-to-t from-white/60 via-transparent to-transparent z-10" />
+                                                    <img
+                                                        src={currentItem.image}
+                                                        alt={currentItem.title}
+                                                        className="w-full h-full object-cover"
+                                                    />
+
+                                                    {/* Decorative elements */}
+                                                    <div className="absolute inset-0 z-20 pointer-events-none">
+                                                        <div className="absolute top-4 right-4 w-16 h-16 border border-purple-500/30 rounded-full" />
+                                                        <div className="absolute bottom-4 left-4 w-24 h-24 border border-blue-500/20 rounded-full" />
+                                                    </div>
+                                                </div>
+
+                                                {/* Description Card */}
+                                                <div className="bg-zinc-100/50 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-black/10">
+                                                    <h3 className="text-xl sm:text-2xl font-bold text-black mb-3 leading-tight">
+                                                        {currentItem.title}
+                                                    </h3>
+                                                    <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                                                        {currentItem.description}
+                                                    </p>
+                                                </div>
+                                            </motion.div>
+                                        </AnimatePresence>
+                                    </div>
+                                )}
+                            </div>
                         ))}
                     </div>
 
-                    {/* Right Side - Content Display (60%) */}
-                    <div className="lg:w-3/5 relative">
+                    {/* Right Side - Content Display (60%) - Desktop Only */}
+                    <div className="hidden lg:block lg:w-3/5 relative">
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={currentSlide}
@@ -426,8 +491,8 @@ function UseCasesSection(): JSX.Element {
                                 className="space-y-6"
                             >
                                 {/* Image */}
-                                <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] rounded-2xl overflow-hidden border border-white/10">
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
+                                <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] rounded-2xl overflow-hidden border border-black/10">
+                                    <div className="absolute inset-0 bg-gradient-to-t from-white/60 via-transparent to-transparent z-10" />
                                     <img
                                         src={currentItem.image}
                                         alt={currentItem.title}
@@ -442,11 +507,11 @@ function UseCasesSection(): JSX.Element {
                                 </div>
 
                                 {/* Description Card */}
-                                <div className="bg-zinc-900/50 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-white/10">
-                                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
+                                <div className="bg-zinc-100/50 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-black/10">
+                                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-black mb-4 leading-tight">
                                         {currentItem.title}
                                     </h3>
-                                    <p className="text-base sm:text-lg text-gray-300 leading-relaxed">
+                                    <p className="text-base sm:text-lg text-gray-700 leading-relaxed">
                                         {currentItem.description}
                                     </p>
                                 </div>
@@ -475,8 +540,13 @@ function HowItWorksSection(): JSX.Element {
             scrollTrigger: {
                 trigger: container.current,
                 pin: true,
-                scrub: 1,
-                snap: 1 / (totalPanels - 1),
+                anticipatePin: 1,
+                scrub: 1.5,
+                snap: {
+                    snapTo: 1 / (totalPanels - 1),
+                    duration: { min: 0.2, max: 0.5 },
+                    ease: "power1.inOut"
+                },
                 end: () => "+=" + (slider.current?.scrollWidth || window.innerWidth),
                 onUpdate: (self) => {
                     const progress = self.progress;
@@ -516,12 +586,12 @@ function HowItWorksSection(): JSX.Element {
             </div>
 
             {/* Header */}
-            <div className="absolute top-28 left-0 w-full z-20 text-center px-4 pointer-events-none">
-                <h2 className="text-3xl text-center md:text-3xl font-bold text-white tracking-tight text-purple-500/80">How It Works</h2>
+            <div className="absolute top-20 sm:top-24 md:top-28 left-0 w-full z-20 text-center px-4 pointer-events-none">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-purple-500/80 tracking-tight">How It Works</h2>
             </div>
 
             {/* SLIDER TRACK */}
-            <div ref={slider} className="mt-16 flex h-full w-[400%]">
+            <div ref={slider} className="mt-12 sm:mt-14 md:mt-16 flex h-full w-[400%]">
                 {steps.map((step) => (
                     <div
                         key={step.id}
