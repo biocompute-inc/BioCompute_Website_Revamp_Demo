@@ -135,139 +135,8 @@ export default function Careers() {
             </div>
           </div>
 
-          {/* Our Values Section */}
-          <div className="bg-gradient-to-br from-fuchsia-50 via-white to-fuchsia-50 rounded-3xl p-8 sm:p-12 md:p-16 mb-20 shadow-lg border border-fuchsia-200">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-4 text-black">
-                Our Values
-              </h2>
-              <div className="w-20 h-1 bg-fuchsia-200 mx-auto mb-12 rounded-full"></div>
-
-              <div className="space-y-8">
-                {/* Value 1 */}
-                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
-                      1
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl sm:text-2xl font-bold text-black mb-2">
-                        Dream Crazy Big — Then Make It Real
-                      </h3>
-                      <p className="text-gray-800 leading-relaxed">
-                        We believe the biggest problems deserve the boldest thinking. Dream audaciously, commit deeply, and turn ambitious ideas into reality.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Value 2 */}
-                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
-                      2
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl sm:text-2xl font-bold text-black mb-2">
-                        Take Ownership. Figure Things Out.
-                      </h3>
-                      <p className="text-gray-800 leading-relaxed">
-                        This is everyone's company. We take responsibility from idea to outcome, proactively attack problems, and don't wait for perfect instructions. When the path isn't obvious, we figure it out.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Value 3 */}
-                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
-                      3
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl sm:text-2xl font-bold text-black mb-2">
-                        Stay Curious
-                      </h3>
-                      <p className="text-gray-800 leading-relaxed">
-                        Curiosity fuels breakthroughs. Ask questions, challenge assumptions, and encourage others to do the same. The best ideas often start with "Why?"
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Value 4 */}
-                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
-                      4
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl sm:text-2xl font-bold text-black mb-2">
-                        Practice Candor
-                      </h3>
-                      <p className="text-gray-800 leading-relaxed">
-                        We value honesty, clarity, and respect. Communicate openly about ideas, challenges, and solutions—and always speak directly to the people involved.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Value 5 */}
-                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
-                      5
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl sm:text-2xl font-bold text-black mb-2">
-                        Be Kind
-                      </h3>
-                      <p className="text-gray-800 leading-relaxed">
-                        Brilliance doesn't require ego. We treat each other with empathy, respect, and generosity especially when things get hard.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Value 6 */}
-                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
-                      6
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl sm:text-2xl font-bold text-black mb-2">
-                        Embrace the Intersection
-                      </h3>
-                      <p className="text-gray-800 leading-relaxed">
-                        We bring together disciplines, perspectives, and expertise that don't usually overlap. We collaborate by default and don't build silos.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Value 7 */}
-                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
-                      7
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl sm:text-2xl font-bold text-black mb-2">
-                        Have Fun
-                      </h3>
-                      <p className="text-gray-800 leading-relaxed">
-                        We're building something extraordinary, and we enjoy the ride. Celebrate wins, embrace the chaos, and don't forget to laugh along the way.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* Job Listings */}
-          <div id="open-roles" className="scroll-mt-20">
+          <div id="open-roles" className="scroll-mt-20 mb-10">
             <h3 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8">Open Roles</h3>
 
             {loading ? (
@@ -401,6 +270,138 @@ export default function Careers() {
                 </div>
               </>
             )}
+          </div>
+
+
+          {/* Our Values Section */}
+          <div className="bg-gradient-to-br from-fuchsia-50 via-white to-fuchsia-50 rounded-3xl p-8 sm:p-12 md:p-16 mb-20 shadow-lg border border-fuchsia-200">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-4 text-black">
+                Our Values
+              </h2>
+              <div className="w-20 h-1 bg-fuchsia-200 mx-auto mb-12 rounded-full"></div>
+
+              <div className="space-y-8">
+                {/* Value 1 */}
+                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
+                      1
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl sm:text-2xl font-bold text-black mb-2">
+                        Dream Crazy Big — Then Make It Real
+                      </h3>
+                      <p className="text-gray-800 leading-relaxed">
+                        We believe the biggest problems deserve the boldest thinking. Dream audaciously, commit deeply, and turn ambitious ideas into reality.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Value 2 */}
+                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
+                      2
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl sm:text-2xl font-bold text-black mb-2">
+                        Take Ownership. Figure Things Out.
+                      </h3>
+                      <p className="text-gray-800 leading-relaxed">
+                        This is everyone's company. We take responsibility from idea to outcome, proactively attack problems, and don't wait for perfect instructions. When the path isn't obvious, we figure it out.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Value 3 */}
+                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
+                      3
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl sm:text-2xl font-bold text-black mb-2">
+                        Stay Curious
+                      </h3>
+                      <p className="text-gray-800 leading-relaxed">
+                        Curiosity fuels breakthroughs. Ask questions, challenge assumptions, and encourage others to do the same. The best ideas often start with "Why?"
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Value 4 */}
+                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
+                      4
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl sm:text-2xl font-bold text-black mb-2">
+                        Practice Candor
+                      </h3>
+                      <p className="text-gray-800 leading-relaxed">
+                        We value honesty, clarity, and respect. Communicate openly about ideas, challenges, and solutions—and always speak directly to the people involved.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Value 5 */}
+                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
+                      5
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl sm:text-2xl font-bold text-black mb-2">
+                        Be Kind
+                      </h3>
+                      <p className="text-gray-800 leading-relaxed">
+                        Brilliance doesn't require ego. We treat each other with empathy, respect, and generosity especially when things get hard.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Value 6 */}
+                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
+                      6
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl sm:text-2xl font-bold text-black mb-2">
+                        Embrace the Intersection
+                      </h3>
+                      <p className="text-gray-800 leading-relaxed">
+                        We bring together disciplines, perspectives, and expertise that don't usually overlap. We collaborate by default and don't build silos.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Value 7 */}
+                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
+                      7
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl sm:text-2xl font-bold text-black mb-2">
+                        Have Fun
+                      </h3>
+                      <p className="text-gray-800 leading-relaxed">
+                        We're building something extraordinary, and we enjoy the ride. Celebrate wins, embrace the chaos, and don't forget to laugh along the way.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

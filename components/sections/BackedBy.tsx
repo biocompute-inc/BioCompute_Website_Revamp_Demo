@@ -100,7 +100,7 @@ export default function OurPartners() {
             <Image src="/nidhi.jpg" width={144} height={48} className="w-[144px] h-[48px]" alt="DST NIDHI" />
           </motion.a>
           <motion.a
-            href="https://www.savant.co.za/"
+            href="https://www.joinsavant.com/"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.15 }}
@@ -223,7 +223,7 @@ export default function OurPartners() {
             <Image src="/nidhi.jpg" width={144} height={48} className="w-[144px] h-[48px]" alt="DST NIDHI" />
           </motion.a>
           <motion.a
-            href="https://www.savant.co.za/"
+            href="https://www.joinsavant.com/"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.15 }}

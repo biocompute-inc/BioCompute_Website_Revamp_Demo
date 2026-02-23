@@ -73,7 +73,7 @@ export default function JobDetailPage() {
         <div className="mb-8 sm:mb-10 md:mb-12">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 leading-tight">{job.title}</h1>
           <p className="text-gray-600 text-base sm:text-lg font-medium">
-            {job.location} | {job.type}
+            {job.location} | {job.type.replace(/\b\w/g, l => l.toUpperCase())}
           </p>
         </div>
 

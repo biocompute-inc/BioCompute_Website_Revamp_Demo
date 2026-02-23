@@ -44,37 +44,37 @@ export default function Header() {
             />
           </Link>
 
-          <nav className="hidden md:flex items-center gap-2 lg:gap-4 xl:gap-6 text-xs lg:text-sm xl:text-base flex-shrink-0">
+          <nav className="hidden md:flex items-center gap-2 lg:gap-4 xl:gap-6 text-sm lg:text-base xl:text-lg flex-shrink-0">
             <Link
               href="/product"
-              className={`hover:text-black hover:bg-slate-200 rounded-md transition-colors whitespace-nowrap px-1 lg:px-2 ${pathname === '/product' ? 'border-b-2 border-purple text-fuchsia-200' : ''}`}
+              className={`hover:text-fuchsia-300 hover:bg-fuchsia-300/20 rounded-md transition-colors whitespace-nowrap px-1 lg:px-2 ${pathname === '/product' ? 'border-b-2 border-purple text-fuchsia-200' : ''}`}
             >
               Product
             </Link>
             <Link
               href="/about"
-              className={`hover:text-black hover:bg-slate-200 rounded-md transition-colors whitespace-nowrap px-1 lg:px-2 ${pathname === '/about' ? 'border-b-2 border-purple text-fuchsia-200' : ''
+              className={`hover:text-fuchsia-300 hover:bg-fuchsia-300/20 rounded-md transition-colors whitespace-nowrap px-1 lg:px-2 ${pathname === '/about' ? 'border-b-2 border-purple text-fuchsia-200' : ''
                 }`}
             >
               About Us
             </Link>
             <Link
               href="/careers"
-              className={`hover:text-black hover:bg-slate-200 rounded-md transition-colors whitespace-nowrap px-1 lg:px-2 ${pathname?.startsWith('/careers') ? 'border-b-2 border-purple text-fuchsia-200' : ''
+              className={`hover:text-fuchsia-300 hover:bg-fuchsia-300/20 rounded-md transition-colors whitespace-nowrap px-1 lg:px-2 ${pathname?.startsWith('/careers') ? 'border-b-2 border-purple text-fuchsia-200' : ''
                 }`}
             >
               Careers
             </Link>
             <Link
               href="/faq"
-              className={`hover:text-black hover:bg-slate-200 rounded-md transition-colors whitespace-nowrap px-1 lg:px-2 ${pathname === '/faq' ? 'border-b-2 border-purple text-fuchsia-200' : ''
+              className={`hover:text-fuchsia-300 hover:bg-fuchsia-300/20 rounded-md transition-colors whitespace-nowrap px-1 lg:px-2 ${pathname === '/faq' ? 'border-b-2 border-purple text-fuchsia-200' : ''
                 }`}
             >
               FAQs
             </Link>
             <Link
               href="/blogs"
-              className={`hover:text-black hover:bg-slate-200 rounded-md transition-colors whitespace-nowrap px-1 lg:px-2 ${pathname?.startsWith('/blogs') ? 'border-b-2 border-purple text-fuchsia-200' : ''
+              className={`hover:text-fuchsia-300 hover:bg-fuchsia-300/20 rounded-md transition-colors whitespace-nowrap px-1 lg:px-2 ${pathname?.startsWith('/blogs') ? 'border-b-2 border-purple text-fuchsia-200' : ''
                 }`}
             >
               Blogs
@@ -102,14 +102,14 @@ export default function Header() {
               <Link
                 href="/product"
                 onClick={() => setMobileMenuOpen(false)}
-                className={`px-4 py-3 hover:bg-dark-secondary transition-colors text-sm ${pathname === '/product' ? 'text-purple border-l-4 border-purple bg-dark-secondary' : ''}`}
+                className={`px-4 py-3 hover:text-fuchsia-300 hover:bg-fuchsia-300/20 transition-colors text-base ${pathname === '/product' ? 'text-purple border-l-4 border-purple bg-dark-secondary' : ''}`}
               >
                 Product
               </Link>
               <Link
                 href="/about"
                 onClick={() => setMobileMenuOpen(false)}
-                className={`px-4 py-3 hover:bg-dark-secondary transition-colors text-sm ${pathname === '/about' ? 'text-purple border-l-4 border-purple bg-dark-secondary' : ''
+                className={`px-4 py-3 hover:text-fuchsia-300 hover:bg-fuchsia-300/20 transition-colors text-base ${pathname === '/about' ? 'text-purple border-l-4 border-purple bg-dark-secondary' : ''
                   }`}
               >
                 About Us
@@ -117,7 +117,7 @@ export default function Header() {
               <Link
                 href="/careers"
                 onClick={() => setMobileMenuOpen(false)}
-                className={`px-4 py-3 hover:bg-dark-secondary transition-colors text-sm ${pathname?.startsWith('/careers') ? 'text-purple border-l-4 border-purple bg-dark-secondary' : ''
+                className={`px-4 py-3 hover:text-fuchsia-300 hover:bg-fuchsia-300/20 transition-colors text-base ${pathname?.startsWith('/careers') ? 'text-purple border-l-4 border-purple bg-dark-secondary' : ''
                   }`}
               >
                 Careers
@@ -125,7 +125,7 @@ export default function Header() {
               <Link
                 href="/faq"
                 onClick={() => setMobileMenuOpen(false)}
-                className={`px-4 py-3 hover:bg-dark-secondary transition-colors text-sm ${pathname === '/faq' ? 'text-purple border-l-4 border-purple bg-dark-secondary' : ''
+                className={`px-4 py-3 hover:text-fuchsia-300 hover:bg-fuchsia-300/20 transition-colors text-base ${pathname === '/faq' ? 'text-purple border-l-4 border-purple bg-dark-secondary' : ''
                   }`}
               >
                 FAQs
@@ -133,7 +133,7 @@ export default function Header() {
               <Link
                 href="/blogs"
                 onClick={() => setMobileMenuOpen(false)}
-                className={`px-4 py-3 hover:bg-dark-secondary transition-colors text-sm ${pathname?.startsWith('/blogs') ? 'text-purple border-l-4 border-purple bg-dark-secondary' : ''
+                className={`px-4 py-3 hover:text-fuchsia-300 hover:bg-fuchsia-300/20 transition-colors text-base ${pathname?.startsWith('/blogs') ? 'text-purple border-l-4 border-purple bg-dark-secondary' : ''
                   }`}
               >
                 Blogs
