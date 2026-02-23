@@ -538,7 +538,6 @@ function HowItWorksSection(): JSX.Element {
             scrollTrigger: {
                 trigger: container.current,
                 pin: true,
-                anticipatePin: 1,
                 scrub: 1.5,
                 snap: {
                     snapTo: 1 / (totalPanels - 1),
