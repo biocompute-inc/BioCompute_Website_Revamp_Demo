@@ -576,16 +576,16 @@ function HowItWorksSection() {
             </div>
 
             {/* Header */}
-            <div className="absolute top-20 left-0 mt-16 w-full z-20 text-center px-4 pointer-events-none">
-                <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight uppercase text-purple-500/80">How It Works</h2>
+            <div className="relative z-20 w-full text-center px-4 pt-6 sm:pt-8 md:pt-10 pb-4 sm:pb-6 flex-shrink-0">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-purple-500/80">How It Works</h2>
             </div>
 
             {/* SLIDER TRACK */}
-            <div ref={slider} className="flex h-full w-[400%]">
+            <div ref={slider} className="flex flex-1 min-h-0 w-[400%]">
                 {steps.map((step) => (
                     <div
                         key={step.id}
-                        className="panel relative w-screen h-full flex flex-col md:flex-row items-center justify-center gap-4 sm:gap-6 md:gap-24 p-4 sm:p-6 box-border border-r border-white/5"
+                        className="panel relative w-screen h-full flex flex-col md:flex-row items-center justify-center gap-4 sm:gap-6 md:gap-24 px-4 sm:px-6 pb-24 sm:pb-28 box-border border-r border-white/5"
                     >
                         {/* Icon Box */}
                         <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-64 md:h-64 lg:w-[450px] lg:h-[450px] flex-shrink-0 bg-gradient-to-br from-purple-900/20 to-black border border-purple-500/20 rounded-2xl sm:rounded-3xl md:rounded-[2.5rem] flex items-center justify-center shadow-[0_0_80px_rgba(168,85,247,0.15)] backdrop-blur-sm">
