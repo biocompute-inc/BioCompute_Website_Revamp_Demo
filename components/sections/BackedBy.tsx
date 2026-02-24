@@ -107,7 +107,7 @@ export default function OurPartners() {
             transition={{ duration: 0.3 }}
             className="flex items-center"
           >
-            <Image src="/Savant.svg" width={144} height={48} className="w-[144px] h-[48px]" alt="Savant" />
+            <Image src="/Savant.svg" width={144} height={48} className="w-[144px] h-[48px] invert" alt="Savant" />
           </motion.a>
           <motion.a
             href="https://www.susmafia.org/"
@@ -230,7 +230,7 @@ export default function OurPartners() {
             transition={{ duration: 0.3 }}
             className="flex items-center"
           >
-            <Image src="/Savant.svg" width={144} height={48} className="w-[144px] h-[48px]" alt="Savant" />
+            <Image src="/Savant.svg" width={144} height={48} className="w-[144px] h-[48px] invert" alt="Savant" />
           </motion.a>
           <motion.a
             href="https://www.susmafia.org/"

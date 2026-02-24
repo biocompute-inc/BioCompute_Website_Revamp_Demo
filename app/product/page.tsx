@@ -69,7 +69,8 @@ const fitsStackItems = [
         title: "Cold Storage Offloading",
         description: "Stop paying for data you aren't using. Migrate your Tier-3 and Tier-4 archival data to our passive DNA Vaults and turn your active cost sinks into passive assets.",
         mobileDescription: "Migrate archival data to passive DNA Vaults. Turn cost sinks into assets.",
-        image: "https://placehold.co/1200x800/0a0a0a/7c3aed?text=Cold+Storage"
+        image: "https://placehold.co/1200x800/0a0a0a/7c3aed?text=Cold+Storage",
+        icon: <Server className="w-10 h-10 sm:w-12 sm:h-12 text-purple-400" />
     },
     {
         title: "High-Density Long-Term Retention",
@@ -80,13 +81,15 @@ const fitsStackItems = [
             { label: "Space Optimized", value: "98%", color: "text-green-400" },
             { label: "Density Increase", value: "10^6x", color: "text-blue-400" },
             { label: "Power Reduction", value: "100%", color: "text-purple-400" }
-        ]
+        ],
+        icon: <Database className="w-10 h-10 sm:w-12 sm:h-12 text-fuchsia-400" />
     },
     {
         title: "Secure Data Transport",
         description: "Move Exabytes in your wallet. Transferring massive datasets over the internet is slow. BioCompute allows you to physically transport Exabytes of encrypted data in a localized, durable medium that is immune to electromagnetic interference.",
         mobileDescription: "Transport Exabytes in your wallet. Durable, immune to interference.",
-        image: "https://placehold.co/1200x800/0a0a0a/10b981?text=Secure+Transport"
+        image: "https://placehold.co/1200x800/0a0a0a/10b981?text=Secure+Transport",
+        icon: <Shield className="w-10 h-10 sm:w-12 sm:h-12 text-fuchsia-200" />
     }
 ];
 
@@ -94,32 +97,32 @@ const useCasesItems = [
     {
         title: "Hyperscale Cloud & AI",
         description: "Slash operational costs by offloading cold data to passive, room-temperature storage. Turn off water-cooling loops and drastically reduce your facility's carbon footprint.",
-        image: "https://placehold.co/800x600/1a1a1a/7c3aed?text=Cloud+%26+AI"
+        image: "/hyperscale.jpg"
     },
     {
         title: "Space Exploration",
         description: "Drastically reduce payload mass by replacing heavy server racks with sub-kilogram scale media. Preserve mission-critical data for centuries in deep space without draining onboard power.",
-        image: "https://placehold.co/800x600/1a1a1a/7c3aed?text=Space+Exploration"
+        image: "/spacexplr.jpg"
     },
     {
         title: "BFSI",
         description: "Ensure absolute immutability for transaction logs and legal records. Protect critical assets from ransomware with a physically air-gapped, unhackable medium.",
-        image: "https://placehold.co/800x600/1a1a1a/7c3aed?text=BFSI"
+        image: "/BFSI.jpg"
     },
     {
         title: "Media & Entertainment",
         description: "Future-proof your master archives against format obsolescence. Preserve high-fidelity cultural assets for centuries without the risk of degradation.",
-        image: "https://placehold.co/800x600/1a1a1a/7c3aed?text=Media+%26+Entertainment"
+        image: "/mediaent.jpg"
     },
     {
         title: "Research & Development",
         description: "Eliminate the \"store or delete\" dilemma. Retain every dataset forever for future analysis & discovery.",
-        image: "https://placehold.co/800x600/1a1a1a/7c3aed?text=Research+%26+Development"
+        image: "/rnd.jpg"
     },
     {
         title: "Government & Public Sector",
         description: "Secure national heritage on a medium with a 500-year half-life. End the expensive, risky cycle of migrating data to new magnetic tapes every decade.",
-        image: "https://placehold.co/800x600/1a1a1a/7c3aed?text=Government+%26+Public"
+        image: "/govpubsec.jpg"
     }
 ];
 
@@ -140,8 +143,8 @@ function FitsInStackSection(): JSX.Element {
             <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 md:mb-24 text-center pt-8 md:pt-16" style={{ opacity: expandedCard !== null ? 0 : 1, transition: 'opacity 0.3s ease' }}>
                 {/* Main Title */}
                 <SplitText
-                    text="Digitize your destiny."
-                    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white pb-6 mb-6 md:mb-8 leading-tight tracking-tight mx-4 sm:mx-8 md:mx-16 lg:mx-24 xl:mx-48"
+                    text="Digitize your destiny"
+                    className="text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-8xl font-bold text-white pb-6 mb-6 md:mb-8 leading-tight tracking-tight mx-4 sm:mx-8 md:mx-16 lg:mx-24 xl:mx-0"
                     delay={50}
                     duration={2}
                     ease="power3.out"
@@ -361,7 +364,12 @@ function FitsInStackSection(): JSX.Element {
                             <button onClick={() => setExpandedCard(null)} className="sticky top-2 float-right p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors z-10">
                                 <X className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                             </button>
-                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 pr-10 clear-both">{fitsStackItems[expandedCard].title}</h2>
+                            <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4 pr-10 clear-both">
+                                <div className="flex-shrink-0">
+                                    {fitsStackItems[expandedCard].icon}
+                                </div>
+                                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">{fitsStackItems[expandedCard].title}</h2>
+                            </div>
                             <p className="text-gray-300 text-base sm:text-lg mb-6 sm:mb-8">{fitsStackItems[expandedCard].description}</p>
                             <img src={fitsStackItems[expandedCard].image} alt="Detail" className="w-full rounded-xl" />
                         </motion.div>
@@ -454,12 +462,6 @@ function UseCasesSection(): JSX.Element {
                                                         alt={currentItem.title}
                                                         className="w-full h-full object-cover"
                                                     />
-
-                                                    {/* Decorative elements */}
-                                                    <div className="absolute inset-0 z-20 pointer-events-none">
-                                                        <div className="absolute top-4 right-4 w-16 h-16 border border-purple-500/30 rounded-full" />
-                                                        <div className="absolute bottom-4 left-4 w-24 h-24 border border-blue-500/20 rounded-full" />
-                                                    </div>
                                                 </div>
 
                                                 {/* Description Card */}
@@ -497,12 +499,6 @@ function UseCasesSection(): JSX.Element {
                                         alt={currentItem.title}
                                         className="w-full h-full object-cover"
                                     />
-
-                                    {/* Decorative elements */}
-                                    <div className="absolute inset-0 z-20 pointer-events-none">
-                                        <div className="absolute top-4 right-4 w-20 h-20 border border-purple-500/30 rounded-full" />
-                                        <div className="absolute bottom-4 left-4 w-32 h-32 border border-blue-500/20 rounded-full" />
-                                    </div>
                                 </div>
 
                                 {/* Description Card */}
@@ -538,7 +534,9 @@ function HowItWorksSection(): JSX.Element {
             ease: "none",
             scrollTrigger: {
                 trigger: container.current,
+                start: "top top",
                 pin: true,
+                pinSpacing: true,
                 scrub: 1.5,
                 snap: {
                     snapTo: 1 / (totalPanels - 1),
@@ -702,6 +700,7 @@ export default function ProductPage() {
             <FitsInStackSection />
             <main>
                 <UseCasesSection />
+
                 <HowItWorksSection />
             </main>
         </>

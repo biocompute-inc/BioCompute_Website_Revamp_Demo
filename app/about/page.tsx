@@ -688,7 +688,7 @@ export default function About() {
                     </p>
                     <Link
                         href="/careers"
-                        className="group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base md:text-lg font-bold text-black bg-gradient-to-r from-purple-600 to-fuchsia-600 rounded-full hover:from-purple-700 hover:to-fuchsia-700 transform hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(168,85,247,0.5)] hover:shadow-[0_0_50px_rgba(168,85,247,0.7)]"
+                        className="group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base md:text-lg font-bold text-black bg-gradient-to-r from-purple-600 to-fuchsia-600 rounded-md hover:from-purple-700 hover:to-fuchsia-700 transform hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(168,85,247,0.5)] hover:shadow-[0_0_50px_rgba(168,85,247,0.7)]"
                     >
                         View Open Positions
                         <svg className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">

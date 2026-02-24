@@ -85,15 +85,7 @@ export default function Careers() {
             {/* Card 1 - Compensation */}
             <div className="bg-fuchsia-50 rounded-2xl p-8 text-center flex flex-col items-center border border-fuchsia-200">
               <div className="mb-6">
-                <svg className="w-16 h-16 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="9" strokeWidth="1.5" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 6v6l4 2" />
-                  <circle cx="12" cy="12" r="2" fill="currentColor" />
-                  <line x1="8" y1="8" x2="9" y2="9" strokeWidth="1.5" strokeLinecap="round" />
-                  <line x1="15" y1="9" x2="16" y2="8" strokeWidth="1.5" strokeLinecap="round" />
-                  <line x1="15" y1="15" x2="16" y2="16" strokeWidth="1.5" strokeLinecap="round" />
-                  <line x1="8" y1="16" x2="9" y2="15" strokeWidth="1.5" strokeLinecap="round" />
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide w-16 h-16 lucide-dollar-sign-icon lucide-dollar-sign"><line x1="12" x2="12" y1="2" y2="22" /><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>
               </div>
               <h3 className="text-lg font-bold text-black mb-3">
                 Generous Compensation & ESOPs
@@ -106,10 +98,14 @@ export default function Careers() {
             {/* Card 2 - Autonomy */}
             <div className="bg-fuchsia-50 rounded-2xl p-8 text-center flex flex-col items-center border border-fuchsia-200">
               <div className="mb-6">
-                <svg className="w-16 h-16 text-fuchsia-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
-                  <ellipse cx="12" cy="9" rx="3" ry="2" strokeWidth="1.5" />
-                </svg>
+                <div className="w-16 h-16 text-black">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="w-full h-full lucide lucide-pickaxe-icon lucide-pickaxe">
+                    <path d="m14 13-8.381 8.38a1 1 0 0 1-3.001-3L11 9.999" />
+                    <path d="M15.973 4.027A13 13 0 0 0 5.902 2.373c-1.398.342-1.092 2.158.277 2.601a19.9 19.9 0 0 1 5.822 3.024" />
+                    <path d="M16.001 11.999a19.9 19.9 0 0 1 3.024 5.824c.444 1.369 2.26 1.676 2.603.278A13 13 0 0 0 20 8.069" />
+                    <path d="M18.352 3.352a1.205 1.205 0 0 0-1.704 0l-5.296 5.296a1.205 1.205 0 0 0 0 1.704l2.296 2.296a1.205 1.205 0 0 0 1.704 0l5.296-5.296a1.205 1.205 0 0 0 0-1.704z" />
+                  </svg>
+                </div>
               </div>
               <h3 className="text-lg font-bold text-black mb-3">
                 Real Autonomy
@@ -122,9 +118,7 @@ export default function Careers() {
             {/* Card 3 - Build across disciplines */}
             <div className="bg-fuchsia-50 rounded-2xl p-8 text-center flex flex-col items-center border border-fuchsia-200">
               <div className="mb-6">
-                <svg className="w-16 h-16 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide w-16 h-16 lucide-badge-check-icon lucide-badge-check"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" /><path d="m9 12 2 2 4-4" /></svg>
               </div>
               <h3 className="text-lg font-bold text-black mb-3">
                 Build Across Disciplines

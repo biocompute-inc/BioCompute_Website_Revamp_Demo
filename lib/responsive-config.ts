@@ -62,8 +62,8 @@ export const VIDEO_ANIMATION_CONFIG = {
     },
     '2xl': {
         // 2xl devices (1536px+)
-        section0: { scale: 1.5, top: '120%' },
-        section1: { scale: 0.8, top: '75%' },
+        section0: { scale: 1.5, top: '125%' },
+        section1: { scale: 0.8, top: '85%' },
         section2: { scale: 0.9, top: '50%' },
         width: 450,
         height: 450,
