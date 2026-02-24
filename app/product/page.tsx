@@ -519,7 +519,7 @@ function UseCasesSection(): JSX.Element {
     );
 }
 
-function HowItWorksSection(): JSX.Element {
+function HowItWorksSection() {
     const container = useRef<HTMLDivElement>(null);
     const slider = useRef<HTMLDivElement>(null);
     const triggerRef = useRef<ScrollTrigger | null>(null);
@@ -534,15 +534,9 @@ function HowItWorksSection(): JSX.Element {
             ease: "none",
             scrollTrigger: {
                 trigger: container.current,
-                start: "top top",
                 pin: true,
-                pinSpacing: true,
-                scrub: 1.5,
-                snap: {
-                    snapTo: 1 / (totalPanels - 1),
-                    duration: { min: 0.2, max: 0.5 },
-                    ease: "power1.inOut"
-                },
+                scrub: 1,
+                snap: 1 / (totalPanels - 1),
                 end: () => "+=" + (slider.current?.scrollWidth || window.innerWidth),
                 onUpdate: (self) => {
                     const progress = self.progress;
@@ -574,7 +568,7 @@ function HowItWorksSection(): JSX.Element {
     };
 
     return (
-        <div id="how-it-works-section" ref={container} className="relative w-full h-screen overflow-hidden flex flex-col">
+        <div id="how-it-works-section" ref={container} className="relative w-full h-screen overflow-hidden bg-black flex flex-col">
 
             {/* Background */}
             <div className="absolute inset-0 z-0">
@@ -582,12 +576,12 @@ function HowItWorksSection(): JSX.Element {
             </div>
 
             {/* Header */}
-            <div className="absolute top-20 sm:top-24 md:top-28 left-0 w-full z-20 text-center px-4 pointer-events-none">
-                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-purple-500/80 tracking-tight">How It Works</h2>
+            <div className="absolute top-20 left-0 mt-16 w-full z-20 text-center px-4 pointer-events-none">
+                <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight uppercase text-purple-500/80">How It Works</h2>
             </div>
 
             {/* SLIDER TRACK */}
-            <div ref={slider} className="mt-12 sm:mt-14 md:mt-16 flex h-full w-[400%]">
+            <div ref={slider} className="flex h-full w-[400%]">
                 {steps.map((step) => (
                     <div
                         key={step.id}
