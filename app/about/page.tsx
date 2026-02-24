@@ -271,15 +271,15 @@ const TimelineCarousel: React.FC<TimelineCarouselProps> = ({
                                             </div>
                                         )}
                                         {item.logos && (
-                                            <div className="mt-5 grid grid-cols-2 gap-3 flex-1 min-h-0">
+                                            <div className="mt-5 grid grid-cols-2 gap-4 flex-1 min-h-0">
                                                 {item.logos.map((logo, i) => (
-                                                    <div key={i} className="relative flex items-center justify-center bg-white/10 rounded-xl border border-fuchsia-200/20 p-3 backdrop-blur-sm">
+                                                    <div key={i} className="relative flex items-center justify-center p-4">
                                                         <Image
                                                             src={logo}
                                                             alt={`investor-${i}`}
                                                             width={120}
                                                             height={60}
-                                                            className="object-contain max-h-14 w-auto"
+                                                            className={`object-contain max-h-14 w-auto${logo === '/Gradcap.png' ? ' invert' : ''}`}
                                                         />
                                                     </div>
                                                 ))}
@@ -462,7 +462,7 @@ export default function About() {
             {/* <DNABackground /> */}
 
             {/* Hero Section */}
-            <section className="relative min-h-[50vh] sm:min-h-[60vh] flex items-center justify-center py-16 sm:py-20 md:py-32 overflow-hidden">
+            <section className="relative min-h-[40vh] sm:min-h-[50vh] flex items-center justify-center py-10 sm:py-12 md:py-16 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-b from-purple-950/20 via-transparent to-transparent" />
                 <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
                     <div className="flex flex-col items-center gap-3 sm:gap-4 md:gap-6">
@@ -483,9 +483,9 @@ export default function About() {
             </section>
 
             {/* Vision and Mission Section */}
-            <section className="relative py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
+            <section className="relative py-6 sm:py-8 md:py-10 lg:py-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-screen-xl mx-auto">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
                         {/* Our Vision */}
                         <div className="space-y-4 sm:space-y-6">
                             <div className="flex items-center gap-2 sm:gap-3">
@@ -536,10 +536,10 @@ export default function About() {
             </section>
 
             {/* Timeline Section */}
-            <section className="relative rounded-2xl pt-10 px-4 mb-0 pb-32 bg-black/30 backdrop-blur-lg">
+            <section className="relative rounded-2xl pt-6 px-4 mb-0 pb-16 bg-black/30 backdrop-blur-lg">
                 <div className="max-w-full mx-auto">
-                    <div className="max-w-xl mx-auto text-center mb-16">
-                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">
+                    <div className="max-w-xl mx-auto text-center mb-8">
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 sm:mb-3">
                             Our Journey So Far
                         </h2>
                         <p className="text-sm sm:text-base md:text-lg text-gray-300">
@@ -547,17 +547,17 @@ export default function About() {
                         </p>
                     </div>
 
-                    <div className="w-full flex justify-center min-h-[600px] items-center pb-20">
+                    <div className="w-full flex justify-center min-h-[520px] items-center pb-10">
                         <TimelineCarouselContainer timelineData={timelineData} />
                     </div>
                 </div>
             </section>
 
             {/* Our Team Section */}
-            <section className="relative py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
+            <section className="relative py-6 sm:py-8 md:py-10 lg:py-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-screen-xl mx-auto">
-                    <div className="text-center mb-8 sm:mb-12 md:mb-16">
-                        <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-purple-500/10 border border-purple-500/20 rounded-full backdrop-blur-sm mb-4 sm:mb-6">
+                    <div className="text-center mb-6 sm:mb-8 md:mb-10">
+                        <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-purple-500/10 border border-purple-500/20 rounded-full backdrop-blur-sm mb-3 sm:mb-4">
                             <Users className="w-3 h-3 sm:w-4 sm:h-4 text-purple-400" />
                             <span className="text-xs sm:text-sm font-medium text-purple-300">Meet the Team</span>
                         </div>
@@ -591,14 +591,14 @@ export default function About() {
             </section>
 
             {/* Divider */}
-            <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+            <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
                 <div className="h-[2px] bg-gradient-to-r from-transparent via-purple-500/40 to-transparent shadow-[0_5px_25px_rgba(217,70,239,0.3),0_-5px_25px_rgba(217,70,239,0.3)]"></div>
             </div>
 
             {/* Media Section */}
-            <section className="relative py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
+            <section className="relative py-6 sm:py-8 md:py-10 lg:py-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-screen-xl mx-auto">
-                    <div className="text-center mb-8 sm:mb-12 md:mb-16">
+                    <div className="text-center mb-6 sm:mb-8 md:mb-10">
                         <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4 px-4">
                             In the News
                         </h2>
@@ -711,7 +711,7 @@ export default function About() {
             </section>
 
             {/* Join Us Section */}
-            <section className="relative py-12 sm:py-16 md:py-20 lg:py-28 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-white via-purple-50/80 to-fuchsia-50/80">
+            <section className="relative py-8 sm:py-10 md:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-white via-purple-50/80 to-fuchsia-50/80">
                 <div className="max-w-screen-xl mx-auto text-center">
                     <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-black/80 border-2 border-purple-300/40 rounded-full backdrop-blur-sm mb-4 sm:mb-6">
                         <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-purple-600" />
