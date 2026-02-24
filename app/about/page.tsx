@@ -12,6 +12,8 @@ interface TimelineItem {
     cardDetailedText: string;
     icon?: React.ReactNode;
     time?: number;
+    image?: string;
+    imageContain?: boolean;
 }
 
 interface TimelineCarouselProps {
@@ -241,7 +243,7 @@ const TimelineCarousel: React.FC<TimelineCarouselProps> = ({
                                 className={`inline-block relative select-none ${isAnimate ? 'transition-all duration-500' : ''}`}
                             >
                                 <div
-                                    className={`w-full h-[400px] bg-gradient-to-br ${gradients[gradientIndex]} transition-all duration-500 cursor-pointer rounded-2xl p-8 flex flex-col justify-center relative border-2 border-fuchsia-200/40 shadow-[0_0_50px_rgba(217,70,239,0.2)] overflow-hidden`}>
+                                    className={`w-full h-auto min-h-[400px] bg-gradient-to-br ${gradients[gradientIndex]} transition-all duration-500 cursor-pointer rounded-2xl p-8 pt-12 flex flex-col justify-start relative border-2 border-fuchsia-200/40 shadow-[0_0_50px_rgba(217,70,239,0.2)] overflow-hidden`}>
                                     <span className="absolute top-4 right-4 text-fuchsia-200 text-xs font-bold tracking-widest uppercase bg-black/60 px-3 py-1 rounded-full border border-fuchsia-200/50 whitespace-nowrap">
                                         {item.title}
                                     </span>
@@ -256,6 +258,17 @@ const TimelineCarousel: React.FC<TimelineCarouselProps> = ({
                                         </div>
                                         <h4 className="text-fuchsia-200 text-base md:text-lg font-semibold mb-4 whitespace-normal break-words overflow-wrap-anywhere">{item.cardSubtitle}</h4>
                                         <p className="text-white text-base md:text-lg leading-relaxed whitespace-normal break-words overflow-wrap-anywhere">{item.cardDetailedText}</p>
+                                        {item.image && (
+                                            <div className="mt-5 w-full relative rounded-xl overflow-hidden flex-shrink-0" style={{ height: '160px' }}>
+                                                <Image
+                                                    src={item.image}
+                                                    alt={item.cardTitle}
+                                                    fill
+                                                    sizes="(max-width: 768px) 85vw, 500px"
+                                                    className={item.imageContain ? 'object-contain p-4' : 'object-cover'}
+                                                />
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -346,35 +359,41 @@ export default function About() {
             cardTitle: "Foundation",
             cardSubtitle: "BioCompute Established",
             cardDetailedText: "BioCompute is set up. We are backed by Emergent Ventures, gradCapital",
-            icon: <Rocket className="w-6 h-6 text-fuchsia-200" />
+            icon: <Rocket className="w-6 h-6 text-fuchsia-200" />,
+            image: "/logoLG.png",
+            imageContain: true
         },
         {
             title: "July 2024",
             cardTitle: "Incubation Begins",
             cardSubtitle: "CCAMP Incubation",
             cardDetailedText: "Incubated at CCAMP. Work on first proof of concept begins",
-            icon: <Microscope className="w-6 h-6 text-fuchsia-200" />
+            icon: <Microscope className="w-6 h-6 text-fuchsia-200" />,
+            image: "/incubationbegins.webp"
         },
         {
             title: "Jan 2025",
             cardTitle: "Home Lab Setup",
             cardSubtitle: "Garage Beginnings",
             cardDetailedText: "Set up home lab",
-            icon: <Home className="w-6 h-6 text-fuchsia-200" />
+            icon: <Home className="w-6 h-6 text-fuchsia-200" />,
+            image: "/homelab.png"
         },
         {
             title: "April 2025",
             cardTitle: "First Success",
             cardSubtitle: "Proof of Concept",
             cardDetailedText: "First proof of concept achieved, we are able to write data into DNA and retrieve it successfully",
-            icon: <CheckCircle className="w-6 h-6 text-fuchsia-200" />
+            icon: <CheckCircle className="w-6 h-6 text-fuchsia-200" />,
+            image: "/firstsuccess.jpg"
         },
         {
             title: "May 2025",
             cardTitle: "Pre-Seed Round",
             cardSubtitle: "Funding Secured",
             cardDetailedText: "Pre-seed round from 1517, gradCapital and angel investors",
-            icon: <DollarSign className="w-6 h-6 text-fuchsia-200" />
+            icon: <DollarSign className="w-6 h-6 text-fuchsia-200" />,
+            image: "/preseed.jpg"
         },
         {
             title: "July 2025",
