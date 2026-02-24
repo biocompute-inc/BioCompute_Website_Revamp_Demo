@@ -14,6 +14,7 @@ interface TimelineItem {
     time?: number;
     image?: string;
     imageContain?: boolean;
+    logos?: string[];
 }
 
 interface TimelineCarouselProps {
@@ -243,12 +244,12 @@ const TimelineCarousel: React.FC<TimelineCarouselProps> = ({
                                 className={`inline-block relative select-none ${isAnimate ? 'transition-all duration-500' : ''}`}
                             >
                                 <div
-                                    className={`w-full h-auto min-h-[400px] bg-gradient-to-br ${gradients[gradientIndex]} transition-all duration-500 cursor-pointer rounded-2xl p-8 pt-12 flex flex-col justify-start relative border-2 border-fuchsia-200/40 shadow-[0_0_50px_rgba(217,70,239,0.2)] overflow-hidden`}>
+                                    className={`w-full h-[500px] bg-gradient-to-br ${gradients[gradientIndex]} transition-all duration-500 cursor-pointer rounded-2xl p-8 pt-12 flex flex-col justify-start relative border-2 border-fuchsia-200/40 shadow-[0_0_50px_rgba(217,70,239,0.2)] overflow-hidden`}>
                                     <span className="absolute top-4 right-4 text-fuchsia-200 text-xs font-bold tracking-widest uppercase bg-black/60 px-3 py-1 rounded-full border border-fuchsia-200/50 whitespace-nowrap">
                                         {item.title}
                                     </span>
-                                    <div className="flex flex-col justify-center overflow-hidden pr-2">
-                                        <div className="flex items-center gap-3 mb-4">
+                                    <div className="flex flex-col flex-1 min-h-0 pr-2">
+                                        <div className="flex items-center gap-3 mb-4 flex-shrink-0">
                                             {item.icon && (
                                                 <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-fuchsia-200/20 rounded-lg border border-fuchsia-200/40">
                                                     {item.icon}
@@ -256,10 +257,10 @@ const TimelineCarousel: React.FC<TimelineCarouselProps> = ({
                                             )}
                                             <h3 className="text-white text-2xl md:text-3xl font-bold whitespace-normal break-words overflow-wrap-anywhere">{item.cardTitle}</h3>
                                         </div>
-                                        <h4 className="text-fuchsia-200 text-base md:text-lg font-semibold mb-4 whitespace-normal break-words overflow-wrap-anywhere">{item.cardSubtitle}</h4>
-                                        <p className="text-white text-base md:text-lg leading-relaxed whitespace-normal break-words overflow-wrap-anywhere">{item.cardDetailedText}</p>
+                                        <h4 className="text-fuchsia-200 text-base md:text-lg font-semibold mb-4 whitespace-normal break-words overflow-wrap-anywhere flex-shrink-0">{item.cardSubtitle}</h4>
+                                        <p className="text-white text-base md:text-lg leading-relaxed whitespace-normal break-words overflow-wrap-anywhere flex-shrink-0">{item.cardDetailedText}</p>
                                         {item.image && (
-                                            <div className="mt-5 w-full relative rounded-xl overflow-hidden flex-shrink-0" style={{ height: '160px' }}>
+                                            <div className="mt-5 w-full relative rounded-xl overflow-hidden flex-1 min-h-0">
                                                 <Image
                                                     src={item.image}
                                                     alt={item.cardTitle}
@@ -267,6 +268,21 @@ const TimelineCarousel: React.FC<TimelineCarouselProps> = ({
                                                     sizes="(max-width: 768px) 85vw, 500px"
                                                     className={item.imageContain ? 'object-contain p-4' : 'object-cover'}
                                                 />
+                                            </div>
+                                        )}
+                                        {item.logos && (
+                                            <div className="mt-5 grid grid-cols-2 gap-3 flex-1 min-h-0">
+                                                {item.logos.map((logo, i) => (
+                                                    <div key={i} className="relative flex items-center justify-center bg-white/10 rounded-xl border border-fuchsia-200/20 p-3 backdrop-blur-sm">
+                                                        <Image
+                                                            src={logo}
+                                                            alt={`investor-${i}`}
+                                                            width={120}
+                                                            height={60}
+                                                            className="object-contain max-h-14 w-auto"
+                                                        />
+                                                    </div>
+                                                ))}
                                             </div>
                                         )}
                                     </div>
@@ -352,7 +368,8 @@ export default function About() {
             cardTitle: "The Spark",
             cardSubtitle: "Conceptualization",
             cardDetailedText: "Anagha, frustrated with Google cloud and her academic project, conceptualizes data storage in DNA without de novo synthesis",
-            icon: <Lightbulb className="w-6 h-6 text-fuchsia-200" />
+            icon: <Lightbulb className="w-6 h-6 text-fuchsia-200" />,
+            image: "/thespark.jpg"
         },
         {
             title: "Jan 2024",
@@ -369,7 +386,7 @@ export default function About() {
             cardSubtitle: "CCAMP Incubation",
             cardDetailedText: "Incubated at CCAMP. Work on first proof of concept begins",
             icon: <Microscope className="w-6 h-6 text-fuchsia-200" />,
-            image: "/incubationbegins.webp"
+            image: "/ccampwork.jpg"
         },
         {
             title: "Jan 2025",
@@ -393,7 +410,7 @@ export default function About() {
             cardSubtitle: "Funding Secured",
             cardDetailedText: "Pre-seed round from 1517, gradCapital and angel investors",
             icon: <DollarSign className="w-6 h-6 text-fuchsia-200" />,
-            image: "/preseed.jpg"
+            logos: ["/1517.jpeg", "/Gradcap.png"]
         },
         {
             title: "July 2025",
@@ -407,7 +424,8 @@ export default function About() {
             cardTitle: "Automation",
             cardSubtitle: "Scaling Up",
             cardDetailedText: "Automated bio lab to accelerate scale up",
-            icon: <Bot className="w-6 h-6 text-fuchsia-200" />
+            icon: <Bot className="w-6 h-6 text-fuchsia-200" />,
+            image: "/automation.jpg"
         }
     ];
 
