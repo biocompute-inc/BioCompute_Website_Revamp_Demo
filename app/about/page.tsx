@@ -273,13 +273,13 @@ const TimelineCarousel: React.FC<TimelineCarouselProps> = ({
                                         {item.logos && (
                                             <div className="mt-5 grid grid-cols-2 gap-4 flex-1 min-h-0">
                                                 {item.logos.map((logo, i) => (
-                                                    <div key={i} className="relative flex items-center justify-center p-4">
+                                                    <div key={i} className="relative flex items-center justify-center p-4 bg-white rounded-xl">
                                                         <Image
                                                             src={logo}
                                                             alt={`investor-${i}`}
-                                                            width={120}
-                                                            height={60}
-                                                            className={`object-contain max-h-14 w-auto${logo === '/Gradcap.png' ? ' invert' : ''}`}
+                                                            width={180}
+                                                            height={90}
+                                                            className="object-contain max-h-20 w-auto"
                                                         />
                                                     </div>
                                                 ))}
@@ -425,7 +425,7 @@ export default function About() {
             cardSubtitle: "Scaling Up",
             cardDetailedText: "Automated bio lab to accelerate scale up",
             icon: <Bot className="w-6 h-6 text-fuchsia-200" />,
-            image: "/automation.jpg"
+            image: "/automation.jpeg"
         }
     ];
 
