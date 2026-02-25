@@ -383,8 +383,8 @@ export default function About() {
         {
             title: "July 2024",
             cardTitle: "Incubation Begins",
-            cardSubtitle: "CCAMP Incubation",
-            cardDetailedText: "Incubated at CCAMP. Work on first proof of concept begins",
+            cardSubtitle: "CCAMP Incubation at Bengaluru",
+            cardDetailedText: "Incubated at Center for Cellular and Molecular Platforms (CCAMP). Work on first proof of concept begins",
             icon: <Microscope className="w-6 h-6 text-fuchsia-200" />,
             image: "/ccampwork.jpg"
         },
@@ -462,7 +462,7 @@ export default function About() {
             {/* <DNABackground /> */}
 
             {/* Hero Section */}
-            <section className="relative min-h-[40vh] sm:min-h-[50vh] flex items-center justify-center py-10 sm:py-12 md:py-16 overflow-hidden">
+            <section className="relative min-h-[60vh] sm:min-h-[65vh] md:min-h-[70vh] flex items-center justify-center pt-24 pb-10 sm:pt-28 sm:pb-12 md:pt-36 md:pb-16 lg:pt-44 lg:pb-16 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-b from-purple-950/20 via-transparent to-transparent" />
                 <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
                     <div className="flex flex-col items-center gap-3 sm:gap-4 md:gap-6">
