@@ -140,11 +140,11 @@ function FitsInStackSection(): JSX.Element {
     return (
         <section className="relative min-h-screen bg-black/30 py-12 md:py-20">
             {/* Hero Section */}
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 md:mb-24 text-center pt-8 md:pt-16" style={{ opacity: expandedCard !== null ? 0 : 1, transition: 'opacity 0.3s ease' }}>
+            <div className="w-full px-4 sm:px-6 lg:px-8 mb-16 md:mb-24 text-center pt-8 md:pt-48 bg-white" style={{ opacity: expandedCard !== null ? 0 : 1, transition: 'opacity 0.3s ease' }}>
                 {/* Main Title */}
                 <SplitText
                     text="Digitize your destiny"
-                    className="text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-8xl font-bold text-white pb-6 mb-6 md:mb-8 leading-tight tracking-tight mx-4 sm:mx-8 md:mx-16 lg:mx-24 xl:mx-0"
+                    className="text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-8xl font-bold text-black pb-6 mb-6 md:mb-8 leading-tight tracking-tight mx-4 sm:mx-8 md:mx-16 lg:mx-24 xl:mx-0"
                     delay={50}
                     duration={2}
                     ease="power3.out"
@@ -167,9 +167,9 @@ function FitsInStackSection(): JSX.Element {
                         speed={50}
                         maxIterations={10}
                         characters="ABCD1234!?"
-                        className="text-base sm:text-lg md:text-xl lg:text-2xl text-fuchsia-200 leading-relaxed"
+                        className="text-base sm:text-lg md:text-xl lg:text-2xl text-fuchsia-700 leading-relaxed"
                         parentClassName="all-letters"
-                        encryptedClassName="text-base sm:text-lg md:text-xl lg:text-2xl text-fuchsia-200 leading-relaxed"
+                        encryptedClassName="text-base sm:text-lg md:text-xl lg:text-2xl text-fuchsia-700 leading-relaxed"
                     />
                 </div>
 
@@ -177,28 +177,24 @@ function FitsInStackSection(): JSX.Element {
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-12 md:mb-16">
                     <button
                         onClick={() => scrollToSection('use-cases-section')}
-                        className="group relative px-8 py-4 bg-white text-black rounded-full font-semibold text-base sm:text-lg transition-all duration-300 hover:bg-gray-200 hover:scale-105 shadow-lg hover:shadow-xl w-full sm:w-auto"
+                        className="group relative px-8 py-4 bg-black text-white rounded-full font-semibold text-base sm:text-lg transition-all duration-300 hover:bg-gray-800 hover:scale-105 shadow-lg hover:shadow-xl w-full sm:w-auto"
                     >
                         Use Cases
                     </button>
                     <button
                         onClick={() => scrollToSection('how-it-works-section')}
-                        className="group relative px-8 py-4 bg-purple-600 text-white rounded-full font-semibold text-base sm:text-lg transition-all duration-300 hover:bg-purple-700 hover:scale-105 shadow-lg shadow-purple-500/50 hover:shadow-xl hover:shadow-purple-500/70 w-full sm:w-auto border-fuchsia-200/30 border-2"
+                        className="group relative px-8 py-4 bg-white text-black rounded-full font-semibold text-base sm:text-lg transition-all duration-300 hover:bg-purple-700 hover:scale-105 shadow-lg shadow-purple-500/50 hover:shadow-xl hover:shadow-purple-500/70 w-full sm:w-auto border-fuchsia-200/30 border-2"
                     >
                         How It Works
                     </button>
                 </div>
 
-                {/* Phone Mockup Image */}
-                <div className="relative max-w-xs sm:max-w-sm md:max-w-md mx-auto">
-                    <div className="relative rounded-2xl sm:rounded-[2.5rem] md:rounded-[3rem] overflow-hidden border-4 sm:border-[6px] md:border-8 border-gray-800 shadow-2xl">
-                        <img
-                            src="https://placehold.co/400x800/f5f5f5/374151?text=App+Preview"
-                            alt="App Preview"
-                            className="w-full h-auto"
-                        />
-                    </div>
-                </div>
+                {/* Device Image */}
+                <img
+                    src="/Devicehandheld.png"
+                    alt="Device Handheld"
+                    className="w-72 sm:w-96 md:w-[28rem] lg:w-[34rem] xl:w-[42rem] h-auto mx-auto"
+                />
             </div>
 
             {/* Bento Grid Section */}
@@ -568,12 +564,7 @@ function HowItWorksSection() {
     };
 
     return (
-        <div id="how-it-works-section" ref={container} className="relative w-full h-screen overflow-hidden bg-black flex flex-col">
-
-            {/* Background */}
-            <div className="absolute inset-0 z-0">
-                <div className="absolute inset-0 bg-black/60" />
-            </div>
+        <div id="how-it-works-section" ref={container} className="relative w-full h-screen overflow-hidden flex flex-col">
 
             {/* Header */}
             <div className="relative z-20 w-full text-center px-4 pt-6 sm:pt-8 md:pt-10 pb-4 sm:pb-6 flex-shrink-0">
