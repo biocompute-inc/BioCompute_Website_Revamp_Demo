@@ -174,7 +174,7 @@ function FitsInStackSection(): JSX.Element {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-12 md:mb-16">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
                     <button
                         onClick={() => scrollToSection('use-cases-section')}
                         className="group relative px-8 py-4 bg-black text-white rounded-full font-semibold text-base sm:text-lg transition-all duration-300 hover:bg-gray-800 hover:scale-105 shadow-lg hover:shadow-xl w-full sm:w-auto"
@@ -193,7 +193,7 @@ function FitsInStackSection(): JSX.Element {
                 <img
                     src="/Devicehandheld.png"
                     alt="Device Handheld"
-                    className="w-72 sm:w-96 md:w-[28rem] lg:w-[34rem] xl:w-[42rem] h-auto mx-auto"
+                    className="w-72 sm:w-96 md:w-[28rem] lg:w-[34rem] xl:w-[42rem] h-auto mx-auto -mt-32"
                 />
             </div>
 
