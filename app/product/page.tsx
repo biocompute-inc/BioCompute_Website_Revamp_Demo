@@ -139,13 +139,13 @@ function FitsInStackSection(): JSX.Element {
     };
 
     return (
-        <section className="relative min-h-screen bg-white py-12 md:py-20">
+        <section className="relative min-h-screen bg-white">
             {/* Hero Section */}
-            <div className="w-full px-4 sm:px-6 lg:px-8  text-center pt-8 md:pt-48 bg-white" style={{ opacity: expandedCard !== null ? 0 : 1, transition: 'opacity 0.3s ease' }}>
+            <div className="w-full px-4 sm:px-6 lg:px-8 text-center pt-16 sm:pt-20 md:pt-28 lg:pt-36 xl:pt-44 pb-0 bg-white" style={{ opacity: expandedCard !== null ? 0 : 1, transition: 'opacity 0.3s ease' }}>
                 {/* Main Title */}
                 <SplitText
                     text="Digitize your destiny"
-                    className="text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-8xl font-bold text-black pb-6 mb-6 md:mb-8 leading-tight tracking-tight mx-4 sm:mx-8 md:mx-16 lg:mx-24 xl:mx-0"
+                    className="text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-8xl font-bold text-black pb-5 mb-2 md:mb-3 leading-tight tracking-tight mx-4 sm:mx-8 md:mx-16 lg:mx-24 xl:mx-0"
                     delay={50}
                     duration={2}
                     ease="power3.out"
@@ -159,7 +159,7 @@ function FitsInStackSection(): JSX.Element {
                 />
 
                 {/* Description */}
-                <div className="mb-8 md:mb-12 max-w-3xl mx-auto">
+                <div className="mb-4 md:mb-6 max-w-3xl mx-auto">
                     <DecryptedText
                         sequential
                         useOriginalCharsOnly
@@ -194,7 +194,7 @@ function FitsInStackSection(): JSX.Element {
                 <img
                     src="/Devicehandheld.png"
                     alt="Device Handheld"
-                    className="w-72 sm:w-96 md:w-[28rem] lg:w-[34rem] xl:w-[42rem] h-auto mx-auto -mt-32"
+                    className="w-56 sm:w-72 md:w-[22rem] lg:w-[28rem] xl:w-[36rem] h-auto mx-auto mt-4 sm:mt-6 md:mt-8"
                 />
             </div>
 
@@ -540,6 +540,14 @@ function HowItWorksSection() {
     const triggerRef = useRef<ScrollTrigger | null>(null);
     const [activeStep, setActiveStep] = useState(0);
 
+    // Refresh ScrollTrigger after layout fully settles (fixes cross-device pin offset)
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            ScrollTrigger.refresh();
+        }, 300);
+        return () => clearTimeout(timeout);
+    }, []);
+
     useGSAP(() => {
         const panels = gsap.utils.toArray(".panel");
         const totalPanels = panels.length;
@@ -550,9 +558,12 @@ function HowItWorksSection() {
             scrollTrigger: {
                 trigger: container.current,
                 pin: true,
+                pinSpacing: true,
+                invalidateOnRefresh: true,
+                start: "top top",
                 scrub: 1,
                 snap: 1 / (totalPanels - 1),
-                end: () => "+=" + (slider.current?.scrollWidth || window.innerWidth),
+                end: () => "+=" + (slider.current?.offsetWidth || window.innerWidth * totalPanels),
                 onUpdate: (self) => {
                     const progress = self.progress;
                     const newIndex = Math.round(progress * (totalPanels - 1));
