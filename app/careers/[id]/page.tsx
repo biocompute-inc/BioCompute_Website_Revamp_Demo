@@ -82,19 +82,21 @@ export default function JobDetailPage() {
           {/* Job Description */}
           <section>
             <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Job Description</h2>
-            <p className="text-gray-700 leading-relaxed text-sm sm:text-base">{job.description}</p>
+            <p className="text-gray-700 leading-relaxed text-sm sm:text-base whitespace-pre-wrap">{job.description}</p>
           </section>
 
           {/* Who are we looking for */}
           <section>
             <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Who Are We Looking For?</h2>
-            <p className="text-gray-700 leading-relaxed text-sm sm:text-base">{job.whoWeAreLookingFor}</p>
+            <p className="text-gray-700 leading-relaxed text-sm sm:text-base whitespace-pre-wrap">
+              {job.whoWeAreLookingFor}
+            </p>
           </section>
 
           {/* How to Apply */}
           <section>
             <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">How To Apply?</h2>
-            <p className="text-gray-700 leading-relaxed text-sm sm:text-base">{job.howToApply}</p>
+            <p className="text-gray-700 leading-relaxed text-sm sm:text-base whitespace-pre-wrap">{job.howToApply}</p>
           </section>
         </div>
 

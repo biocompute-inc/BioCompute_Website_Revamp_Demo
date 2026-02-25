@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SplitText from '@/client/components/ui/splittext';
 import { useIsMobile } from '@/client/hooks/use-mobile';
 import DNABackground from '@/components/DNABackground';
+import DNAHelix from '@/client/components/ui/dnahelix';
 
 import {
     Server,
@@ -138,9 +139,9 @@ function FitsInStackSection(): JSX.Element {
     };
 
     return (
-        <section className="relative min-h-screen bg-black/30 py-12 md:py-20">
+        <section className="relative min-h-screen bg-white py-12 md:py-20">
             {/* Hero Section */}
-            <div className="w-full px-4 sm:px-6 lg:px-8 mb-16 md:mb-24 text-center pt-8 md:pt-48 bg-white" style={{ opacity: expandedCard !== null ? 0 : 1, transition: 'opacity 0.3s ease' }}>
+            <div className="w-full px-4 sm:px-6 lg:px-8  text-center pt-8 md:pt-48 bg-white" style={{ opacity: expandedCard !== null ? 0 : 1, transition: 'opacity 0.3s ease' }}>
                 {/* Main Title */}
                 <SplitText
                     text="Digitize your destiny"
@@ -198,145 +199,163 @@ function FitsInStackSection(): JSX.Element {
             </div>
 
             {/* Bento Grid Section */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold px-2 sm:px-4 md:px-8 mb-6 sm:mb-8 md:mb-12 text-white">
-                    Where We Fit
+            <div className="relative overflow-hidden bg-black -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+                <div className="absolute inset-0 blur-sm pointer-events-none z-0">
+                    <DNAHelix
+                        linesGradient={["#7d4f95", "#8a5fa5", "#9b6fb5", "#ac7fc5", "#bd8fd5", "#9b6fb5", "#8a5fa5", "#7d4f95", "#6f3f85"]}
+                        enabledWaves={['top', 'middle', 'bottom']}
+                        lineCount={[1, 1, 1]}
+                        lineDistance={[0.2, 0.15, 0.18]}
+                        topWavePosition={{ x: 8.5, y: 0, rotate: -0.9 }}
+                        middleWavePosition={{ x: 7.0, y: 0.1, rotate: 0.1 }}
+                        bottomWavePosition={{ x: 8.0, y: -1, rotate: 0.8 }}
+                        animationSpeed={0.2}
+                        bendStrength={0.8}
+                        opacity={0.6}
+                        interactive={false}
+                        parallax={false}
+                    />
                 </div>
+                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold px-2 sm:px-4 md:px-8 mb-6 sm:mb-8 md:mb-12 text-white">
+                        Where We Fit
+                    </div>
 
-                {/* Bento Grid Layout */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
-                    {/* Row 1: High-Density Card (Large - 2 columns) */}
-                    <div
-                        onClick={() => setExpandedCard(1)}
-                        className="group relative lg:col-span-2 bg-gradient-to-br from-fuchsia-950/40 via-purple-950/30 to-black backdrop-blur-md rounded-2xl md:rounded-3xl overflow-hidden border border-fuchsia-500/20 hover:border-fuchsia-500/50 transition-all duration-500 cursor-pointer h-[400px] md:h-[500px] lg:h-[380px] xl:h-[420px] hover:scale-[1.02] hover:shadow-[0_0_60px_rgba(217,70,239,0.3)]"
-                    >
-                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-fuchsia-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                    {/* Bento Grid Layout */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
+                        {/* Row 1: High-Density Card (Large - 2 columns) */}
+                        <div
+                            onClick={() => setExpandedCard(1)}
+                            className="group relative lg:col-span-2 bg-gradient-to-br from-fuchsia-950/40 via-purple-950/30 to-black backdrop-blur-md rounded-2xl md:rounded-3xl overflow-hidden border border-fuchsia-500/20 hover:border-fuchsia-500/50 transition-all duration-500 cursor-pointer h-[400px] md:h-[500px] lg:h-[380px] xl:h-[420px] hover:scale-[1.02] hover:shadow-[0_0_60px_rgba(217,70,239,0.3)]"
+                        >
+                            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-fuchsia-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-                        <div className="relative h-full p-4 sm:p-6 md:p-8 flex flex-col justify-between pointer-events-none">
-                            {/* Icon & Stats Area */}
-                            <div className="flex-1 flex items-center justify-center mb-3 sm:mb-4">
-                                <div className="w-full max-w-md space-y-2 sm:space-y-3 lg:space-y-4">
-                                    {/* Icon */}
-                                    <div className="flex justify-center mb-3 sm:mb-4 lg:mb-6">
-                                        <div className="relative">
-                                            <Database className="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 text-fuchsia-400 relative z-10" />
-                                            <div className="absolute inset-0 bg-fuchsia-500/20 blur-2xl rounded-full scale-150" />
-                                        </div>
-                                    </div>
-
-                                    {/* Stats Display */}
-                                    <div className="space-y-2 sm:space-y-3 bg-black/30 backdrop-blur-sm rounded-xl p-2 sm:p-3 md:p-4 border border-white/5">
-                                        {fitsStackItems[1].stats?.map((stat, i) => (
-                                            <div key={i} className="flex justify-between items-center group/stat">
-                                                <span className="text-xs sm:text-sm md:text-base text-gray-400 group-hover/stat:text-gray-300 transition-colors">{stat.label}</span>
-                                                <span className={`text-base sm:text-xl md:text-2xl font-bold ${stat.color} group-hover/stat:scale-110 transition-transform`}>
-                                                    {stat.value}
-                                                </span>
+                            <div className="relative h-full p-4 sm:p-6 md:p-8 flex flex-col justify-between pointer-events-none">
+                                {/* Icon & Stats Area */}
+                                <div className="flex-1 flex items-center justify-center mb-3 sm:mb-4">
+                                    <div className="w-full max-w-md space-y-2 sm:space-y-3 lg:space-y-4">
+                                        {/* Icon */}
+                                        <div className="flex justify-center mb-3 sm:mb-4 lg:mb-6">
+                                            <div className="relative">
+                                                <Database className="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 text-fuchsia-400 relative z-10" />
+                                                <div className="absolute inset-0 bg-fuchsia-500/20 blur-2xl rounded-full scale-150" />
                                             </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
+                                        </div>
 
-                            {/* Title & Description */}
-                            <div>
-                                <div className="flex justify-between items-start gap-2 mb-2 sm:mb-3">
-                                    <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white leading-tight flex-1">
-                                        {fitsStackItems[1].title}
-                                    </h3>
-                                    <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-fuchsia-500/10 border border-fuchsia-500/30 flex items-center justify-center group-hover:bg-fuchsia-600 group-hover:border-fuchsia-500 transition-all flex-shrink-0">
-                                        <span className="text-white text-base sm:text-xl">+</span>
-                                    </div>
-                                </div>
-                                <p className="text-xs sm:text-sm md:text-base text-gray-400 leading-relaxed">
-                                    {fitsStackItems[1].mobileDescription}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Row 1: Cold Storage Card (Small - 1 column) */}
-                    <div
-                        onClick={() => setExpandedCard(0)}
-                        className="group relative bg-gradient-to-br from-purple-950/40 via-violet-950/30 to-black backdrop-blur-md rounded-2xl md:rounded-3xl overflow-hidden border border-purple-500/20 hover:border-purple-500/50 transition-all duration-500 cursor-pointer h-[400px] md:h-[500px] lg:h-[380px] xl:h-[420px] hover:scale-[1.02] hover:shadow-[0_0_60px_rgba(168,85,247,0.3)]"
-                    >
-                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-purple-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-                        {/* Animated Grid Pattern */}
-                        <div className="absolute inset-0 opacity-10 pointer-events-none">
-                            <div className="w-full h-full grid grid-cols-4 gap-2 p-4">
-                                {[...Array(16)].map((_, i) => (
-                                    <div
-                                        key={i}
-                                        className="bg-purple-500/40 rounded animate-pulse"
-                                        style={{ animationDelay: `${i * 0.15}s`, animationDuration: '2s' }}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-
-                        <div className="relative h-full p-4 sm:p-6 md:p-8 flex flex-col justify-between pointer-events-none">
-                            {/* Icon Area */}
-                            <div className="flex-1 flex items-center justify-center">
-                                <div className="relative">
-                                    <Server className="w-16 h-16 sm:w-20 sm:h-20 md:w-32 md:h-32 text-purple-400 relative z-10 group-hover:scale-110 transition-transform duration-500" />
-                                    <div className="absolute inset-0 bg-purple-500/20 blur-3xl rounded-full scale-150 group-hover:scale-[2] transition-transform duration-500" />
-                                </div>
-                            </div>
-
-                            {/* Title & Description */}
-                            <div>
-                                <div className="flex justify-between items-start gap-2 mb-2 sm:mb-3">
-                                    <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white leading-tight flex-1">
-                                        {fitsStackItems[0].title}
-                                    </h3>
-                                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-purple-500/10 border border-purple-500/30 flex items-center justify-center group-hover:bg-purple-600 group-hover:border-purple-500 transition-all flex-shrink-0">
-                                        <span className="text-white text-base sm:text-xl">+</span>
-                                    </div>
-                                </div>
-                                <p className="text-xs sm:text-sm text-gray-400 leading-relaxed line-clamp-3">
-                                    {fitsStackItems[0].mobileDescription}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Row 2: Secure Transport Card (Full Width - 3 columns) */}
-                    <div
-                        onClick={() => setExpandedCard(2)}
-                        className="group relative lg:col-span-3 bg-gradient-to-br from-fuchsia-950/40 via-fuchsia-900/20 to-black backdrop-blur-md rounded-2xl md:rounded-3xl overflow-hidden border border-fuchsia-200/20 hover:border-fuchsia-200/50 transition-all duration-500 cursor-pointer h-[300px] md:h-[350px] lg:h-[280px] xl:h-[300px] hover:scale-[1.01] hover:shadow-[0_0_60px_rgba(245,208,254,0.3)]"
-                    >
-                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-fuchsia-200/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-                        {/* Pulse Rings */}
-                        <div className="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">
-                            <div className="absolute w-32 h-32 md:w-48 md:h-48 border border-fuchsia-200/40 rounded-full animate-ping" style={{ animationDuration: '3s' }} />
-                            <div className="absolute w-48 h-48 md:w-64 md:h-64 border border-fuchsia-200/30 rounded-full animate-ping" style={{ animationDuration: '4s', animationDelay: '0.5s' }} />
-                        </div>
-
-                        <div className="relative h-full p-4 sm:p-6 md:p-8 flex items-center pointer-events-none">
-                            <div className="flex flex-col md:flex-row items-center md:items-start gap-6 sm:gap-8 md:gap-12 w-full">
-                                {/* Icon */}
-                                <div className="flex-shrink-0">
-                                    <div className="relative">
-                                        <Shield className="w-16 h-16 sm:w-20 sm:h-20 md:w-40 md:h-40 text-fuchsia-200 relative z-10 group-hover:scale-110 transition-transform duration-500" />
-                                        <div className="absolute inset-0 bg-fuchsia-200/20 blur-3xl rounded-full scale-150 group-hover:scale-[2] transition-transform duration-500" />
-                                    </div>
-                                </div>
-
-                                {/* Content */}
-                                <div className="flex-1 text-center md:text-left">
-                                    <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-3 sm:mb-4 gap-2 sm:gap-3">
-                                        <h3 className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold text-white leading-tight flex-1">
-                                            {fitsStackItems[2].title}
-                                        </h3>
-                                        <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-fuchsia-200/10 border border-fuchsia-200/30 flex items-center justify-center group-hover:bg-fuchsia-600 group-hover:border-fuchsia-200 transition-all mx-auto md:mx-0 flex-shrink-0">
-                                            <span className="text-white text-lg sm:text-xl md:text-2xl">+</span>
+                                        {/* Stats Display */}
+                                        <div className="space-y-2 sm:space-y-3 bg-black/30 backdrop-blur-sm rounded-xl p-2 sm:p-3 md:p-4 border border-white/5">
+                                            {fitsStackItems[1].stats?.map((stat, i) => (
+                                                <div key={i} className="flex justify-between items-center group/stat">
+                                                    <span className="text-xs sm:text-sm md:text-base text-gray-400 group-hover/stat:text-gray-300 transition-colors">{stat.label}</span>
+                                                    <span className={`text-base sm:text-xl md:text-2xl font-bold ${stat.color} group-hover/stat:scale-110 transition-transform`}>
+                                                        {stat.value}
+                                                    </span>
+                                                </div>
+                                            ))}
                                         </div>
                                     </div>
-                                    <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-400 leading-relaxed max-w-3xl mx-auto md:mx-0">
-                                        {fitsStackItems[2].mobileDescription}
+                                </div>
+
+                                {/* Title & Description */}
+                                <div>
+                                    <div className="flex justify-between items-start gap-2 mb-2 sm:mb-3">
+                                        <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white leading-tight flex-1">
+                                            {fitsStackItems[1].title}
+                                        </h3>
+                                        <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-fuchsia-500/10 border border-fuchsia-500/30 flex items-center justify-center group-hover:bg-fuchsia-600 group-hover:border-fuchsia-500 transition-all flex-shrink-0">
+                                            <span className="text-white text-base sm:text-xl">+</span>
+                                        </div>
+                                    </div>
+                                    <p className="text-xs sm:text-sm md:text-base text-gray-400 leading-relaxed">
+                                        {fitsStackItems[1].mobileDescription}
                                     </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Row 1: Cold Storage Card (Small - 1 column) */}
+                        <div
+                            onClick={() => setExpandedCard(0)}
+                            className="group relative bg-gradient-to-br from-purple-950/40 via-violet-950/30 to-black backdrop-blur-md rounded-2xl md:rounded-3xl overflow-hidden border border-purple-500/20 hover:border-purple-500/50 transition-all duration-500 cursor-pointer h-[400px] md:h-[500px] lg:h-[380px] xl:h-[420px] hover:scale-[1.02] hover:shadow-[0_0_60px_rgba(168,85,247,0.3)]"
+                        >
+                            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-purple-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+                            {/* Animated Grid Pattern */}
+                            <div className="absolute inset-0 opacity-10 pointer-events-none">
+                                <div className="w-full h-full grid grid-cols-4 gap-2 p-4">
+                                    {[...Array(16)].map((_, i) => (
+                                        <div
+                                            key={i}
+                                            className="bg-purple-500/40 rounded animate-pulse"
+                                            style={{ animationDelay: `${i * 0.15}s`, animationDuration: '2s' }}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="relative h-full p-4 sm:p-6 md:p-8 flex flex-col justify-between pointer-events-none">
+                                {/* Icon Area */}
+                                <div className="flex-1 flex items-center justify-center">
+                                    <div className="relative">
+                                        <Server className="w-16 h-16 sm:w-20 sm:h-20 md:w-32 md:h-32 text-purple-400 relative z-10 group-hover:scale-110 transition-transform duration-500" />
+                                        <div className="absolute inset-0 bg-purple-500/20 blur-3xl rounded-full scale-150 group-hover:scale-[2] transition-transform duration-500" />
+                                    </div>
+                                </div>
+
+                                {/* Title & Description */}
+                                <div>
+                                    <div className="flex justify-between items-start gap-2 mb-2 sm:mb-3">
+                                        <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white leading-tight flex-1">
+                                            {fitsStackItems[0].title}
+                                        </h3>
+                                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-purple-500/10 border border-purple-500/30 flex items-center justify-center group-hover:bg-purple-600 group-hover:border-purple-500 transition-all flex-shrink-0">
+                                            <span className="text-white text-base sm:text-xl">+</span>
+                                        </div>
+                                    </div>
+                                    <p className="text-xs sm:text-sm text-gray-400 leading-relaxed line-clamp-3">
+                                        {fitsStackItems[0].mobileDescription}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Row 2: Secure Transport Card (Full Width - 3 columns) */}
+                        <div
+                            onClick={() => setExpandedCard(2)}
+                            className="group relative lg:col-span-3 bg-gradient-to-br from-fuchsia-950/40 via-fuchsia-900/20 to-black backdrop-blur-md rounded-2xl md:rounded-3xl overflow-hidden border border-fuchsia-200/20 hover:border-fuchsia-200/50 transition-all duration-500 cursor-pointer h-[300px] md:h-[350px] lg:h-[280px] xl:h-[300px] hover:scale-[1.01] hover:shadow-[0_0_60px_rgba(245,208,254,0.3)]"
+                        >
+                            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-fuchsia-200/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+                            {/* Pulse Rings */}
+                            <div className="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">
+                                <div className="absolute w-32 h-32 md:w-48 md:h-48 border border-fuchsia-200/40 rounded-full animate-ping" style={{ animationDuration: '3s' }} />
+                                <div className="absolute w-48 h-48 md:w-64 md:h-64 border border-fuchsia-200/30 rounded-full animate-ping" style={{ animationDuration: '4s', animationDelay: '0.5s' }} />
+                            </div>
+
+                            <div className="relative h-full p-4 sm:p-6 md:p-8 flex items-center pointer-events-none">
+                                <div className="flex flex-col md:flex-row items-center md:items-start gap-6 sm:gap-8 md:gap-12 w-full">
+                                    {/* Icon */}
+                                    <div className="flex-shrink-0">
+                                        <div className="relative">
+                                            <Shield className="w-16 h-16 sm:w-20 sm:h-20 md:w-40 md:h-40 text-fuchsia-200 relative z-10 group-hover:scale-110 transition-transform duration-500" />
+                                            <div className="absolute inset-0 bg-fuchsia-200/20 blur-3xl rounded-full scale-150 group-hover:scale-[2] transition-transform duration-500" />
+                                        </div>
+                                    </div>
+
+                                    {/* Content */}
+                                    <div className="flex-1 text-center md:text-left">
+                                        <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-3 sm:mb-4 gap-2 sm:gap-3">
+                                            <h3 className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold text-white leading-tight flex-1">
+                                                {fitsStackItems[2].title}
+                                            </h3>
+                                            <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-fuchsia-200/10 border border-fuchsia-200/30 flex items-center justify-center group-hover:bg-fuchsia-600 group-hover:border-fuchsia-200 transition-all mx-auto md:mx-0 flex-shrink-0">
+                                                <span className="text-white text-lg sm:text-xl md:text-2xl">+</span>
+                                            </div>
+                                        </div>
+                                        <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-400 leading-relaxed max-w-3xl mx-auto md:mx-0">
+                                            {fitsStackItems[2].mobileDescription}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -564,19 +583,24 @@ function HowItWorksSection() {
     };
 
     return (
-        <div id="how-it-works-section" ref={container} className="relative w-full h-screen overflow-hidden flex flex-col">
+        <div id="how-it-works-section" ref={container} className="relative w-full h-screen overflow-hidden bg-black flex flex-col">
+
+            {/* Background */}
+            <div className="absolute inset-0 z-0">
+                <div className="absolute inset-0 bg-black/60" />
+            </div>
 
             {/* Header */}
-            <div className="relative z-20 w-full text-center px-4 pt-6 sm:pt-8 md:pt-10 pb-4 sm:pb-6 flex-shrink-0">
-                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight uppercase text-purple-500/80">How It Works</h2>
+            <div className="absolute top-20 left-0 mt-16 w-full z-20 text-center px-4 pointer-events-none">
+                <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight uppercase text-purple-500/80">How It Works</h2>
             </div>
 
             {/* SLIDER TRACK */}
-            <div ref={slider} className="flex flex-1 min-h-0 w-[400%]">
+            <div ref={slider} className="flex h-full w-[400%]">
                 {steps.map((step) => (
                     <div
                         key={step.id}
-                        className="panel relative w-screen h-full flex flex-col md:flex-row items-center justify-center gap-4 sm:gap-6 md:gap-24 px-4 sm:px-6 pb-24 sm:pb-28 box-border border-r border-white/5"
+                        className="panel relative w-screen h-full flex flex-col md:flex-row items-center justify-center gap-4 sm:gap-6 md:gap-24 p-4 sm:p-6 box-border border-r border-white/5"
                     >
                         {/* Icon Box */}
                         <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-64 md:h-64 lg:w-[450px] lg:h-[450px] flex-shrink-0 bg-gradient-to-br from-purple-900/20 to-black border border-purple-500/20 rounded-2xl sm:rounded-3xl md:rounded-[2.5rem] flex items-center justify-center shadow-[0_0_80px_rgba(168,85,247,0.15)] backdrop-blur-sm">
