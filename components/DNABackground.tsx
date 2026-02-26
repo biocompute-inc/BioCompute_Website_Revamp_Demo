@@ -4,7 +4,7 @@ import DNAHelix from "@/client/components/ui/dnahelix"
 
 export default function DNABackground() {
     return (
-        <div className="fixed inset-0 blur-sm -z-10 pointer-events-none">
+        <div className="fixed inset-0 blur-sm z-0 pointer-events-none">
             <DNAHelix
                 linesGradient={["#7d4f95", "#8a5fa5", "#9b6fb5", "#ac7fc5", "#bd8fd5", "#9b6fb5", "#8a5fa5", "#7d4f95", "#6f3f85"]}
                 enabledWaves={['top', 'middle', 'bottom']}

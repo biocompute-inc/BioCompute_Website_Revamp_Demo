@@ -590,7 +590,7 @@ function HowItWorksSection() {
     };
 
     return (
-        <div id="how-it-works-section" ref={container} className="relative w-full h-screen overflow-hidden bg-black flex flex-col">
+        <div id="how-it-works-section" ref={container} className="relative w-full h-screen overflow-hidden flex flex-col">
             {/* Header */}
             <div className="absolute left-0 mt-12 w-full z-20 text-center px-4 pointer-events-none">
                 <h2 className="text-3xl md:text-2xl lg:text-4xl font-bold text-white tracking-tight uppercase text-purple-500/80">How It Works</h2>
