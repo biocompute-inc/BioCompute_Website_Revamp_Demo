@@ -302,9 +302,9 @@ export default function Home() {
               backfaceVisibility: 'hidden'
             }}
           >
-            <video
-              src="/devicepulsing.mp4"
-              autoPlay loop muted playsInline
+            <img
+              src="/DeviceEditedFinalNoBG.png"
+              alt="Device"
               style={{
                 width: `${VIDEO_ANIMATION_CONFIG[screenSize].width}px`,
                 height: `${VIDEO_ANIMATION_CONFIG[screenSize].height}px`,
