@@ -574,7 +574,7 @@ export default function About() {
                             Working together to make a difference
                         </p>
                     </div>
-                    <div className="grid gap-6 sm:gap-8 grid-cols-6 sm:grid-cols-6">
+                    <div className="grid gap-6 sm:gap-8 grid-cols-2 md:grid-cols-6">
                         {team.map((item, idx) => (
                             <div key={idx} className="group h-full flex flex-col items-center">
                                 <div className="aspect-[3/4] w-full max-w-[200px] sm:max-w-none mb-3 sm:mb-4 overflow-hidden rounded-xl flex-shrink-0">
