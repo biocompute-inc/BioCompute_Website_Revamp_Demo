@@ -501,10 +501,10 @@ export default function About() {
                 <div className="max-w-screen-xl mx-auto">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
                         {/* Our Vision */}
-                        <div className="relative group rounded-md border border-purple-500/20 bg-purple-500/5 p-5 sm:p-6 flex flex-col gap-4">
+                        <div className="relative group rounded-md border border-fuchsia-500/20 bg-fuchsia-500/5 p-5 sm:p-6 flex flex-col gap-4">
                             <div className="flex items-center gap-3">
-                                <div className="p-2 bg-purple-500/10 rounded-lg border border-purple-500/20 shrink-0">
-                                    <Rocket className="w-5 h-5 text-purple-400" />
+                                <div className="p-2 bg-fuchsia-500/10 rounded-lg border border-fuchsia-500/20 shrink-0">
+                                    <Rocket className="w-5 h-5 text-fuchsia-400" />
                                 </div>
                                 <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
                                     Our Vision
@@ -617,23 +617,23 @@ export default function About() {
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
                         {/* Media Card 1 — CNBC TV18 */}
                         <div className="group relative">
-                            <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500" />
-                            <div className="relative backdrop-blur-xl bg-gradient-to-br from-purple-950/60 via-fuchsia-950/40 to-black/60 border border-purple-500/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 h-full flex flex-col transform group-hover:scale-[1.02] transition-all duration-300">
+                            <div className="absolute -inset-0.5 bg-gradient-to-r from-fuchsia-600 to-purple-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500" />
+                            <div className="relative backdrop-blur-xl bg-gradient-to-br from-fuchsia-950/60 via-purple-950/40 to-black/60 border border-fuchsia-500/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 h-full flex flex-col transform group-hover:scale-[1.02] transition-all duration-300">
                                 <div className="relative w-full h-44 rounded-xl overflow-hidden mb-3 sm:mb-4 flex-shrink-0">
                                     <Image src="/cnbcarticle.jpg" alt="CNBC TV18 article" fill className="object-cover" sizes="(max-width: 640px) 100vw, 50vw" />
                                 </div>
                                 <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/20 border border-purple-500/30 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
-                                        <svg className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-fuchsia-500/20 border border-fuchsia-500/30 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+                                        <svg className="w-5 h-5 sm:w-6 sm:h-6 text-fuchsia-400" fill="currentColor" viewBox="0 0 20 20">
                                             <path fillRule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clipRule="evenodd" />
                                         </svg>
                                     </div>
                                     <div className="min-w-0">
                                         <p className="font-bold text-white text-sm sm:text-base truncate">CNBC TV18</p>
-                                        <p className="text-xs text-purple-300">Jun 2024</p>
+                                        <p className="text-xs text-fuchsia-300">Jun 2024</p>
                                     </div>
                                 </div>
-                                <h3 className="font-semibold text-white text-base sm:text-lg mb-2 sm:mb-3 group-hover:text-purple-300 transition-colors line-clamp-2">
+                                <h3 className="font-semibold text-white text-base sm:text-lg mb-2 sm:mb-3 group-hover:text-fuchsia-300 transition-colors line-clamp-2">
                                     BioCompute Wins India&apos;s Largest Early-Stage Climate Startup Grant
                                 </h3>
                                 <p className="text-xs sm:text-sm text-gray-300 mb-3 sm:mb-4 line-clamp-3 flex-grow">
@@ -643,7 +643,7 @@ export default function About() {
                                     href="https://www.cnbctv18.com/business/startup/biocompute-wins-indias-largest-early-stage-climate-startup-grant-at-suscrunch-2024-19429970.htm"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center text-xs sm:text-sm font-semibold text-purple-400 hover:text-purple-300 transition-colors mt-auto"
+                                    className="inline-flex items-center text-xs sm:text-sm font-semibold text-fuchsia-400 hover:text-fuchsia-300 transition-colors mt-auto"
                                 >
                                     Read Article
                                     <svg className="w-3 h-3 sm:w-4 sm:h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
