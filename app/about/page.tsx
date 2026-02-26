@@ -446,7 +446,7 @@ export default function About() {
         {
             avatar: "/akankshabio.png",
             name: "Akanksha Dasmohapatra",
-            title: "Chief Product Officer"
+            title: "Product Lead"
         },
         {
             avatar: "/naveenbio.jpeg",
