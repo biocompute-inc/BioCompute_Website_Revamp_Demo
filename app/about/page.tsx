@@ -423,7 +423,8 @@ export default function About() {
             cardTitle: "Team Growth",
             cardSubtitle: "Expansion",
             cardDetailedText: "Set up our own lab in Koramangala, team grows to 6",
-            icon: <Users className="w-6 h-6 text-fuchsia-200" />
+            icon: <Users className="w-6 h-6 text-fuchsia-200" />,
+            image: "/teamgrowpic.jpg"
         },
         {
             title: "Oct 2025",
