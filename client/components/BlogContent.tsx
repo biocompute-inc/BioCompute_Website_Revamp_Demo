@@ -75,7 +75,15 @@ export default function BlogContent({ content }: BlogContentProps) {
             <div
                 ref={contentRef}
                 onClick={handleContentClick}
-                className="prose prose-lg prose-gray max-w-none 
+                className="prose prose-lg prose-gray max-w-none
+                    prose-p:leading-8 prose-p:mb-6
+                    prose-headings:mt-10 prose-headings:mb-4 prose-headings:leading-tight
+                    prose-h1:mt-12 prose-h2:mt-10 prose-h3:mt-8
+                    prose-li:mb-2 prose-li:leading-7
+                    prose-ul:my-6 prose-ol:my-6
+                    prose-blockquote:my-8 prose-blockquote:leading-8
+                    prose-img:my-8
+                    prose-hr:my-10
                     [&_img]:transition-all [&_img]:duration-300 [&_img]:rounded-lg
                     [&_img+a]:hidden [&_img~a]:hidden [&_img+svg]:hidden"
                 dangerouslySetInnerHTML={{ __html: content }}
