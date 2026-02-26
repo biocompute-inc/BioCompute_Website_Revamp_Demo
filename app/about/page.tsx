@@ -244,7 +244,7 @@ const TimelineCarousel: React.FC<TimelineCarouselProps> = ({
                                 className={`inline-block relative select-none ${isAnimate ? 'transition-all duration-500' : ''}`}
                             >
                                 <div
-                                    className={`w-full h-[500px] bg-gradient-to-br ${gradients[gradientIndex]} transition-all duration-500 cursor-pointer rounded-2xl p-8 pt-12 flex flex-col justify-start relative border-2 border-fuchsia-200/40 shadow-[0_0_50px_rgba(217,70,239,0.2)] overflow-hidden`}>
+                                    className={`w-full h-[500px]  bg-gradient-to-br ${gradients[gradientIndex]} transition-all duration-500 cursor-pointer rounded-2xl p-8 pt-12 flex flex-col justify-start relative border-2 border-fuchsia-200/40 shadow-[0_0_50px_rgba(217,70,239,0.2)] overflow-hidden`}>
                                     <span className="absolute top-4 right-4 text-fuchsia-200 text-xs font-bold tracking-widest uppercase bg-black/60 px-3 py-1 rounded-full border border-fuchsia-200/50 whitespace-nowrap">
                                         {item.title}
                                     </span>
@@ -441,7 +441,7 @@ export default function About() {
             title: "Chief Product Officer"
         },
         {
-            avatar: "/Naveen.png",
+            avatar: "/naveenbio.jpeg",
             name: "Naveen",
             title: "Electronics Engineer"
         },
@@ -454,7 +454,13 @@ export default function About() {
             avatar: "/franci.jpeg",
             name: "Franci",
             title: "Bio-Engineer"
+        },
+        {
+            avatar: "/abhisheklinkedin.jpg",
+            name: "Abhishek K M",
+            title: "Software Engineer"
         }
+
     ]
 
     return (
@@ -568,7 +574,7 @@ export default function About() {
                             Working together to make a difference
                         </p>
                     </div>
-                    <div className="grid gap-6 sm:gap-8 grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                    <div className="grid gap-6 sm:gap-8 grid-cols-6 sm:grid-cols-6">
                         {team.map((item, idx) => (
                             <div key={idx} className="group h-full flex flex-col items-center">
                                 <div className="aspect-[3/4] w-full max-w-[200px] sm:max-w-none mb-3 sm:mb-4 overflow-hidden rounded-xl flex-shrink-0">
@@ -607,44 +613,14 @@ export default function About() {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                        {/* Media Card 1 */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+                        {/* Media Card 1 — CNBC TV18 */}
                         <div className="group relative">
                             <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500" />
                             <div className="relative backdrop-blur-xl bg-gradient-to-br from-purple-950/60 via-fuchsia-950/40 to-black/60 border border-purple-500/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 h-full flex flex-col transform group-hover:scale-[1.02] transition-all duration-300">
-                                <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/20 border border-purple-500/30 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
-                                        <svg className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
-                                        </svg>
-                                    </div>
-                                    <div className="min-w-0">
-                                        <p className="font-bold text-white text-sm sm:text-base truncate">Media Outlet</p>
-                                        <p className="text-xs text-purple-300">Jan 2025</p>
-                                    </div>
+                                <div className="relative w-full h-44 rounded-xl overflow-hidden mb-3 sm:mb-4 flex-shrink-0">
+                                    <Image src="/cnbcarticle.jpg" alt="CNBC TV18 article" fill className="object-cover" sizes="(max-width: 640px) 100vw, 50vw" />
                                 </div>
-                                <h3 className="font-semibold text-white text-base sm:text-lg mb-2 sm:mb-3 group-hover:text-purple-300 transition-colors line-clamp-2">
-                                    Featured Article Title
-                                </h3>
-                                <p className="text-xs sm:text-sm text-gray-300 mb-3 sm:mb-4 line-clamp-3 flex-grow">
-                                    Brief description of the media coverage or article content goes here.
-                                </p>
-                                <a
-                                    href="#"
-                                    className="inline-flex items-center text-xs sm:text-sm font-semibold text-purple-400 hover:text-purple-300 transition-colors mt-auto"
-                                >
-                                    Read Article
-                                    <svg className="w-3 h-3 sm:w-4 sm:h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-
-                        {/* Media Card 2 */}
-                        <div className="group relative">
-                            <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-fuchsia-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500" />
-                            <div className="relative backdrop-blur-xl bg-gradient-to-br from-purple-950/60 via-fuchsia-950/40 to-black/60 border border-purple-500/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 h-full flex flex-col transform group-hover:scale-[1.02] transition-all duration-300">
                                 <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
                                     <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/20 border border-purple-500/30 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
                                         <svg className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
@@ -652,18 +628,20 @@ export default function About() {
                                         </svg>
                                     </div>
                                     <div className="min-w-0">
-                                        <p className="font-bold text-white text-sm sm:text-base truncate">Tech News</p>
-                                        <p className="text-xs text-purple-300">Dec 2024</p>
+                                        <p className="font-bold text-white text-sm sm:text-base truncate">CNBC TV18</p>
+                                        <p className="text-xs text-purple-300">Jun 2024</p>
                                     </div>
                                 </div>
                                 <h3 className="font-semibold text-white text-base sm:text-lg mb-2 sm:mb-3 group-hover:text-purple-300 transition-colors line-clamp-2">
-                                    Another Press Feature
+                                    BioCompute Wins India&apos;s Largest Early-Stage Climate Startup Grant
                                 </h3>
                                 <p className="text-xs sm:text-sm text-gray-300 mb-3 sm:mb-4 line-clamp-3 flex-grow">
-                                    Brief description of the media coverage or article content goes here.
+                                    BioCompute awarded India&apos;s largest non-equity climate startup grant of ₹31.4 lakh at the inaugural SusCrunch 2024, hosted by SusMafia in collaboration with PIEDS.
                                 </p>
                                 <a
-                                    href="#"
+                                    href="https://www.cnbctv18.com/business/startup/biocompute-wins-indias-largest-early-stage-climate-startup-grant-at-suscrunch-2024-19429970.htm"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="inline-flex items-center text-xs sm:text-sm font-semibold text-purple-400 hover:text-purple-300 transition-colors mt-auto"
                                 >
                                     Read Article
@@ -674,32 +652,113 @@ export default function About() {
                             </div>
                         </div>
 
-                        {/* Media Card 3 */}
+                        {/* Media Card 2 — Swarajya Mag */}
                         <div className="group relative">
-                            <div className="absolute -inset-0.5 bg-gradient-to-r from-fuchsia-600 to-purple-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500" />
-                            <div className="relative backdrop-blur-xl bg-gradient-to-br from-fuchsia-950/60 via-purple-950/40 to-black/60 border border-fuchsia-500/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 h-full flex flex-col transform group-hover:scale-[1.02] transition-all duration-300">
+                            <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-fuchsia-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500" />
+                            <div className="relative backdrop-blur-xl bg-gradient-to-br from-purple-950/60 via-fuchsia-950/40 to-black/60 border border-purple-500/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 h-full flex flex-col transform group-hover:scale-[1.02] transition-all duration-300">
+                                <div className="relative w-full h-44 rounded-xl overflow-hidden mb-3 sm:mb-4 flex-shrink-0">
+                                    <Image src="/swarajya.jpg" alt="Swarajya article" fill className="object-cover" sizes="(max-width: 640px) 100vw, 50vw" />
+                                </div>
                                 <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-fuchsia-500/20 border border-fuchsia-500/30 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
-                                        <svg className="w-5 h-5 sm:w-6 sm:h-6 text-fuchsia-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/20 border border-purple-500/30 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+                                        <svg className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
                                             <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                                         </svg>
                                     </div>
                                     <div className="min-w-0">
-                                        <p className="font-bold text-white text-sm sm:text-base truncate">Industry Blog</p>
-                                        <p className="text-xs text-fuchsia-300">Nov 2024</p>
+                                        <p className="font-bold text-white text-sm sm:text-base truncate">Swarajya</p>
+                                        <p className="text-xs text-purple-300">May 2025</p>
+                                    </div>
+                                </div>
+                                <h3 className="font-semibold text-white text-base sm:text-lg mb-2 sm:mb-3 group-hover:text-purple-300 transition-colors line-clamp-2">
+                                    The 20-Something Deep Tech Revolution
+                                </h3>
+                                <p className="text-xs sm:text-sm text-gray-300 mb-3 sm:mb-4 line-clamp-3 flex-grow">
+                                    How India&apos;s youngest founders are redefining innovation — featuring BioCompute&apos;s Anagha Rajesh and her groundbreaking work on DNA data storage.
+                                </p>
+                                <a
+                                    href="https://swarajyamag.com/technology/young-and-deep-in-tech-indias-quiet-shift-towards-ever-younger-founders-tackling-pressing-problems"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center text-xs sm:text-sm font-semibold text-purple-400 hover:text-purple-300 transition-colors mt-auto"
+                                >
+                                    Read Article
+                                    <svg className="w-3 h-3 sm:w-4 sm:h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+
+                        {/* Media Card 3 — YouTube */}
+                        <div className="group relative">
+                            <div className="absolute -inset-0.5 bg-gradient-to-r from-fuchsia-600 to-red-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500" />
+                            <div className="relative backdrop-blur-xl bg-gradient-to-br from-fuchsia-950/60 via-purple-950/40 to-black/60 border border-fuchsia-500/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 h-full flex flex-col transform group-hover:scale-[1.02] transition-all duration-300">
+                                <div className="relative w-full h-44 rounded-xl overflow-hidden mb-3 sm:mb-4 flex-shrink-0">
+                                    <Image src="/tedxvid.jpg" alt="TEDx talk" fill className="object-cover" sizes="(max-width: 640px) 100vw, 50vw" />
+                                </div>
+                                <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-red-500/20 border border-red-500/30 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+                                        <svg className="w-5 h-5 sm:w-6 sm:h-6 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+                                        </svg>
+                                    </div>
+                                    <div className="min-w-0">
+                                        <p className="font-bold text-white text-sm sm:text-base truncate">YouTube</p>
+                                        <p className="text-xs text-fuchsia-300">2024</p>
                                     </div>
                                 </div>
                                 <h3 className="font-semibold text-white text-base sm:text-lg mb-2 sm:mb-3 group-hover:text-fuchsia-300 transition-colors line-clamp-2">
-                                    Industry Recognition
+                                    BioCompute — DNA Data Storage
                                 </h3>
                                 <p className="text-xs sm:text-sm text-gray-300 mb-3 sm:mb-4 line-clamp-3 flex-grow">
-                                    Brief description of the media coverage or article content goes here.
+                                    Watch BioCompute&apos;s featured video explaining how DNA-based data storage is set to revolutionise the future of digital infrastructure.
                                 </p>
                                 <a
-                                    href="#"
+                                    href="https://www.youtube.com/watch?v=B3Of4A7s9y0"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="inline-flex items-center text-xs sm:text-sm font-semibold text-fuchsia-400 hover:text-fuchsia-300 transition-colors mt-auto"
                                 >
-                                    Read Article
+                                    Watch Video
+                                    <svg className="w-3 h-3 sm:w-4 sm:h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+
+                        {/* Media Card 4 — Instagram */}
+                        <div className="group relative">
+                            <div className="absolute -inset-0.5 bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500" />
+                            <div className="relative backdrop-blur-xl bg-gradient-to-br from-fuchsia-950/60 via-pink-950/40 to-black/60 border border-fuchsia-500/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 h-full flex flex-col transform group-hover:scale-[1.02] transition-all duration-300">
+                                <div className="relative w-full h-44 rounded-xl overflow-hidden mb-3 sm:mb-4 flex-shrink-0">
+                                    <Image src="/elevatorpitch.jpg" alt="Elevator pitch" fill className="object-cover" sizes="(max-width: 640px) 100vw, 50vw" />
+                                </div>
+                                <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-pink-500/20 border border-pink-500/30 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+                                        <svg className="w-5 h-5 sm:w-6 sm:h-6 text-pink-400" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                                        </svg>
+                                    </div>
+                                    <div className="min-w-0">
+                                        <p className="font-bold text-white text-sm sm:text-base truncate">Instagram</p>
+                                        <p className="text-xs text-pink-300">2025</p>
+                                    </div>
+                                </div>
+                                <h3 className="font-semibold text-white text-base sm:text-lg mb-2 sm:mb-3 group-hover:text-pink-300 transition-colors line-clamp-2">
+                                    BioCompute Reel
+                                </h3>
+                                <p className="text-xs sm:text-sm text-gray-300 mb-3 sm:mb-4 line-clamp-3 flex-grow">
+                                    A behind-the-scenes look at BioCompute&apos;s work on DNA-based data storage — catch us on Instagram for the latest updates from the lab.
+                                </p>
+                                <a
+                                    href="https://www.instagram.com/reel/DMx1ZuDTiIl/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center text-xs sm:text-sm font-semibold text-pink-400 hover:text-pink-300 transition-colors mt-auto"
+                                >
+                                    Watch Reel
                                     <svg className="w-3 h-3 sm:w-4 sm:h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                     </svg>

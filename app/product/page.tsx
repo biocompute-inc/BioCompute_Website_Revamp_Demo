@@ -595,16 +595,17 @@ function HowItWorksSection() {
 
     return (
         <div id="how-it-works-section" ref={container} className="relative w-full h-screen overflow-hidden bg-black flex flex-col">
+            {/* Header */}
+            <div className="absolute left-0 mt-12 w-full z-20 text-center px-4 pointer-events-none">
+                <h2 className="text-3xl md:text-2xl lg:text-4xl font-bold text-white tracking-tight uppercase text-purple-500/80">How It Works</h2>
+            </div>
 
             {/* Background */}
             <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-black/60" />
             </div>
 
-            {/* Header */}
-            <div className="absolute top-20 left-0 mt-16 w-full z-20 text-center px-4 pointer-events-none">
-                <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight uppercase text-purple-500/80">How It Works</h2>
-            </div>
+
 
             {/* SLIDER TRACK */}
             <div ref={slider} className="flex h-full w-[400%]">
