@@ -85,6 +85,12 @@ export default function Contact() {
     }
   };
 
+  useEffect(() => {
+    fetch('https://biocompute-cms.onrender.com/api/health')
+      .then(() => console.log("Server is healthy"))
+      .catch(() => console.log("Server is down"));
+  }, [])
+
   return (
     <div className="pt-0">
       <section className="bg-dark flex mt-48 sm:mt-64 mb-10 pb-48 sm:mb-64 items-start py-4 ">

@@ -179,7 +179,7 @@ export default function ApplyModal({ jobId, jobTitle }: ApplyModalProps) {
                             {/* Cover Letter */}
                             <div>
                                 <label htmlFor="coverLetter" className="block text-sm font-semibold text-dark mb-2">
-                                    Cover Letter
+                                    Additional Document Links
                                 </label>
                                 <textarea
                                     id="coverLetter"
@@ -188,7 +188,7 @@ export default function ApplyModal({ jobId, jobTitle }: ApplyModalProps) {
                                     value={formData.coverLetter}
                                     onChange={handleInputChange}
                                     className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-purple transition-colors resize-none"
-                                    placeholder="Tell us why you're a great fit for this role..."
+                                    placeholder="Add links for documents like research papers, cover letters, portfolio, etc. (one per line)"
                                 />
                             </div>
 

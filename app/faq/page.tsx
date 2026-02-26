@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 
@@ -55,6 +55,12 @@ export default function FAQ() {
   const toggleItem = (id: number) => {
     setExpandedId(expandedId === id ? null : id);
   };
+
+  useEffect(() => {
+    fetch('https://biocompute-cms.onrender.com/api/health')
+      .then(() => console.log("Server is healthy"))
+      .catch(() => console.log("Server is down"));
+  }, [])
 
   return (
     <div className="bg-white text-dark">

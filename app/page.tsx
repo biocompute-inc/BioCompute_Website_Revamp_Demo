@@ -257,7 +257,7 @@ export default function Home() {
               variants={dnaVariants}
               initial="section0"
               animate={currentSection === 0 ? "section0" : currentSection === 1 ? "section1" : "hidden"}
-              className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold relative z-10 px-2 sm:px-4"
+              className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold backdrop-blur-lg relative z-10 px-2 sm:px-4"
               style={{
                 background: 'linear-gradient(to bottom right, #a580c0, #9b6fb5, #8a5fa5)',
                 WebkitBackgroundClip: 'text',

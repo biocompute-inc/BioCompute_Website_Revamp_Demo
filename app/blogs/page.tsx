@@ -12,6 +12,12 @@ export default function BlogsPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    fetch('https://biocompute-cms.onrender.com/api/health')
+      .then(() => console.log("Server is healthy"))
+      .catch(() => console.log("Server is down"));
+  }, [])
+
+  useEffect(() => {
     async function loadBlogs() {
       try {
         const response = await fetch('/api/blogs');

@@ -361,6 +361,12 @@ const TimelineCarouselContainer: React.FC<{ timelineData: TimelineItem[] }> = ({
 };
 
 export default function About() {
+
+    useEffect(() => {
+        fetch('https://biocompute-cms.onrender.com/api/health')
+            .then(() => console.log("Server is healthy"))
+            .catch(() => console.log("Server is down"));
+    }, [])
     // Timeline Data
     const timelineData = [
         {

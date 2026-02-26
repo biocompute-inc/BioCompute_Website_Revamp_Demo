@@ -191,7 +191,7 @@ function FitsInStackSection(): JSX.Element {
                 <img
                     src="/Devicehandheld.png"
                     alt="Device Handheld"
-                    className="w-56 sm:w-72 md:w-[22rem] lg:w-[28rem] xl:w-[36rem] h-auto mx-auto mt-4 sm:mt-6 md:mt-8"
+                    className="w-56 sm:w-72 md:w-[22rem] lg:w-[28rem] xl:w-[36rem] h-auto mx-auto mt-2 sm:mt-4 md:mt-6"
                 />
             </div>
 
@@ -711,6 +711,13 @@ function HowItWorksSection() {
 }
 
 export default function ProductPage() {
+
+    useEffect(() => {
+        fetch('https://biocompute-cms.onrender.com/api/health')
+            .then(() => console.log("Server is healthy"))
+            .catch(() => console.log("Server is down"));
+    }, [])
+
     return (
         <>
             <DNABackground />
