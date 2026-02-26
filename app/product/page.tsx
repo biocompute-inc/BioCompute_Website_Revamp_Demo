@@ -70,14 +70,12 @@ const fitsStackItems = [
         title: "Cold Storage Offloading",
         description: "Stop paying for data you aren't using. Migrate your Tier-3 and Tier-4 archival data to our passive DNA Vaults and turn your active cost sinks into passive assets.",
         mobileDescription: "Migrate archival data to passive DNA Vaults. Turn cost sinks into assets.",
-        image: "https://placehold.co/1200x800/0a0a0a/7c3aed?text=Cold+Storage",
         icon: <Server className="w-10 h-10 sm:w-12 sm:h-12 text-purple-400" />
     },
     {
         title: "High-Density Long-Term Retention",
         description: "Shrink your physical footprint and reclaim valuable floor space in your data center. Replace aisles of magnetic tape libraries with a single BioCompute rack, freeing up power and space for high-performance compute tasks.",
         mobileDescription: "Replace tape libraries with a single rack. Reclaim space and power.",
-        image: "https://placehold.co/1200x800/0a0a0a/a855f7?text=High+Density",
         stats: [
             { label: "Space Optimized", value: "98%", color: "text-green-400" },
             { label: "Density Increase", value: "10^6x", color: "text-blue-400" },
@@ -89,7 +87,6 @@ const fitsStackItems = [
         title: "Secure Data Transport",
         description: "Move Exabytes in your wallet. Transferring massive datasets over the internet is slow. BioCompute allows you to physically transport Exabytes of encrypted data in a localized, durable medium that is immune to electromagnetic interference.",
         mobileDescription: "Transport Exabytes in your wallet. Durable, immune to interference.",
-        image: "https://placehold.co/1200x800/0a0a0a/10b981?text=Secure+Transport",
         icon: <Shield className="w-10 h-10 sm:w-12 sm:h-12 text-fuchsia-200" />
     }
 ];
@@ -386,7 +383,6 @@ function FitsInStackSection(): JSX.Element {
                                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">{fitsStackItems[expandedCard].title}</h2>
                             </div>
                             <p className="text-gray-300 text-base sm:text-lg mb-6 sm:mb-8">{fitsStackItems[expandedCard].description}</p>
-                            <img src={fitsStackItems[expandedCard].image} alt="Detail" className="w-full rounded-xl" />
                         </motion.div>
                     </motion.div>
                 )}

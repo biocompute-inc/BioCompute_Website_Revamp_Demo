@@ -443,22 +443,22 @@ export default function About() {
         {
             avatar: "/naveenbio.jpeg",
             name: "Naveen",
-            title: "Electronics Engineer"
+            title: "Read Stack (Electronics)"
         },
         {
             avatar: "/SaiPooja.jpg",
             name: "Sai Pooja",
-            title: "Bio-Engineer"
+            title: "Write/Store Stack (Biotechnology)"
         },
         {
             avatar: "/franci.jpeg",
             name: "Franci",
-            title: "Bio-Engineer"
+            title: "Write/Store Stack (Biotechnology)"
         },
         {
             avatar: "/abhisheklinkedin.jpg",
             name: "Abhishek K M",
-            title: "Software Engineer"
+            title: "Read Stack (Software)"
         }
 
     ]
@@ -489,53 +489,45 @@ export default function About() {
             </section>
 
             {/* Vision and Mission Section */}
-            <section className="relative py-6 sm:py-8 md:py-10 lg:py-12 px-4 sm:px-6 lg:px-8">
+            <section className="relative py-6 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-screen-xl mx-auto">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
                         {/* Our Vision */}
-                        <div className="space-y-4 sm:space-y-6">
-                            <div className="flex items-center gap-2 sm:gap-3">
-                                <div className="p-2 sm:p-3 bg-purple-500/10 rounded-lg border border-purple-500/20">
-                                    <Rocket className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" />
+                        <div className="relative group rounded-md border border-purple-500/20 bg-purple-500/5 p-5 sm:p-6 flex flex-col gap-4">
+                            <div className="flex items-center gap-3">
+                                <div className="p-2 bg-purple-500/10 rounded-lg border border-purple-500/20 shrink-0">
+                                    <Rocket className="w-5 h-5 text-purple-400" />
                                 </div>
-                                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white">
+                                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
                                     Our Vision
                                 </h2>
                             </div>
-                            <div className="space-y-3 sm:space-y-4 text-gray-200">
-                                <p className="text-sm sm:text-base md:text-lg leading-relaxed">
+                            <div className="space-y-3 text-gray-300 text-sm sm:text-base leading-relaxed">
+                                <p>
                                     Our vision is to build data infrastructure that scales at the speed of data.
                                 </p>
-                                <p className="text-base sm:text-lg md:text-xl font-semibold leading-relaxed bg-gradient-to-r from-purple-400 to-fuchsia-400 bg-clip-text text">
+                                <p className="font-semibold bg-gradient-to-r from-purple-400 to-fuchsia-400 bg-clip-text ">
                                     By programming biology to break through the physical limits of traditional computing.
                                 </p>
-                                <p className="text-sm sm:text-base md:text-lg leading-relaxed">
+                                <p>
                                     We leverage the intrinsic space and energy efficiency of biomolecules like DNA to help data center providers lower their operational expenses, and thus scale their storage and compute infrastructure.
                                 </p>
                             </div>
                         </div>
 
                         {/* Full Stack System */}
-                        <div className="space-y-4 sm:space-y-6">
-                            <div className="flex items-center gap-2 sm:gap-3">
-                                <div className="p-2 sm:p-3 bg-fuchsia-500/10 rounded-lg border border-fuchsia-500/20">
-                                    <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-fuchsia-400" />
+                        <div className="relative rounded-md border border-fuchsia-500/20 bg-fuchsia-500/5 p-5 sm:p-6 flex flex-col gap-4">
+                            <div className="flex items-center gap-3">
+                                <div className="p-2 bg-fuchsia-500/10 rounded-lg border border-fuchsia-500/20 shrink-0">
+                                    <Zap className="w-5 h-5 text-fuchsia-400" />
                                 </div>
-                                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white">
+                                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
                                     Atoms, Bytes & Genes
                                 </h2>
                             </div>
-                            <p className="text-sm sm:text-base md:text-lg leading-relaxed text-gray-200">
+                            <p className="text-sm sm:text-base leading-relaxed text-gray-300">
                                 We are building a full-stack data storage system at the intersection of atoms, bytes and genes.
                             </p>
-                            <div className="w-full aspect-video rounded-xl overflow-hidden bg-gradient-to-br from-purple-900/20 to-fuchsia-900/20 border-2 border-dashed border-fuchsia-500/30 flex items-center justify-center">
-                                <span className="text-fuchsia-200/60 font-medium flex flex-col items-center gap-2 sm:gap-3 px-4">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                                    </svg>
-                                    <span className="text-xs sm:text-sm text-center">Lab Footage</span>
-                                </span>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -640,44 +632,6 @@ export default function About() {
                                 </p>
                                 <a
                                     href="https://www.cnbctv18.com/business/startup/biocompute-wins-indias-largest-early-stage-climate-startup-grant-at-suscrunch-2024-19429970.htm"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center text-xs sm:text-sm font-semibold text-purple-400 hover:text-purple-300 transition-colors mt-auto"
-                                >
-                                    Read Article
-                                    <svg className="w-3 h-3 sm:w-4 sm:h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-
-                        {/* Media Card 2 — Swarajya Mag */}
-                        <div className="group relative">
-                            <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-fuchsia-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500" />
-                            <div className="relative backdrop-blur-xl bg-gradient-to-br from-purple-950/60 via-fuchsia-950/40 to-black/60 border border-purple-500/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 h-full flex flex-col transform group-hover:scale-[1.02] transition-all duration-300">
-                                <div className="relative w-full h-44 rounded-xl overflow-hidden mb-3 sm:mb-4 flex-shrink-0">
-                                    <Image src="/swarajya.jpg" alt="Swarajya article" fill className="object-cover" sizes="(max-width: 640px) 100vw, 50vw" />
-                                </div>
-                                <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/20 border border-purple-500/30 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
-                                        <svg className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                                        </svg>
-                                    </div>
-                                    <div className="min-w-0">
-                                        <p className="font-bold text-white text-sm sm:text-base truncate">Swarajya</p>
-                                        <p className="text-xs text-purple-300">May 2025</p>
-                                    </div>
-                                </div>
-                                <h3 className="font-semibold text-white text-base sm:text-lg mb-2 sm:mb-3 group-hover:text-purple-300 transition-colors line-clamp-2">
-                                    The 20-Something Deep Tech Revolution
-                                </h3>
-                                <p className="text-xs sm:text-sm text-gray-300 mb-3 sm:mb-4 line-clamp-3 flex-grow">
-                                    How India&apos;s youngest founders are redefining innovation — featuring BioCompute&apos;s Anagha Rajesh and her groundbreaking work on DNA data storage.
-                                </p>
-                                <a
-                                    href="https://swarajyamag.com/technology/young-and-deep-in-tech-indias-quiet-shift-towards-ever-younger-founders-tackling-pressing-problems"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="inline-flex items-center text-xs sm:text-sm font-semibold text-purple-400 hover:text-purple-300 transition-colors mt-auto"

@@ -266,16 +266,16 @@ export default function Careers() {
 
 
           {/* Our Values Section */}
-          < div className="bg-gradient-to-br from-fuchsia-50 via-white to-fuchsia-50 rounded-3xl p-8 sm:p-12 md:p-16 mb-20 shadow-lg border border-fuchsia-200" >
+          {/* < div className="bg-gradient-to-br from-fuchsia-50 via-white to-fuchsia-50 rounded-3xl p-8 sm:p-12 md:p-16 mb-20 shadow-lg border border-fuchsia-200" >
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-4 text-black">
                 Our Values
               </h2>
               <div className="w-20 h-1 bg-fuchsia-200 mx-auto mb-12 rounded-full"></div>
 
-              <div className="space-y-8">
-                {/* Value 1 */}
-                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
+              <div className="space-y-8"> */}
+          {/* Value 1 */}
+          {/* <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
                       1
@@ -289,10 +289,10 @@ export default function Careers() {
                       </p>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
-                {/* Value 2 */}
-                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
+          {/* Value 2 */}
+          {/* <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
                       2
@@ -306,10 +306,10 @@ export default function Careers() {
                       </p>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
-                {/* Value 3 */}
-                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
+          {/* Value 3 */}
+          {/* <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
                       3
@@ -323,10 +323,10 @@ export default function Careers() {
                       </p>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
-                {/* Value 4 */}
-                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
+          {/* Value 4 */}
+          {/* <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
                       4
@@ -340,10 +340,10 @@ export default function Careers() {
                       </p>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
-                {/* Value 5 */}
-                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
+          {/* Value 5 */}
+          {/* <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
                       5
@@ -357,10 +357,10 @@ export default function Careers() {
                       </p>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
-                {/* Value 6 */}
-                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
+          {/* Value 6 */}
+          {/* <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
                       6
@@ -374,10 +374,10 @@ export default function Careers() {
                       </p>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
-                {/* Value 7 */}
-                <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
+          {/* Value 7 */}
+          {/* <div className="group hover:transform hover:translate-x-2 transition-all duration-300">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-12 h-12 rounded-full bg-black text-white flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
                       7
@@ -391,12 +391,8 @@ export default function Careers() {
                       </p>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div >
+                </div> */}
         </div >
       </section >
-    </div >
-  );
+    </div >);
 }
