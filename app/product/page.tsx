@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
+import PageImageLoader from '@/components/PageImageLoader';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
@@ -720,6 +721,7 @@ export default function ProductPage() {
 
     return (
         <>
+            <PageImageLoader src="/Devicehandheld.png" />
             <DNABackground />
             <FitsInStackSection />
             <main>

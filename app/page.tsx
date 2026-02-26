@@ -205,7 +205,7 @@ export default function Home() {
 
   return (
     <>
-      <PageImageLoader />
+      <PageImageLoader src="/DeviceEditedFinalNoBG.png" />
 
       <main
         ref={scrollContainerRef}

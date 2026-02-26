@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from 'react';
 
-/**
- * Shows a full-screen loading overlay until every <img> element on
- * the page (including Next.js <Image> tags) has fired its `load` or
- * `error` event.  Falls back to `window.load` so it never gets stuck.
- */
-export default function PageImageLoader() {
+interface PageImageLoaderProps {
+    /** When provided, the loader dismisses as soon as this specific image URL loads.
+     *  When omitted, it waits for ALL images on the page (original behaviour). */
+    src?: string;
+}
+
+export default function PageImageLoader({ src }: PageImageLoaderProps) {
     const [visible, setVisible] = useState(true);
     const [fadeOut, setFadeOut] = useState(false);
 
@@ -19,51 +20,56 @@ export default function PageImageLoader() {
             setFadeOut(true);
             setTimeout(() => {
                 if (!cancelled) setVisible(false);
-            }, 600); // matches the CSS transition duration
+            }, 600);
         };
-
-        const checkImages = () => {
-            const imgs = Array.from(document.images);
-            if (imgs.length === 0) {
-                dismiss();
-                return;
-            }
-
-            let pending = imgs.filter(img => !img.complete).length;
-            if (pending === 0) {
-                dismiss();
-                return;
-            }
-
-            const onSettle = () => {
-                pending--;
-                if (pending <= 0) dismiss();
-            };
-
-            imgs.forEach(img => {
-                if (!img.complete) {
-                    img.addEventListener('load', onSettle, { once: true });
-                    img.addEventListener('error', onSettle, { once: true });
-                }
-            });
-        };
-
-        // Small delay to let React render the initial DOM
-        const timer = setTimeout(checkImages, 50);
-
-        // Hard fallback: dismiss when the whole window finishes loading
-        window.addEventListener('load', dismiss, { once: true });
 
         // Safety net: never block more than 6 s
         const safety = setTimeout(dismiss, 6000);
 
+        if (src) {
+            // Watch only the specific image
+            const img = new Image();
+            img.onload = dismiss;
+            img.onerror = dismiss;
+            img.src = src;
+            // If already cached the browser marks it complete synchronously
+            if (img.complete) {
+                dismiss();
+            }
+        } else {
+            // Original behaviour: wait for every <img> on the page
+            const checkImages = () => {
+                const imgs = Array.from(document.images);
+                if (imgs.length === 0) { dismiss(); return; }
+
+                let pending = imgs.filter(i => !i.complete).length;
+                if (pending === 0) { dismiss(); return; }
+
+                const onSettle = () => { pending--; if (pending <= 0) dismiss(); };
+                imgs.forEach(i => {
+                    if (!i.complete) {
+                        i.addEventListener('load', onSettle, { once: true });
+                        i.addEventListener('error', onSettle, { once: true });
+                    }
+                });
+            };
+
+            const timer = setTimeout(checkImages, 50);
+            window.addEventListener('load', dismiss, { once: true });
+
+            return () => {
+                cancelled = true;
+                clearTimeout(timer);
+                clearTimeout(safety);
+                window.removeEventListener('load', dismiss);
+            };
+        }
+
         return () => {
             cancelled = true;
-            clearTimeout(timer);
             clearTimeout(safety);
-            window.removeEventListener('load', dismiss);
         };
-    }, []);
+    }, [src]);
 
     if (!visible) return null;
 
