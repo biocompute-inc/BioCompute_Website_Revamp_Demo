@@ -9,6 +9,7 @@ import {
   getScreenSize,
   type ScreenSize
 } from '@/lib/responsive-config';
+import PageImageLoader from '@/components/PageImageLoader';
 
 // Lazy load heavy components
 const Features = lazy(() => import('@/components/sections/Features'));
@@ -204,6 +205,8 @@ export default function Home() {
 
   return (
     <>
+      <PageImageLoader />
+
       <main
         ref={scrollContainerRef}
         // We keep snap-y mandatory here for the browser's resize handling, 
