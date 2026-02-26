@@ -439,12 +439,12 @@ export default function About() {
 
     const team = [
         {
-            avatar: "/anaghabio.jpg",
+            avatar: "/anaghabio.png",
             name: "Anagha Rajesh",
             title: "Founder"
         },
         {
-            avatar: "/akankshabio.jpg",
+            avatar: "/akankshabio.png",
             name: "Akanksha Dasmohapatra",
             title: "Chief Product Officer"
         },
