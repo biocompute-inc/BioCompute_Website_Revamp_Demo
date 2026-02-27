@@ -441,7 +441,7 @@ export default function About() {
         {
             avatar: "/anaghabio.png",
             name: "Anagha Rajesh",
-            title: "Founder"
+            title: "Founder & CEO"
         },
         {
             avatar: "/akankshabio.png",
@@ -456,12 +456,12 @@ export default function About() {
         {
             avatar: "/SaiPooja.jpg",
             name: "Sai Pooja",
-            title: "Write/Store Stack (Biotechnology)"
+            title: "Write/Store Stack (Bioengineer)"
         },
         {
             avatar: "/franci.jpeg",
             name: "Franci",
-            title: "Write/Store Stack (Biotechnology)"
+            title: "Write/Store Stack (Bioengineer)"
         },
         {
             avatar: "/abhisheklinkedin.jpg",

@@ -59,7 +59,6 @@ export async function getSubstackBlogs(): Promise<SubstackBlogPost[]> {
         'Accept': 'application/rss+xml, application/xml, text/xml, */*; q=0.1',
         'Accept-Language': 'en-US,en;q=0.9',
       },
-
     });
     const xmlText = await response.text();
     const feed = await parser.parseString(xmlText);
