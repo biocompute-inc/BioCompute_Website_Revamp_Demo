@@ -53,7 +53,14 @@ const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1576075796033-848c2a5f
 export async function getSubstackBlogs(): Promise<SubstackBlogPost[]> {
   try {
     // Fetch RSS feed using modern fetch API to avoid deprecated url.parse()
-    const response = await fetch('https://blog.biocomputeinc.com/feed');
+    const response = await fetch('https://blog.biocomputeinc.com/feed', {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'application/rss+xml, application/xml, text/xml, */*; q=0.1',
+        'Accept-Language': 'en-US,en;q=0.9',
+      },
+
+    });
     const xmlText = await response.text();
     const feed = await parser.parseString(xmlText);
 
