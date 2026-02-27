@@ -54,7 +54,7 @@ export const VIDEO_ANIMATION_CONFIG = {
     },
     xl: {
         // Extra large devices (1024px+)
-        section0: { scale: 1.5, top: '105%' },
+        section0: { scale: 1.5, top: '115%' },
         section1: { scale: 1, top: '75%' },
         section2: { scale: 1, top: '48%' },
         width: 400,
