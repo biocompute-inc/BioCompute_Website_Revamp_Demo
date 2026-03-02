@@ -583,7 +583,7 @@ export default function About() {
                                         width={300}
                                         height={400}
                                         unoptimized
-                                        className="w-full h-full object-cover object-center transform group-hover:scale-110 transition-transform duration-500"
+                                        className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-500"
                                         alt={item.name}
                                     />
                                 </div>
