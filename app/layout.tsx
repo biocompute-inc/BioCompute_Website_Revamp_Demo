@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   description: 'The Future of Data Storage is DNA',
   icons: {
     icon: '/faviconfinal.png',
+    shortcut: '/faviconfinal.png',
+    apple: '/faviconfinal.png',
   },
 };
 
