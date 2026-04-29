@@ -437,6 +437,19 @@ export default function About() {
     ];
     // redeploy
 
+    const advisors = [
+        {
+            avatar: "/ishaangupta.png",
+            name: "Prof. Ishaan Gupta (IIT Delhi)",
+            summary: "Ishaan was a molecular biology researcher at EMBL, Icahn School of Medicine Mount Sinai and Weill Cornell Medicine before returning to India to take up a professorship at IIT Delhi. With expertise in both wet lab and computational approaches, he has worked closely with the India Genome Project, built a sequencing company, and heads the industry academia collaboration efforts at IIT Delhi.",
+        },
+        {
+            avatar: "/manojvarma.png",
+            name: "Dr. Manoj Varma (IISc)",
+            summary: "With 20+ years of experience, Manoj is one of the leading experts on solid state nanopores in the world. He is currently a professor at the Center for Nanoscience and Engineering (CeNSE) at the Indian Institute of Science. He has previously been a researcher at Purdue University and the director of engineering at Quadraspec Inc.",
+        }
+    ]
+
     const team = [
         {
             avatar: "/anaghabio.png",
@@ -577,7 +590,7 @@ export default function About() {
                     <div className="grid gap-6 sm:gap-8 grid-cols-2 md:grid-cols-6">
                         {team.map((item, idx) => (
                             <div key={idx} className="group h-full flex flex-col items-center">
-                                <div className="aspect-[3/4] w-full max-w-[200px] sm:max-w-none mb-3 sm:mb-4 overflow-hidden rounded-xl flex-shrink-0">
+                                <div className="aspect-[3/4] w-full max-w-[160px] sm:max-w-[180px] md:max-w-[200px] mx-auto mb-3 sm:mb-4 overflow-hidden rounded-xl flex-shrink-0">
                                     <Image
                                         src={item.avatar}
                                         width={300}
@@ -590,6 +603,49 @@ export default function About() {
                                 <div className="text-center">
                                     <h4 className="text-base sm:text-lg font-bold text-white mb-1">{item.name}</h4>
                                     <p className="text-xs sm:text-sm text-purple-300">{item.title}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Divider */}
+            <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+                <div className="h-[2px] bg-gradient-to-r from-transparent via-purple-500/40 to-transparent shadow-[0_5px_25px_rgba(217,70,239,0.3),0_-5px_25px_rgba(217,70,239,0.3)]"></div>
+            </div>
+
+            {/* Scientific Advisory Board */}
+            <section className="relative py-6 sm:py-8 md:py-10 lg:py-12 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-screen-xl mx-auto">
+                    <div className="text-center mb-6 sm:mb-8 md:mb-10">
+                        <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-purple-500/10 border border-purple-500/20 rounded-full backdrop-blur-sm mb-3 sm:mb-4">
+                            <Users className="w-3 h-3 sm:w-4 sm:h-4 text-purple-400" />
+                            <span className="text-xs sm:text-sm font-medium text-purple-300">Scientific Advisory Board</span>
+                        </div>
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4 px-4">
+                            Scientific Advisory Board
+                        </h2>
+                        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-300 max-w-2xl mx-auto px-4">
+                            Expert guidance for our research and development
+                        </p>
+                    </div>
+                    <div className="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 justify-items-center">
+                        {advisors.map((item, idx) => (
+                            <div key={idx} className="group h-full flex flex-col items-center">
+                                <div className="aspect-[3/4] w-full max-w-[160px] sm:max-w-[180px] md:max-w-[200px] mx-auto mb-3 sm:mb-4 overflow-hidden rounded-xl flex-shrink-0">
+                                    <Image
+                                        src={item.avatar}
+                                        width={300}
+                                        height={400}
+                                        unoptimized
+                                        className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-500"
+                                        alt={item.name}
+                                    />
+                                </div>
+                                <div className="text-center">
+                                    <h4 className="text-base sm:text-lg font-bold text-white mb-1">{item.name}</h4>
+                                    <p className="text-sm sm:text-base text-gray-300 max-w-[28rem] leading-relaxed">{item.summary}</p>
                                 </div>
                             </div>
                         ))}
