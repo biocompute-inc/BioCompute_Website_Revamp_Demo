@@ -1,421 +1,155 @@
 'use client';
 
-import { useState, useRef, useEffect, lazy, Suspense, memo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import {
-  VIDEO_ANIMATION_CONFIG,
-  TEXT_ANIMATION_CONFIG,
-  FLOATING_LABELS_CONFIG,
-  getScreenSize,
-  type ScreenSize
-} from '@/lib/responsive-config';
-import PageImageLoader from '@/components/PageImageLoader';
+import React, { useEffect, useRef, useState } from 'react';
+import './onepage.css';
 
-// Lazy load heavy components
-const Features = lazy(() => import('@/components/sections/Features'));
-const BackedBy = lazy(() => import('@/components/sections/BackedBy'));
-
-// --- SECTION PLACEHOLDERS ---
-const SectionPlaceholder = memo(({ onEnter, index }: { onEnter: (n: number) => void; index: number }) => (
-  <section
-    className="h-screen w-full snap-start relative"
-    style={{ contentVisibility: 'auto', containIntrinsicSize: '100vh' }}
-  >
-    {/* Trigger state change when 55% of the slide is visible */}
-    <motion.div
-      onViewportEnter={() => onEnter(index)}
-      viewport={{ amount: 0.55, once: false }}
-      className="w-full h-full pointer-events-none"
-    />
-  </section>
-));
-SectionPlaceholder.displayName = 'SectionPlaceholder';
-
-// --- ANIMATION CONFIG ---
-// Smooth, fluid easing for premium feel
-const SMOOTH_EASE = [0.25, 0.1, 0.25, 1];
-const TRANSITION_SETTINGS = { duration: 1, ease: SMOOTH_EASE };
-const SCROLL_LOCK_DURATION = 1000;
+const WORK_OPTIONS = [
+    { value: 'Founder', label: 'Founder' },
+    { value: 'computational biologist', label: 'Computational biologist' },
+    { value: 'experimental scientist', label: 'Experimental scientist' },
+    { value: 'independent researcher', label: 'Independent researcher' },
+    { value: 'other', label: 'Other' },
+];
+const OBSTACLE_OPTIONS = [
+    { value: 'Cost', label: 'Cost' },
+    { value: 'access to equipment', label: 'Access to equipment' },
+    { value: 'time', label: 'Time' },
+    { value: 'expertise', label: 'Expertise' },
+    { value: 'another obstacle', label: 'Another obstacle' },
+];
+const WAITLIST_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxwrxDTWXPo6fPsd6NTDKuuGrl9ecL9IG2IVk6u-mmFW0CNTwmUQbSLvgbad0wXAdrwsA/exec';
 
 export default function Home() {
-  const [currentSection, setCurrentSection] = useState(0);
-  const [isVideoVisible, setIsVideoVisible] = useState(true);
-  const [screenSize, setScreenSize] = useState<ScreenSize>('xl');
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const canScrollRef = useRef(true);
+    const heroVideoRef = useRef<HTMLVideoElement>(null);
+    const [submitState, setSubmitState] = useState<'idle' | 'sending' | 'done' | 'error' | 'error-network'>('idle');
+    const [work, setWork] = useState('');
+    const [obstacle, setObstacle] = useState('');
 
-  useEffect(() => {
-    fetch('https://biocompute-cms.onrender.com/api/health')
-      .then(() => console.log("Server is healthy"))
-      .catch(() => console.log("Server is down"));
-  }, [])
-
-  // Screen Size Logic
-  useEffect(() => {
-    const updateScreenSize = () => {
-      setScreenSize(getScreenSize(window.innerWidth));
+    const handleWaitlistSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        const form = event.currentTarget.closest('form');
+        if (!form) return;
+        if (!form.reportValidity()) return;
+        setSubmitState('sending');
+        const fd = new FormData(form);
+        const workOther = (fd.get('work_other') || '').toString().trim();
+        if (fd.get('work') === 'other' && workOther) fd.set('work', 'other: ' + workOther);
+        fd.delete('work_other');
+        const obstacleOther = (fd.get('obstacle_other') || '').toString().trim();
+        if (fd.get('obstacle') === 'another obstacle' && obstacleOther) fd.set('obstacle', 'another obstacle: ' + obstacleOther);
+        fd.delete('obstacle_other');
+        fetch(WAITLIST_ENDPOINT, { method: 'POST', body: fd })
+            .then((r) => r.json())
+            .then((j) => {
+                if (j && j.ok) {
+                    form.reset();
+                    setWork('');
+                    setObstacle('');
+                    setSubmitState('done');
+                } else {
+                    setSubmitState('error');
+                }
+            })
+            .catch(() => setSubmitState('error-network'));
     };
-    updateScreenSize();
-    window.addEventListener('resize', updateScreenSize);
-    return () => window.removeEventListener('resize', updateScreenSize);
-  }, []);
 
-  // Video Visibility Logic
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-    const handleScroll = () => {
-      if (container.scrollTop > container.clientHeight * 2.5) {
-        setIsVideoVisible(false);
-      } else {
-        setIsVideoVisible(true);
-      }
-    };
-    container.addEventListener('scroll', handleScroll);
-    return () => container.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // --- REFINED WHEEL LOGIC ---
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
-    const handleWheel = (e: WheelEvent) => {
-      // 1. Lock the scroll completely for the first few slides to handle it via JS
-      if (currentSection < 3) {
-        e.preventDefault();
-      }
-
-      // If animation is in progress, ignore input
-      if (!canScrollRef.current) return;
-
-      const scrollingDown = e.deltaY > 0;
-      const sectionHeight = container.clientHeight;
-
-      // --- LOGIC: Going Back Up from Section 3 ---
-      if (currentSection === 3) {
-        // If at top of section 3 and scrolling UP
-        if (!scrollingDown && container.scrollTop <= container.clientHeight * 3.05) {
-          e.preventDefault();
-
-          if (!canScrollRef.current) return;
-          canScrollRef.current = false;
-
-          // 1. Disable snap to allow smooth JS scroll
-          container.style.scrollSnapType = 'none';
-
-          setCurrentSection(2);
-
-          container.scrollTo({ top: sectionHeight * 2, behavior: 'smooth' });
-
-          setTimeout(() => {
-            canScrollRef.current = true;
-            container.style.scrollSnapType = 'y mandatory';
-          }, SCROLL_LOCK_DURATION);
+    useEffect(() => {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches && heroVideoRef.current) {
+            heroVideoRef.current.pause();
         }
-        return;
-      }
+    }, []);
 
-      // --- LOGIC: Standard Slides (0 -> 1 -> 2 -> 3) ---
+    return (
+        <div className="mock">
+            <header className="topbar">
+                <img className="logo" src="/logoLG.png" alt="BioCompute" />
+                <nav className="topnav">
+                    <a className="nav-link" href="https://blog.biocomputeinc.com/" target="_blank" rel="noopener noreferrer">Blog</a>
+                    <a className="pill-button" href="#waitlist" onClick={(e) => { e.preventDefault(); document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' }); }}>Join the waitlist</a>
+                </nav>
+            </header>
 
-      // Determine next target
-      let nextSection = currentSection;
-      if (scrollingDown && currentSection < 3) nextSection++;
-      else if (!scrollingDown && currentSection > 0) nextSection--;
-
-      // If nowhere to go, exit
-      if (nextSection === currentSection) return;
-
-      // EXECUTE SCROLL
-      canScrollRef.current = false;
-      setCurrentSection(nextSection);
-
-      // CRITICAL: Disable CSS snap BEFORE scrolling via JS.
-      // This stops the browser from fighting the animation.
-      container.style.scrollSnapType = 'none';
-
-      container.scrollTo({
-        top: nextSection * sectionHeight,
-        behavior: 'smooth'
-      });
-
-      // LOCK DURATION: Matches the transition duration
-      setTimeout(() => {
-        canScrollRef.current = true;
-        container.style.scrollSnapType = 'y mandatory';
-      }, SCROLL_LOCK_DURATION);
-    };
-
-    container.addEventListener('wheel', handleWheel, { passive: false });
-    return () => container.removeEventListener('wheel', handleWheel);
-  }, [currentSection]);
-
-  // --- TEXT VARIANTS (Added Blur for smoothness) ---
-  const textConfig = TEXT_ANIMATION_CONFIG[screenSize];
-
-  const titleVariants = {
-    section0: {
-      scale: textConfig.titleScale.section0,
-      y: textConfig.titleY.section0,
-      opacity: 1,
-      marginBottom: "1rem",
-      transition: TRANSITION_SETTINGS
-    },
-    section1: {
-      scale: textConfig.titleScale.section1,
-      y: textConfig.titleY.section1,
-      opacity: 1,
-      marginBottom: "1rem",
-      transition: TRANSITION_SETTINGS
-    },
-    hidden: {
-      scale: 0.9,
-      y: -30,
-      opacity: 0,
-      filter: "blur(8px)",
-      marginBottom: "0rem",
-      transition: { duration: 0.6, ease: SMOOTH_EASE }
-    }
-  };
-
-  const dnaVariants = {
-    section0: {
-      scale: textConfig.dnaScale.section0,
-      y: textConfig.dnaY.section0,
-      opacity: 1,
-      letterSpacing: "0.05em",
-      transition: TRANSITION_SETTINGS
-    },
-    section1: {
-      scale: textConfig.dnaScale.section1,
-      y: textConfig.dnaY.section1,
-      opacity: 1,
-      letterSpacing: "0em",
-      transition: TRANSITION_SETTINGS
-    },
-    hidden: {
-      scale: 0.9,
-      y: 0,
-      opacity: 0,
-      letterSpacing: "0em",
-      filter: "blur(8px)",
-      transition: { duration: 0.6, ease: SMOOTH_EASE }
-    }
-  };
-
-  return (
-    <>
-      <PageImageLoader src="/DeviceEditedFinalNoBG.png" />
-
-      <main
-        ref={scrollContainerRef}
-        // We keep snap-y mandatory here for the browser's resize handling, 
-        // but we disable it via JS during the actual scroll events.
-        className={`h-screen w-full overflow-y-scroll scrollbar-hide bg-black ${currentSection < 3 ? 'snap-y snap-mandatory' : ''}`}
-        // scrollBehavior must be 'auto' so JS can dictate the curve via scrollTo({behavior: 'smooth'})
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', scrollBehavior: 'auto' }}
-      >
-        {/* <DottedGlowBackground
-          className="fixed inset-0 z-[5]"
-          gap={40}
-          radius={3}
-          color="rgba(165, 128, 192, 0.4)"
-          glowColor="rgba(155, 111, 181, 1)"
-          opacity={0.7}
-          backgroundOpacity={0}
-          speedMin={0.2}
-          speedMax={0.3}
-          speedScale={1}
-        /> */}
-
-        {/* --- FIXED TEXT CONTAINER --- */}
-        <motion.div
-          className="fixed inset-0 z-20 flex flex-col items-center justify-center pointer-events-none"
-          animate={{
-            top: currentSection === 0
-              ? textConfig.containerTop.section0
-              : currentSection === 1
-                ? textConfig.containerTop.section1
-                : '-50%',
-            opacity: currentSection < 2 ? 1 : 0
-          }}
-          transition={TRANSITION_SETTINGS}
-          style={{
-            willChange: 'transform, opacity',
-            transform: 'translateZ(0)',
-            backfaceVisibility: 'hidden'
-          }}
-        >
-          <div className="text-center px-4">
-            <motion.h1
-              variants={titleVariants}
-              initial="section0"
-              animate={currentSection === 0 ? "section0" : currentSection === 1 ? "section1" : "hidden"}
-              className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight pb-2 text-white px-2 sm:px-4 leading-tight"
-            >
-              The Future Of <br /> Data Storage Is
-            </motion.h1>
-
-            <motion.h2
-              variants={dnaVariants}
-              initial="section0"
-              animate={currentSection === 0 ? "section0" : currentSection === 1 ? "section1" : "hidden"}
-              className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold backdrop-blur-lg relative z-10 px-2 sm:px-4"
-              style={{
-                background: 'linear-gradient(to bottom right, #a580c0, #9b6fb5, #8a5fa5)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                display: 'inline-block'
-              }}
-            >
-              DNA
-            </motion.h2>
-          </div>
-        </motion.div>
-
-        {/* --- FIXED DEVICE VIDEO --- */}
-        {isVideoVisible && (
-          <motion.div
-            className="fixed z-10 pointer-events-none"
-            initial={{
-              top: VIDEO_ANIMATION_CONFIG[screenSize].section0.top,
-              left: '50%',
-              x: '-50%',
-              y: '-50%',
-              scale: VIDEO_ANIMATION_CONFIG[screenSize].section0.scale
-            }}
-            animate={{
-              top: currentSection === 0
-                ? VIDEO_ANIMATION_CONFIG[screenSize].section0.top
-                : currentSection === 1
-                  ? VIDEO_ANIMATION_CONFIG[screenSize].section1.top
-                  : VIDEO_ANIMATION_CONFIG[screenSize].section2.top,
-              scale: currentSection === 0
-                ? VIDEO_ANIMATION_CONFIG[screenSize].section0.scale
-                : currentSection === 1
-                  ? VIDEO_ANIMATION_CONFIG[screenSize].section1.scale
-                  : VIDEO_ANIMATION_CONFIG[screenSize].section2.scale,
-              opacity: currentSection < 3 ? 1 : 0,
-            }}
-            transition={TRANSITION_SETTINGS}
-            style={{
-              willChange: 'transform, opacity',
-              transform: 'translateZ(0)',
-              backfaceVisibility: 'hidden'
-            }}
-          >
-            <img
-              src="/DeviceEditedFinalNoBG.png"
-              alt="Device"
-              style={{
-                width: `${VIDEO_ANIMATION_CONFIG[screenSize].width}px`,
-                height: `${VIDEO_ANIMATION_CONFIG[screenSize].height}px`,
-              }}
-              className="object-contain"
-            />
-          </motion.div>
-        )}
-
-        {/* --- SLIDE 2: FLOATING LABELS --- */}
-        <AnimatePresence>
-          {currentSection === 2 && (
-            <>
-              <motion.div
-                initial={{ opacity: 0, x: -30, scale: 0.95 }}
-                animate={{ opacity: 1, x: 0, scale: 1 }}
-                exit={{ opacity: 0, x: -30, scale: 0.95 }}
-                transition={{ duration: 0.5, delay: 0.15, ease: SMOOTH_EASE }}
-                className="fixed text-white text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold uppercase tracking-widest z-30 backdrop-blur-sm p-2 rounded-lg"
-                style={{
-                  top: FLOATING_LABELS_CONFIG[screenSize].secure.top,
-                  left: FLOATING_LABELS_CONFIG[screenSize].secure.left,
-                  transform: 'translateZ(0)',
-                  willChange: 'transform, opacity'
-                }}
-              >
-                SECURE
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, x: 30, scale: 0.95 }}
-                animate={{ opacity: 1, x: 0, scale: 1 }}
-                exit={{ opacity: 0, x: 30, scale: 0.95 }}
-                transition={{ duration: 0.5, delay: 0.25, ease: SMOOTH_EASE }}
-                className="fixed text-white text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold uppercase tracking-widest z-30 backdrop-blur-sm p-2 rounded-lg"
-                style={{
-                  top: FLOATING_LABELS_CONFIG[screenSize].ultraDense.top,
-                  right: FLOATING_LABELS_CONFIG[screenSize].ultraDense.right,
-                  transform: 'translateZ(0)',
-                  willChange: 'transform, opacity'
-                }}
-              >
-                ULTRA-DENSE
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, x: -30, scale: 0.95 }}
-                animate={{ opacity: 1, x: 0, scale: 1 }}
-                exit={{ opacity: 0, x: -30, scale: 0.95 }}
-                transition={{ duration: 0.5, delay: 0.35, ease: SMOOTH_EASE }}
-                className="fixed text-white text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold uppercase backdrop-blur-lg p-2 rounded-backdrop-blur-sm tracking-widest z-30"
-                style={{
-                  top: FLOATING_LABELS_CONFIG[screenSize].longLasting.top,
-                  left: FLOATING_LABELS_CONFIG[screenSize].longLasting.left,
-                  transform: 'translateZ(0)',
-                  willChange: 'transform, opacity'
-                }}
-              >
-                LONG-LASTING
-              </motion.div>
-            </>
-          )}
-        </AnimatePresence>
-
-        {/* --- SLIDE 2: BOTTOM STATS --- */}
-        <AnimatePresence>
-          {currentSection === 2 && (
-            <motion.div
-              initial={{ y: '100%' }}
-              animate={{ y: '0%' }}
-              exit={{ y: '100%' }}
-              transition={{ duration: 0.6, delay: 0.1, ease: SMOOTH_EASE }}
-              className="fixed bottom-0 left-0 w-full bg-black/80 backdrop-blur-md border-t border-white/10 py-4 sm:py-6 md:py-8 z-40"
-              style={{ transform: 'translateZ(0)', willChange: 'transform' }}
-            >
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
-                <div className="text-center">
-                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-0.5 sm:mb-1">512 PB</div>
-                  <div className="text-[10px] sm:text-xs text-gray-400 uppercase tracking-widest">per cm³</div>
+            <section className="hero">
+                <video
+                    ref={heroVideoRef}
+                    className="hero-video"
+                    src="https://github.com/user-attachments/assets/feaf3ae4-5d01-4ce7-9395-9c2688b31e9c"
+                    poster="https://github.com/user-attachments/assets/93399241-7d66-43ec-b67e-fd780450acbe"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    aria-hidden="true"
+                />
+                <div className="hero-scrim" aria-hidden="true" />
+                <div className="hero-content">
+                    <h1>Idea to lab data.<br className="br-mobile" /> In record time.</h1>
+                    <p className="tagline">
+                        <span className="sent">You or your AI agent bring the experiment.</span>{' '}
+                        <span className="sent">We run it on our custom hardware.</span>{' '}
+                        <span className="sent">You get the data in record time.</span>
+                    </p>
+                    <p className="tagline tagline-accent">Think Lovable, but for biology.</p>
+                    <a className="pill-button is-large" href="#waitlist" onClick={(e) => { e.preventDefault(); document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' }); }}>Join the waitlist</a>
                 </div>
-                <div className="text-center">
-                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-0.5 sm:mb-1">100+</div>
-                  <div className="text-[10px] sm:text-xs text-gray-400 uppercase tracking-widest">years durability</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-0.5 sm:mb-1">99.99%</div>
-                  <div className="text-[10px] sm:text-xs text-gray-400 uppercase tracking-widest">accuracy</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-0.5 sm:mb-1">0kWh</div>
-                  <div className="text-[10px] sm:text-xs text-gray-400 uppercase tracking-widest">energy consumption</div>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </section>
 
-        {/* --- INVISIBLE SCROLL TARGETS --- */}
-        <SectionPlaceholder index={0} onEnter={setCurrentSection} />
-        <SectionPlaceholder index={1} onEnter={setCurrentSection} />
-        <SectionPlaceholder index={2} onEnter={setCurrentSection} />
+            <section className="waitlist" id="waitlist">
+                <div className="why">
+                    <p className="why-lead">We built this specialized hardware for biocomputing.</p>
+                    <p className="why-sub">Now we are opening it up to anyone with a good idea to accelerate scientific discovery.</p>
+                    <p className="why-badge">No biology background or wet lab experience needed.</p>
+                </div>
+                <h2>Join the waitlist</h2>
+                <form>
+                    <label>Name<input type="text" name="name" required /></label>
+                    <label>Email<input type="email" name="email" required /></label>
+                    <label>What best describes your work?
+                        <select name="work" required value={work} onChange={(e) => setWork(e.target.value)}>
+                            <option value="" disabled>Select one</option>
+                            {WORK_OPTIONS.map((o) => (
+                                <option key={o.value} value={o.value}>{o.label}</option>
+                            ))}
+                        </select>
+                        {work === 'other' && (
+                            <input className="other-fill" type="text" name="work_other" placeholder="Please specify" />
+                        )}
+                    </label>
+                    <label>What&apos;s the first experiment you would run?
+                        <textarea name="experiment" rows={3} />
+                    </label>
+                    <label>What&apos;s stopping you from running it today?
+                        <select name="obstacle" required value={obstacle} onChange={(e) => setObstacle(e.target.value)}>
+                            <option value="" disabled>Select one</option>
+                            {OBSTACLE_OPTIONS.map((o) => (
+                                <option key={o.value} value={o.value}>{o.label}</option>
+                            ))}
+                        </select>
+                        {obstacle === 'another obstacle' && (
+                            <input className="other-fill" type="text" name="obstacle_other" placeholder="Please specify" />
+                        )}
+                    </label>
+                    <label>How often would you need to run experiments like this?
+                        <input type="text" name="frequency" />
+                    </label>
+                    <button className="pill-button is-large" type="button" disabled={submitState === 'sending'} onClick={handleWaitlistSubmit}>
+                        {submitState === 'sending' ? 'Submitting...' : 'Submit'}
+                    </button>
+                    {submitState === 'done' && (
+                        <p className="form-note is-success">Thanks - you are on the list. We will be in touch.</p>
+                    )}
+                    {submitState === 'error' && (
+                        <p className="form-note is-error">Something went wrong. Please try again.</p>
+                    )}
+                    {submitState === 'error-network' && (
+                        <p className="form-note is-error">Could not reach the server. Please check your internet connection and try again, or email hello@biocomputeinc.com.</p>
+                    )}
+                </form>
+            </section>
 
-      </main>
-
-      <Suspense fallback={<div className="min-h-screen bg-black" />}>
-        <div className="relative z-50">
-          <Features />
-          <BackedBy />
+            <footer className="footer">
+                <p>BioCompute Inc &middot; 2311 Bowditch Street, Berkeley, CA 94704 &middot; hello@biocomputeinc.com</p>
+            </footer>
         </div>
-      </Suspense>
-    </>
-  );
+    );
 }

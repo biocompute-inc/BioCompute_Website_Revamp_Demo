@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Chrome from '@/components/Chrome';
 
 export const metadata: Metadata = {
   title: 'BioCompute Inc. - DNA-Based Data Storage',
@@ -24,13 +25,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-dark text-white">
-        <div className="relative z-60">
-          <Header />
-        </div>
-        <main>{children}</main>
-        <div className="relative z-50">
-          <Footer />
-        </div>
+        <Chrome header={<Header />} footer={<Footer />}>
+          <main>{children}</main>
+        </Chrome>
       </body>
     </html>
   );
