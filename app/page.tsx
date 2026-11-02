@@ -73,8 +73,8 @@ export default function Home() {
                 <video
                     ref={heroVideoRef}
                     className="hero-video"
-                    src="/hero-bg.mp4"
-                    poster="/hero-bg.jpg"
+                    src="https://github.com/user-attachments/assets/feaf3ae4-5d01-4ce7-9395-9c2688b31e9c"
+                    poster="https://github.com/user-attachments/assets/93399241-7d66-43ec-b67e-fd780450acbe"
                     autoPlay
                     muted
                     loop
