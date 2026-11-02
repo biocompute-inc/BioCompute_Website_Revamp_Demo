@@ -87,7 +87,7 @@ export default function Home() {
                     <p className="tagline">
                         <span className="sent">You or your AI agent bring the experiment.</span>{' '}
                         <span className="sent">We run it on our custom hardware.</span>{' '}
-                        <span className="sent">You get the data in record time.</span>
+                        <span className="sent">You get the data.</span>
                     </p>
                     <p className="tagline tagline-accent">Think Lovable, but for biology.</p>
                     <a className="pill-button is-large" href="#waitlist" onClick={(e) => { e.preventDefault(); document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' }); }}>Join the waitlist</a>
