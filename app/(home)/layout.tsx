@@ -4,7 +4,7 @@ const TITLE = 'BioCompute Inc. | Idea to lab data. In record time.';
 const DESCRIPTION =
     'You or your AI agent bring the experiment. We run it on our custom hardware. You get the data.';
 const OG_IMAGE =
-    'https://github.com/biocompute-inc/BioCompute_Website_Revamp_Demo/releases/download/assets-2026-11-01/og-home.jpg';
+    'https://www.biocomputeinc.com/og-home.jpg';
 
 export const metadata: Metadata = {
     title: TITLE,
