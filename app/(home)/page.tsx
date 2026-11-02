@@ -104,6 +104,10 @@ export default function Home() {
                 <form>
                     <label>Name<input type="text" name="name" required /></label>
                     <label>Email<input type="email" name="email" required /></label>
+                    <label>
+                        LinkedIn, X, personal website, Github, other socials <span className="optional">(optional)</span>
+                        <input type="text" name="socials" />
+                    </label>
                     <label>What best describes your work?
                         <select name="work" required value={work} onChange={(e) => setWork(e.target.value)}>
                             <option value="" disabled>Select one</option>
